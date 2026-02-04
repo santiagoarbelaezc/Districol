@@ -1,0 +1,34 @@
+# === NODE ===
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# === ENV VARIABLES ===
+**/.env
+**/.env.local
+**/.env.*.local
+
+# === DIST / BUILD ===
+frontend/dist/
+frontend/.angular/
+backend/dist/
+backend/build/
+
+# === OS ===
+.DS_Store
+Thumbs.db
+
+# === IDEs ===
+.vscode/
+.idea/
+
+# === LOGS ===
+logs/
+*.log
+!.gitkeep
+
+# === TEST COVERAGE ===
+coverage/
+**/coverage/
