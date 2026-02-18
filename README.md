@@ -17,7 +17,6 @@
 ## 📌 Descripción
 Plataforma e-commerce desarrollada para empresa de **distribución comercial**. Enfocada en **gestión de catálogo y visualización de productos**. Arquitectura desacoplada frontend/backend con API REST.
 
----
 
 ---
 
@@ -300,4 +299,5 @@ Estudiante Ingeniería de Sistemas – Universidad del Quindío
 <div align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=90&section=footer&animation=fadeIn" />
 </div>
+
 
