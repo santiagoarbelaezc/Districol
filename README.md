@@ -19,6 +19,13 @@ Plataforma e-commerce desarrollada para empresa de **distribución comercial**. 
 
 ---
 
+---
+
+### 🔧 **Version Beta**
+- Pensado para produccion el 25 de febrero
+
+---
+
 ## 🚀 **Arquitectura de Despliegue**
 ### **🌐 Frontend (Hostinger)**
 - Aplicación Angular desplegada en **Hostinger**
@@ -293,3 +300,4 @@ Estudiante Ingeniería de Sistemas – Universidad del Quindío
 <div align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=90&section=footer&animation=fadeIn" />
 </div>
+
