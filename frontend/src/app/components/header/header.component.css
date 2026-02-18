@@ -1,7 +1,7 @@
 .hero-header {
   position: relative;
   width: 100%;
-  margin-top: 70px; /* Para compensar el navbar fijo */
+  margin-top: 120px; /* Ajustado para navbar + info-bar */
 }
 
 .hero-image {
@@ -13,4 +13,11 @@
   width: 100%;
   height: auto;
   display: block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-header {
+    margin-top: 80px; /* Solo navbar en móvil */
+  }
 }
