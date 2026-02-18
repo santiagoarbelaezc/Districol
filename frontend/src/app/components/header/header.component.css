@@ -1,0 +1,16 @@
+.hero-header {
+  position: relative;
+  width: 100%;
+  margin-top: 70px; /* Para compensar el navbar fijo */
+}
+
+.hero-image {
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}

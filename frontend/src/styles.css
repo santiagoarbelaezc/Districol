@@ -1,24 +1,25 @@
 /* Districol - Luxury Mattress E-commerce Styles */
 
 /* Font Imports */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import './app/themes/colors.css';
 
 :root {
-  /* Luxury Palette */
-  --color-primary: #1A1A1A;     /* Rich Black / Charcoal */
-  --color-secondary: #D4AF37;   /* Metallic Gold */
-  --color-accent: #B8860B;      /* Darker Gold */
-  --color-background: #F9F9F9;  /* Off-White / Cream */
+  /* Coffee Palette */
+  --color-primary: var(--color-negro);     /* Casi negro con tinte café */
+  --color-secondary: var(--color-principal);   /* Café medio cálido */
+  --color-accent: var(--color-secundario);      /* Café claro */
+  --color-background: var(--color-blanco);  /* Blanco roto (hueso) */
   --color-surface: #FFFFFF;     /* Pure White */
-  --color-text: #333333;        /* Dark Grey */
-  --color-text-light: #777777;  /* Light Grey */
-  --color-border: #E5E5E5;
+  --color-text: var(--color-text);        /* Texto café oscuro */
+  --color-text-light: var(--color-complementario-5);  /* Gris café oscuro */
+  --color-border: var(--color-complementario-6); /* Crema café */
 
   /* Shadows */
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
-  --shadow-gold: 0 4px 20px rgba(212, 175, 55, 0.2);
+  --shadow-gold: 0 4px 20px rgba(92, 59, 30, 0.2); /* Adjusted to coffee color */
 
   /* Transitions */
   --transition-fast: 0.2s ease;
@@ -33,7 +34,7 @@
 }
 
 body {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Inter Tight';
   background-color: var(--color-background);
   color: var(--color-text);
   line-height: 1.6;
@@ -41,7 +42,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Inter Tight';
   color: var(--color-primary);
   font-weight: 700;
   margin-bottom: 1rem;
@@ -82,7 +83,7 @@ img {
   padding: 12px 32px;
   border: 1px solid transparent;
   cursor: pointer;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Inter Tight';
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -137,7 +138,7 @@ img {
 .section-subtitle {
   text-align: center;
   color: var(--color-secondary);
-  font-family: 'Lato', sans-serif;
+  font-family: 'Inter Tight';
   text-transform: uppercase;
   letter-spacing: 2px;
   font-size: 0.9rem;

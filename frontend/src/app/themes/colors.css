@@ -1,0 +1,21 @@
+:root {
+  --color-principal: #8B5A2B;       /* Café medio cálido */
+  --color-secundario: #A6714B;      /* Café claro */
+  --color-negro: #1A120B;           /* Casi negro con tinte café */
+  --color-blanco: #FDF8F2;          /* Blanco roto (hueso) */
+
+  --color-complementario-1: #5C3B1E; /* Café muy oscuro (chocolate) */
+  --color-complementario-2: #C69C6D; /* Café claro arenoso */
+  --color-complementario-3: #B87C4B; /* Canela */
+  --color-complementario-4: #7B5E3F; /* Café verdoso/oliva */
+  --color-complementario-5: #4A3C31; /* Gris café oscuro */
+  --color-complementario-6: #D9B382; /* Crema café */
+
+  --color-whatsapp: #25D366;
+  --color-facebook: #1877F2;
+  --color-instagram: #E1306C;
+  --color-background: rgba(253, 248, 242, 0.95); /* Blanco roto con transparencia */
+  --color-shadow: rgba(60, 40, 20, 0.15);        /* Sombra café */
+  --color-text: #2C1E12;             /* Texto café oscuro */
+  --transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+}

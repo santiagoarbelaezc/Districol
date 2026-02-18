@@ -1,0 +1,60 @@
+.navbar {
+  background-color: var(--color-blanco);
+  box-shadow: var(--shadow-sm);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 10px 0;
+}
+
+.navbar-logo .logo-img {
+  height: 40px;
+  width: auto;
+}
+
+.navbar-menu {
+  list-style: none;
+  gap: 30px;
+}
+
+.navbar-link {
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: 600;
+  transition: var(--transition-fast);
+}
+
+.navbar-link:hover {
+  color: var(--color-principal);
+}
+
+.navbar-actions {
+  gap: 20px;
+}
+
+.search-input {
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-family: 'Inter Tight';
+  font-size: 0.9rem;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--color-principal);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-principal);
+  border-color: var(--color-principal);
+  padding: 8px 16px;
+  font-size: 0.9rem;
+}
+
+.btn-outline:hover {
+  background-color: var(--color-principal);
+  color: var(--color-blanco);
+}
