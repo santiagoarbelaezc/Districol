@@ -1,5 +1,23 @@
 <header class="hero-header">
-  <div class="hero-image">
-    <img src="assets/img/colchon-districol.jpeg" alt="Colchón Districol" class="hero-img">
+  <div class="video-container">
+    <video #heroVideo class="hero-video" autoplay muted playsinline preload="auto">
+      <source src="assets/videos/districol2.mp4" type="video/mp4">
+      Tu navegador no soporta el elemento video.
+    </video>
+
+    <!-- Botón de Play -->
+    <button class="play-button" (click)="playVideo()" [class.hidden]="isPlaying">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+    </button>
+
+    <div class="hero-overlay" [class.show]="showOverlay" [style.opacity]="showOverlay ? 1 : 0" [style.visibility]="showOverlay ? 'visible' : 'hidden'">
+      <div class="overlay-content">
+        <img src="assets/img/logo-grande.png" alt="Districol Logo" class="overlay-logo">
+        <h1 class="overlay-title">Colchones Districol</h1>
+        <p class="overlay-subtitle">Diseñados para tu mejor descanso</p>
+      </div>
+    </div>
   </div>
 </header>
