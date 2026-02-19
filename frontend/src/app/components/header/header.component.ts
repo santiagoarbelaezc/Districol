@@ -77,6 +77,7 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
 
     video.addEventListener('ended', () => {
       this.isPlaying = false;
+      this.showOverlay = true; // Mostrar overlay cuando termine el video
       this.clearTimeouts();
       this.cdr.detectChanges();
     });

@@ -50,36 +50,46 @@
 .overlay-content {
   text-align: center;
   color: var(--color-blanco);
+  padding: 60px 40px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.5) 0%, transparent 70%);
+  border-radius: 20px;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .overlay-logo {
-  height: 180px;
+  height: 140px;
   width: auto;
-  margin-bottom: 40px;
+  margin: 0 auto 30px auto;
   opacity: 0;
-  transform: translateY(40px) scale(0.9);
+  transform: translateY(40px);
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
-  filter: drop-shadow(0 8px 30px rgba(139, 90, 43, 0.5));
+  filter: drop-shadow(0 8px 40px rgba(139, 90, 43, 0.6));
+  display: block;
 }
 
 .hero-overlay.show .overlay-logo {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translateY(0);
 }
 
 .overlay-title {
-  font-size: 4.5rem;
-  font-weight: 800;
-  margin: 0 0 20px 0;
+  font-size: 3.8rem;
+  font-weight: 700;
+  margin: 0 0 15px 0;
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s;
-  text-shadow: 0 6px 30px rgba(0, 0, 0, 0.6), 0 2px 10px rgba(139, 90, 43, 0.3);
-  letter-spacing: 4px;
-  background: linear-gradient(135deg, #FFFFFF 0%, var(--color-complementario-6) 50%, var(--color-principal) 100%);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+  letter-spacing: 6px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #E8DED4 40%, var(--color-principal) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-transform: uppercase;
 }
 
 .hero-overlay.show .overlay-title {
@@ -88,16 +98,29 @@
 }
 
 .overlay-subtitle {
-  font-size: 1.4rem;
-  font-weight: 500;
+  font-size: 1.1rem;
+  font-weight: 400;
   margin: 0;
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.9s;
-  color: var(--color-blanco);
-  letter-spacing: 5px;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 8px;
   text-transform: uppercase;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.6);
+  position: relative;
+  padding-top: 20px;
+}
+
+.overlay-subtitle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-principal), transparent);
 }
 
 .hero-overlay.show .overlay-subtitle {
@@ -108,33 +131,39 @@
 /* Botón de Play */
 .play-button {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  background: rgba(139, 90, 43, 0.9);
-  border: 3px solid var(--color-blanco);
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.4);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
   z-index: 10;
+  backdrop-filter: blur(8px);
 }
 
 .play-button:hover {
-  background: var(--color-principal);
-  transform: translate(-50%, -50%) scale(1.1);
-  box-shadow: 0 0 30px rgba(139, 90, 43, 0.6);
+  background: rgba(139, 90, 43, 0.8);
+  border-color: var(--color-blanco);
+  transform: scale(1.1);
+  box-shadow: 0 4px 20px rgba(139, 90, 43, 0.5);
 }
 
 .play-button svg {
-  width: 35px;
-  height: 35px;
+  width: 20px;
+  height: 20px;
   color: var(--color-blanco);
-  margin-left: 5px;
+  margin-left: 3px;
+  opacity: 0.9;
+}
+
+.play-button:hover svg {
+  opacity: 1;
 }
 
 .play-button.hidden {
