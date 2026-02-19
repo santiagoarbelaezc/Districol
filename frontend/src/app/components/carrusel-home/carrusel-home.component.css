@@ -1,0 +1,391 @@
+/* ===== SECCIÓN CARRUSEL ===== */
+.carrusel-section {
+  width: 100%;
+  padding: 80px 0;
+  transition: var(--transition-smooth);
+}
+
+/* ===== TEMAS ===== */
+.theme-dark {
+  background-color: #0a0a0a;
+}
+
+.theme-light {
+  background-color: var(--color-blanco);
+}
+
+/* ===== HEADER ===== */
+.carrusel-header {
+  text-align: center;
+  max-width: 1400px;
+  margin: 0 auto 50px auto;
+  padding: 0 20px;
+}
+
+.carrusel-titulo {
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin: 0;
+  position: relative;
+  display: inline-block;
+}
+
+.carrusel-titulo::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 2px;
+  background: var(--color-principal);
+}
+
+.theme-dark .carrusel-titulo {
+  color: var(--color-blanco);
+}
+
+.theme-light .carrusel-titulo {
+  color: var(--color-negro);
+}
+
+/* ===== WRAPPER ===== */
+.carrusel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ===== CONTROLES LATERALES ===== */
+.control-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.95);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
+  z-index: 10;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.control-prev {
+  left: 10px;
+}
+
+.control-next {
+  right: 10px;
+}
+
+.theme-dark .control-btn {
+  background: rgba(30, 30, 30, 0.95);
+  color: var(--color-blanco);
+}
+
+.theme-light .control-btn {
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--color-negro);
+}
+
+.control-btn:hover {
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
+}
+
+.theme-dark .control-btn:hover {
+  background: rgba(50, 50, 50, 1);
+}
+
+.theme-light .control-btn:hover {
+  background: rgba(245, 245, 245, 1);
+}
+
+.control-btn svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* ===== CONTENEDOR CARRUSEL ===== */
+.carrusel-container {
+  display: flex;
+  gap: 30px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 30px 80px;
+  width: 100%;
+  user-select: none;
+  -webkit-overflow-scrolling: auto;
+}
+
+.carrusel-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* ===== TARJETA PRODUCTO ===== */
+.producto-card {
+  flex: 0 0 340px;
+  scroll-snap-align: start;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.4s ease;
+  position: relative;
+}
+
+.theme-dark .producto-card {
+  background: #151515;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.theme-light .producto-card {
+  background: #ffffff;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.producto-card:hover {
+  transform: translateY(-8px);
+}
+
+.theme-dark .producto-card:hover {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+}
+
+.theme-light .producto-card:hover {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== IMAGEN ===== */
+.card-imagen {
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  position: relative;
+}
+
+.card-imagen::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  pointer-events: none;
+}
+
+.theme-dark .card-imagen::after {
+  background: linear-gradient(transparent, #151515);
+}
+
+.theme-light .card-imagen::after {
+  background: linear-gradient(transparent, #ffffff);
+}
+
+.card-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.producto-card:hover .card-imagen img {
+  transform: scale(1.05);
+}
+
+/* ===== CONTENIDO ===== */
+.card-content {
+  padding: 25px 28px 30px;
+}
+
+.card-nombre {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  letter-spacing: 0.5px;
+}
+
+.theme-dark .card-nombre {
+  color: var(--color-blanco);
+}
+
+.theme-light .card-nombre {
+  color: var(--color-negro);
+}
+
+.card-descripcion {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin: 0 0 24px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.theme-dark .card-descripcion {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.theme-light .card-descripcion {
+  color: rgba(0, 0, 0, 0.55);
+}
+
+/* ===== BOTÓN VER MÁS ===== */
+.btn-ver-mas {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  color: var(--color-principal);
+}
+
+.btn-ver-mas span {
+  position: relative;
+}
+
+.btn-ver-mas span::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-principal);
+  transition: width 0.3s ease;
+}
+
+.btn-ver-mas:hover span::after {
+  width: 100%;
+}
+
+.btn-ver-mas svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s ease;
+}
+
+.btn-ver-mas:hover svg {
+  transform: translateX(6px);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .carrusel-section {
+    padding: 60px 0;
+  }
+
+  .carrusel-container {
+    padding: 25px 70px;
+  }
+
+  .producto-card {
+    flex: 0 0 300px;
+  }
+
+  .control-btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .control-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .carrusel-section {
+    padding: 50px 0;
+  }
+
+  .carrusel-titulo {
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+  }
+
+  .carrusel-container {
+    padding: 20px 60px;
+    gap: 20px;
+  }
+
+  .producto-card {
+    flex: 0 0 270px;
+  }
+
+  .card-imagen {
+    height: 200px;
+  }
+
+  .card-content {
+    padding: 20px 22px 25px;
+  }
+
+  .card-nombre {
+    font-size: 1.1rem;
+  }
+
+  .card-descripcion {
+    font-size: 0.85rem;
+  }
+
+  .control-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .control-prev {
+    left: 5px;
+  }
+
+  .control-next {
+    right: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carrusel-header {
+    margin-bottom: 35px;
+  }
+
+  .carrusel-titulo {
+    font-size: 1.5rem;
+  }
+
+  .carrusel-container {
+    padding: 15px 50px;
+  }
+
+  .producto-card {
+    flex: 0 0 250px;
+  }
+
+  .control-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .control-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+}

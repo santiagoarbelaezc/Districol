@@ -2,6 +2,24 @@
 
 <app-header></app-header>
 
-<main class="main-content">
-  <!-- Contenido adicional de la página home aquí -->
-</main>
+<app-carrusel-colchones></app-carrusel-colchones>
+
+<app-card-home
+  imagen="assets/img/colchon-prueba1.jpg"
+  titulo="Colchón Sleep Well"
+  descripcion="Tu descanso nunca volverá a ser el mismo. Tejido de punto de alta calidad. Memory Foam Gel Infused de 2 cm para una frescura y soporte inigualables. Sistema Pocket de 5 zonas con Foam Case de 7 cm para un descanso personalizado. Capas de espuma de alta densidad y acolchado de algodón para máximo confort. Porque un buen día empieza con una buena noche."
+  [invertido]="false"
+  tema="dark">
+</app-card-home>
+
+<app-card-home
+  imagen="assets/img/colchon-prueba2.jpg"
+  titulo="Colchón Sleep Well"
+  descripcion="Tu descanso nunca volverá a ser el mismo. Tejido de punto de alta calidad. Memory Foam Gel Infused de 2 cm para una frescura y soporte inigualables. Sistema Pocket de 5 zonas con Foam Case de 7 cm para un descanso personalizado. Capas de espuma de alta densidad y acolchado de algodón para máximo confort. Porque un buen día empieza con una buena noche."
+  [invertido]="true"
+  tema="dark">
+</app-card-home>
+
+<app-almohada-video></app-almohada-video>
+
+<app-footer></app-footer>

@@ -1,1 +1,39 @@
-<p>carrusel-home works!</p>
+<section class="carrusel-section" [class.theme-light]="tema === 'light'" [class.theme-dark]="tema === 'dark'">
+  <div class="carrusel-header">
+    <h2 class="carrusel-titulo">{{ titulo }}</h2>
+  </div>
+
+  <div class="carrusel-wrapper">
+    <!-- Botón Anterior -->
+    <button class="control-btn control-prev" (click)="scrollCarousel('prev')" aria-label="Anterior">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+      </svg>
+    </button>
+
+    <div class="carrusel-container" [id]="'carousel-' + carouselId">
+      <div class="producto-card" *ngFor="let producto of productos">
+        <div class="card-imagen">
+          <img [src]="producto.imagen" [alt]="producto.nombre">
+        </div>
+        <div class="card-content">
+          <h3 class="card-nombre">{{ producto.nombre }}</h3>
+          <p class="card-descripcion">{{ producto.descripcion }}</p>
+          <button class="btn-ver-mas" (click)="verMas(producto)">
+            <span>Ver más</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón Siguiente -->
+    <button class="control-btn control-next" (click)="scrollCarousel('next')" aria-label="Siguiente">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+      </svg>
+    </button>
+  </div>
+</section>

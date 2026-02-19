@@ -1,1 +1,15 @@
-<p>card-home works!</p>
+<section class="card-section" [class.theme-light]="tema === 'light'" [class.theme-dark]="tema === 'dark'">
+  <div class="card-container" [class.invertido]="invertido">
+    <!-- Imagen -->
+    <div class="card-imagen">
+      <img [src]="imagen" [alt]="titulo">
+    </div>
+
+    <!-- Contenido -->
+    <div class="card-content">
+      <h2 class="card-titulo">{{ titulo }}</h2>
+      <div class="card-linea"></div>
+      <p class="card-descripcion">{{ descripcion }}</p>
+    </div>
+  </div>
+</section>
