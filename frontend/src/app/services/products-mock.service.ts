@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ProductoCarrusel } from '../components/carrusel-home/carrusel-home.component';
-import { PRODUCTOS_COLCHONES, PRODUCTOS_AMBIENTES, PRODUCTOS_COMPLEMENTOS, TODOS_LOS_PRODUCTOS } from '../data/mock-products';
+import { 
+  PRODUCTOS_COLCHONES, 
+  PRODUCTOS_AMBIENTES, 
+  PRODUCTOS_COMPLEMENTOS, 
+  PRODUCTOS_ALMOHADAS,
+  PRODUCTOS_SABANAS,
+  TODOS_LOS_PRODUCTOS 
+} from '../data/mock-products';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +24,14 @@ export class ProductsMockService {
 
   getComplementos(): ProductoCarrusel[] {
     return PRODUCTOS_COMPLEMENTOS;
+  }
+
+  getAlmohadas(): ProductoCarrusel[] {
+    return PRODUCTOS_ALMOHADAS;
+  }
+
+  getSabanas(): ProductoCarrusel[] {
+    return PRODUCTOS_SABANAS;
   }
 
   getTodosLosProductos(): ProductoCarrusel[] {

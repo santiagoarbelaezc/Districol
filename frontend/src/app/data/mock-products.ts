@@ -99,9 +99,52 @@ export const PRODUCTOS_COMPLEMENTOS: ProductoCarrusel[] = [
   }
 ];
 
+export const PRODUCTOS_ALMOHADAS: ProductoCarrusel[] = [
+  {
+    imagen: 'assets/img/almohadas.jpg',
+    nombre: 'Almohada Comfort Plus',
+    descripcion: 'Relleno de fibra siliconada de alta densidad. Soporte ergonómico que se adapta a la curvatura natural del cuello.'
+  },
+  {
+    imagen: 'assets/img/almohada2.jpg',
+    nombre: 'Almohada Memory Foam',
+    descripcion: 'Espuma viscoelástica con efecto memoria. Distribución uniforme del peso para aliviar puntos de presión.'
+  },
+  {
+    imagen: 'assets/img/almohada3.jpg',
+    nombre: 'Almohada Gel Fresh',
+    descripcion: 'Tecnología gel infused para noches frescas. Funda removible de algodón hipoalergénico lavable a máquina.'
+  }
+];
+
+export const PRODUCTOS_SABANAS: ProductoCarrusel[] = [
+  {
+    imagen: 'assets/img/sabanas.jpg',
+    nombre: 'Sábanas Premium 400 Hilos',
+    descripcion: 'Algodón egipcio de 400 hilos con acabado satinado. Suavidad excepcional que mejora con cada lavado.'
+  },
+  {
+    imagen: 'assets/img/sabana.jpg',
+    nombre: 'Sábanas Luxury Collection',
+    descripcion: 'Tejido de microfibra premium con acabado perlado. Resistentes a las arrugas y de secado rápido.'
+  },
+  {
+    imagen: 'assets/img/sabana2.jpg',
+    nombre: 'Sábanas Organic Cotton',
+    descripcion: 'Algodón 100% orgánico certificado. Tejido transpirable ideal para pieles sensibles y alérgicos.'
+  },
+  {
+    imagen: 'assets/img/sabana3.jpg',
+    nombre: 'Sábanas Silky Touch',
+    descripcion: 'Mezcla de algodón y seda natural. Sensación de lujo incomparable para un descanso de ensueño.'
+  }
+];
+
 // Todos los productos combinados
 export const TODOS_LOS_PRODUCTOS: ProductoCarrusel[] = [
   ...PRODUCTOS_COLCHONES,
   ...PRODUCTOS_AMBIENTES,
-  ...PRODUCTOS_COMPLEMENTOS
+  ...PRODUCTOS_COMPLEMENTOS,
+  ...PRODUCTOS_ALMOHADAS,
+  ...PRODUCTOS_SABANAS
 ];

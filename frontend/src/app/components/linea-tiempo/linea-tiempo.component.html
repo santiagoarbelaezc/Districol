@@ -1,1 +1,21 @@
-<p>linea-tiempo works!</p>
+<section class="timeline-section">
+  <div class="timeline-header">
+    <h2 class="section-titulo">Nuestra Historia</h2>
+    <p class="section-subtitulo">Un camino de compromiso con tu descanso</p>
+  </div>
+
+  <div class="timeline-container">
+    <div class="timeline-line"></div>
+    
+    <div class="timeline-item" *ngFor="let evento of eventos; let i = index" [class.reverse]="i % 2 !== 0">
+      <div class="timeline-content">
+        <span class="timeline-anio">{{ evento.anio }}</span>
+        <h3 class="timeline-titulo">{{ evento.titulo }}</h3>
+        <p class="timeline-descripcion">{{ evento.descripcion }}</p>
+      </div>
+      <div class="timeline-dot">
+        <div class="dot-inner"></div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -141,7 +141,8 @@
   scroll-snap-align: start;
   border-radius: 20px;
   overflow: hidden;
-  transition: transform 0.4s ease;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+              box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
 }
 
@@ -156,23 +157,24 @@
 }
 
 .producto-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-15px) scale(1.02);
 }
 
 .theme-dark .producto-card:hover {
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
 }
 
 .theme-light .producto-card:hover {
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
 }
 
 /* ===== IMAGEN ===== */
 .card-imagen {
   width: 100%;
-  height: 240px;
+  height: 210px;
   overflow: hidden;
   position: relative;
+  background-color: #000000;
 }
 
 .card-imagen::after {
@@ -183,6 +185,7 @@
   right: 0;
   height: 80px;
   pointer-events: none;
+  z-index: 2;
 }
 
 .theme-dark .card-imagen::after {
@@ -193,11 +196,16 @@
   background: linear-gradient(transparent, #ffffff);
 }
 
+.theme-light .card-imagen {
+  background: #ffffff;
+}
+
 .card-imagen img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.6s ease;
+  will-change: transform;
 }
 
 .producto-card:hover .card-imagen img {

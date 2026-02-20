@@ -1,0 +1,312 @@
+/* ===== HIGHLIGHTS SECTION ===== */
+.highlights-section {
+  background-color: #0a0a0a;
+  padding: 80px 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.highlights-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.highlight-item {
+  text-align: center;
+  padding: 40px 25px;
+  background: #151515;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.4s ease;
+}
+
+.highlight-item:hover {
+  transform: translateY(-8px);
+  border-color: rgba(139, 90, 43, 0.3);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.highlight-icon {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(139, 90, 43, 0.1);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.highlight-item:hover .highlight-icon {
+  background: rgba(139, 90, 43, 0.2);
+  transform: scale(1.1);
+}
+
+.highlight-icon svg {
+  width: 32px;
+  height: 32px;
+  color: var(--color-principal);
+}
+
+.highlight-titulo {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-blanco);
+  margin: 0 0 8px 0;
+  letter-spacing: 0.5px;
+}
+
+.highlight-descripcion {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+/* ===== MISIÓN Y VISIÓN ===== */
+.mision-vision-section {
+  background-color: #151515;
+  padding: 100px 40px;
+}
+
+.mv-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.mv-card {
+  text-align: center;
+  padding: 50px 35px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.mv-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--color-principal), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.mv-card:hover::before {
+  opacity: 1;
+}
+
+.mv-card:hover {
+  transform: translateY(-10px);
+  background: rgba(139, 90, 43, 0.05);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+}
+
+.mv-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(139, 90, 43, 0.15);
+  border-radius: 50%;
+  border: 2px solid rgba(139, 90, 43, 0.3);
+}
+
+.mv-icon svg {
+  width: 36px;
+  height: 36px;
+  color: var(--color-principal);
+}
+
+.mv-titulo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-blanco);
+  margin: 0 0 20px 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.mv-descripcion {
+  font-size: 0.95rem;
+  line-height: 1.9;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+/* ===== COMPROMISO SECTION ===== */
+.compromiso-section {
+  background-color: #0a0a0a;
+  padding: 100px 40px;
+}
+
+.compromiso-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.compromiso-titulo {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--color-blanco);
+  margin: 0 0 20px 0;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.compromiso-linea {
+  width: 100px;
+  height: 3px;
+  background: var(--color-principal);
+  margin: 0 auto 40px;
+}
+
+.compromiso-texto {
+  font-size: 1.1rem;
+  line-height: 2;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 25px 0;
+}
+
+.compromiso-texto:last-child {
+  margin-bottom: 0;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .highlights-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+
+  .mv-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .mision-vision-section {
+    padding: 80px 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .highlights-section {
+    padding: 60px 25px;
+  }
+
+  .highlights-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .highlight-item {
+    padding: 30px 20px;
+  }
+
+  .highlight-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 20px;
+  }
+
+  .highlight-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .highlight-titulo {
+    font-size: 1rem;
+  }
+
+  .mision-vision-section {
+    padding: 60px 25px;
+  }
+
+  .mv-card {
+    padding: 40px 25px;
+  }
+
+  .mv-titulo {
+    font-size: 1.3rem;
+  }
+
+  .compromiso-section {
+    padding: 70px 25px;
+  }
+
+  .compromiso-titulo {
+    font-size: 1.8rem;
+  }
+
+  .compromiso-texto {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .highlights-section {
+    padding: 50px 20px;
+  }
+
+  .highlights-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .highlight-item {
+    padding: 25px 20px;
+  }
+
+  .mision-vision-section {
+    padding: 50px 20px;
+  }
+
+  .mv-card {
+    padding: 35px 20px;
+  }
+
+  .mv-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  .mv-icon svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .mv-titulo {
+    font-size: 1.2rem;
+  }
+
+  .mv-descripcion {
+    font-size: 0.9rem;
+  }
+
+  .compromiso-section {
+    padding: 50px 20px;
+  }
+
+  .compromiso-titulo {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+  }
+
+  .compromiso-texto {
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+}
