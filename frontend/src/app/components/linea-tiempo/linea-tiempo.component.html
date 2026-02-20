@@ -1,13 +1,14 @@
 <section class="timeline-section">
-  <div class="timeline-header">
+  <div class="timeline-header" data-aos="fade-up">
     <h2 class="section-titulo">Nuestra Historia</h2>
     <p class="section-subtitulo">Un camino de compromiso con tu descanso</p>
   </div>
 
   <div class="timeline-container">
     <div class="timeline-line"></div>
-    
-    <div class="timeline-item" *ngFor="let evento of eventos; let i = index" [class.reverse]="i % 2 !== 0">
+
+    <div class="timeline-item" *ngFor="let evento of eventos; let i = index" [class.reverse]="i % 2 !== 0"
+      [attr.data-aos]="i % 2 === 0 ? 'fade-right' : 'fade-left'" [attr.data-aos-delay]="i * 100">
       <div class="timeline-content">
         <span class="timeline-anio">{{ evento.anio }}</span>
         <h3 class="timeline-titulo">{{ evento.titulo }}</h3>

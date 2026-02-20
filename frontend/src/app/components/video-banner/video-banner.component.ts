@@ -22,38 +22,38 @@ export class VideoBannerComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('heroVideo', { static: true }) heroVideo!: ElementRef<HTMLVideoElement>;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngAfterViewInit() {
     const video = this.heroVideo.nativeElement;
-    
+
     this.showOverlay = false;
     this.cdr.detectChanges();
 
     if (!this.videoPlayAttempted) {
       this.videoPlayAttempted = true;
-      
+
       video.play()
         .then(() => {
           console.log('Video reproduciéndose correctamente');
-          
+
           this.showTimeout = setTimeout(() => {
             this.showOverlay = true;
             this.cdr.detectChanges();
-            
+
             this.hideTimeout = setTimeout(() => {
               this.showOverlay = false;
               this.cdr.detectChanges();
             }, 5000);
-            
+
           }, 5000);
-          
+
         })
         .catch((error) => {
           console.log('Autoplay bloqueado:', error);
           this.showOverlay = true;
           this.cdr.detectChanges();
-          
+
           setTimeout(() => {
             this.showOverlay = false;
             this.cdr.detectChanges();
@@ -79,6 +79,17 @@ export class VideoBannerComponent implements AfterViewInit, OnDestroy {
     });
   }
 
+  onVideoLoaded() {
+    const video = this.heroVideo.nativeElement;
+    video.play().then(() => {
+      this.isPlaying = true;
+      this.cdr.detectChanges();
+    }).catch(() => {
+      this.isPlaying = false;
+      this.cdr.detectChanges();
+    });
+  }
+
   playVideo() {
     const video = this.heroVideo.nativeElement;
     video.currentTime = 0;
@@ -86,17 +97,17 @@ export class VideoBannerComponent implements AfterViewInit, OnDestroy {
       this.isPlaying = true;
       this.showOverlay = false;
       this.clearTimeouts();
-      
+
       this.showTimeout = setTimeout(() => {
         this.showOverlay = true;
         this.cdr.detectChanges();
-        
+
         this.hideTimeout = setTimeout(() => {
           this.showOverlay = false;
           this.cdr.detectChanges();
         }, 5000);
       }, 5000);
-      
+
       this.cdr.detectChanges();
     }).catch(err => console.log('Error al reproducir:', err));
   }

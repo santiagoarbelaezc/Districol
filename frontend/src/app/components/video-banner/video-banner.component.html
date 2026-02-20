@@ -1,6 +1,7 @@
 <section class="video-banner">
   <div class="video-container">
-    <video #heroVideo class="banner-video" autoplay muted playsinline preload="auto">
+    <video #heroVideo class="banner-video" autoplay muted loop playsinline preload="auto"
+      (loadeddata)="onVideoLoaded()">
       <source [src]="videoSrc" type="video/mp4">
       Tu navegador no soporta el elemento video.
     </video>
@@ -8,11 +9,12 @@
     <!-- Botón de Play -->
     <button class="play-button" (click)="playVideo()" [class.hidden]="isPlaying">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M8 5v14l11-7z"/>
+        <path d="M8 5v14l11-7z" />
       </svg>
     </button>
 
-    <div class="video-overlay" [class.show]="showOverlay" [style.opacity]="showOverlay ? 1 : 0" [style.visibility]="showOverlay ? 'visible' : 'hidden'">
+    <div class="video-overlay" [class.show]="showOverlay" [style.opacity]="showOverlay ? 1 : 0"
+      [style.visibility]="showOverlay ? 'visible' : 'hidden'">
       <div class="overlay-content">
         <img [src]="logoSrc" alt="Logo" class="overlay-logo" *ngIf="logoSrc">
         <h1 class="overlay-title">{{ titulo }}</h1>

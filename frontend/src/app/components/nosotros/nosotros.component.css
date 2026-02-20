@@ -1,7 +1,12 @@
+:host {
+  display: block;
+  margin-top: 40px;
+}
+
 /* ===== HIGHLIGHTS SECTION ===== */
 .highlights-section {
   background-color: #0a0a0a;
-  padding: 80px 40px;
+  padding: 110px 40px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
