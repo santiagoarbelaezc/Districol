@@ -19,6 +19,7 @@ export class VideoBannerComponent implements AfterViewInit, OnDestroy {
   private showTimeout: any;
   private hideTimeout: any;
   private videoPlayAttempted = false;
+  private timeUpdateListener: any;
 
   @ViewChild('heroVideo', { static: true }) heroVideo!: ElementRef<HTMLVideoElement>;
 
@@ -36,28 +37,12 @@ export class VideoBannerComponent implements AfterViewInit, OnDestroy {
       video.play()
         .then(() => {
           console.log('Video reproduciéndose correctamente');
-
-          this.showTimeout = setTimeout(() => {
-            this.showOverlay = true;
-            this.cdr.detectChanges();
-
-            this.hideTimeout = setTimeout(() => {
-              this.showOverlay = false;
-              this.cdr.detectChanges();
-            }, 5000);
-
-          }, 5000);
-
+          this.scheduleOverlay();
         })
         .catch((error) => {
           console.log('Autoplay bloqueado:', error);
           this.showOverlay = true;
           this.cdr.detectChanges();
-
-          setTimeout(() => {
-            this.showOverlay = false;
-            this.cdr.detectChanges();
-          }, 10000);
         });
     }
 
@@ -71,12 +56,52 @@ export class VideoBannerComponent implements AfterViewInit, OnDestroy {
       this.cdr.detectChanges();
     });
 
+    // Para videos con loop: detectar cuando el video está por terminar un ciclo
+    this.timeUpdateListener = () => {
+      if (video.duration && video.currentTime >= video.duration - 0.5) {
+        if (!this.showOverlay) {
+          this.showOverlay = true;
+          this.cdr.detectChanges();
+        }
+      }
+    };
+    video.addEventListener('timeupdate', this.timeUpdateListener);
+
+    // Para videos sin loop
     video.addEventListener('ended', () => {
       this.isPlaying = false;
       this.showOverlay = true;
       this.clearTimeouts();
       this.cdr.detectChanges();
     });
+
+    // Detectar cuando el video reinicia el loop (seeking al inicio)
+    video.addEventListener('seeked', () => {
+      if (video.currentTime < 1 && this.showOverlay) {
+        // El video hizo loop: ocultar overlay después de 3 segundos
+        this.hideTimeout = setTimeout(() => {
+          this.showOverlay = false;
+          this.cdr.detectChanges();
+        }, 3000);
+      }
+    });
+  }
+
+  private scheduleOverlay(): void {
+    this.clearTimeouts();
+
+    // Mostrar overlay a los 5 segundos
+    this.showTimeout = setTimeout(() => {
+      this.showOverlay = true;
+      this.cdr.detectChanges();
+
+      // Ocultar a los 5 segundos
+      this.hideTimeout = setTimeout(() => {
+        this.showOverlay = false;
+        this.cdr.detectChanges();
+      }, 5000);
+
+    }, 5000);
   }
 
   onVideoLoaded() {
@@ -97,23 +122,17 @@ export class VideoBannerComponent implements AfterViewInit, OnDestroy {
       this.isPlaying = true;
       this.showOverlay = false;
       this.clearTimeouts();
-
-      this.showTimeout = setTimeout(() => {
-        this.showOverlay = true;
-        this.cdr.detectChanges();
-
-        this.hideTimeout = setTimeout(() => {
-          this.showOverlay = false;
-          this.cdr.detectChanges();
-        }, 5000);
-      }, 5000);
-
+      this.scheduleOverlay();
       this.cdr.detectChanges();
     }).catch(err => console.log('Error al reproducir:', err));
   }
 
   ngOnDestroy() {
     this.clearTimeouts();
+    const video = this.heroVideo?.nativeElement;
+    if (video && this.timeUpdateListener) {
+      video.removeEventListener('timeupdate', this.timeUpdateListener);
+    }
   }
 
   private clearTimeouts() {

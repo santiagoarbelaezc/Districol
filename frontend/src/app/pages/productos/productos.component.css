@@ -1,0 +1,114 @@
+/* ===== PRODUCTOS PAGE LAYOUT ===== */
+
+:host {
+    display: block;
+    background: var(--color-blanco, #FDF8F2);
+    min-height: 100vh;
+}
+
+/* ===== MAIN LAYOUT ===== */
+.productos-layout {
+    display: flex;
+    gap: 32px;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 140px 40px 60px;
+    align-items: flex-start;
+}
+
+/* ===== MOBILE TOGGLE ===== */
+.menu-toggle-categorias {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 999;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: none;
+    background: var(--color-principal, #8B5A2B);
+    box-shadow: 0 4px 20px rgba(139, 90, 43, 0.35);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.menu-toggle-categorias:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 28px rgba(139, 90, 43, 0.45);
+}
+
+.toggle-arrow {
+    width: 18px;
+    height: 18px;
+    border-right: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+    transform: rotate(-45deg) translate(-2px, -2px);
+    transition: transform 0.3s ease;
+}
+
+.toggle-arrow.open {
+    transform: rotate(135deg) translate(-2px, -2px);
+}
+
+/* ===== OVERLAY ===== */
+.menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(26, 18, 11, 0.4);
+    backdrop-filter: blur(2px);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+}
+
+.menu-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+    .productos-layout {
+        gap: 24px;
+        padding: 130px 24px 40px;
+    }
+}
+
+@media (max-width: 992px) {
+    .productos-layout {
+        gap: 20px;
+        padding: 120px 20px 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .productos-layout {
+        flex-direction: column;
+        padding: 110px 16px 32px;
+        gap: 0;
+    }
+
+    .menu-toggle-categorias {
+        display: flex;
+    }
+
+    .menu-overlay {
+        display: block;
+    }
+
+    /* menu-categorias se controla desde su propio CSS con .visible */
+}
+
+@media (max-width: 480px) {
+    .productos-layout {
+        padding: 100px 12px 24px;
+    }
+}

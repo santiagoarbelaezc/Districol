@@ -1,1 +1,18 @@
-<p>productos works!</p>
+<app-navbar></app-navbar>
+
+<div class="productos-layout">
+    <app-menu-categorias #menuCategorias [class.visible]="menuVisible"
+        (subcategoriaSeleccionada)="onSubcategoriaSeleccionada($event)">
+    </app-menu-categorias>
+    <app-productos-list #productosList></app-productos-list>
+</div>
+
+<!-- Flecha desplegable para móvil -->
+<button class="menu-toggle-categorias" (click)="toggleMenu()">
+    <div class="toggle-arrow" [class.open]="menuVisible"></div>
+</button>
+
+<!-- Overlay para cerrar menú tocando fuera -->
+<div class="menu-overlay" [class.visible]="menuVisible" (click)="closeMenu()"></div>
+
+<app-footer></app-footer>

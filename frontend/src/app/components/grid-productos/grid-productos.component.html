@@ -1,1 +1,22 @@
-<p>grid-productos works!</p>
+<section class="grid-interes-section" *ngIf="productos.length > 0">
+    <div class="grid-header">
+        <h2 class="grid-titulo">También te puede interesar</h2>
+        <p class="grid-subtitulo">Descubre otros productos para complementar tu descanso</p>
+    </div>
+
+    <div class="grid-container">
+        <div class="grid-card" *ngFor="let producto of productos" (click)="verProducto(producto)">
+            <div class="grid-card-image-wrapper">
+                <img [src]="producto.imagen" [alt]="producto.nombre" class="grid-card-image" />
+                <div class="grid-card-overlay">
+                    <span class="ver-detalle">Ver detalle</span>
+                </div>
+            </div>
+            <div class="grid-card-info">
+                <span class="grid-card-categoria">{{ producto.categoria }}</span>
+                <h4 class="grid-card-nombre">{{ producto.nombre }}</h4>
+                <p class="grid-card-precio">{{ formatearPrecio(producto.precio) }}</p>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,157 @@
+<div class="description-producto-container">
+
+    <!-- Estado de carga -->
+    <div *ngIf="cargando" class="loading-container">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Cargando detalles del producto...</p>
+    </div>
+
+    <!-- Estado de error -->
+    <div *ngIf="error && !cargando" class="error-container">
+        <div class="error-icon">⚠️</div>
+        <h2 class="error-title">Producto no encontrado</h2>
+        <p class="error-message">El producto que buscas no existe o no está disponible.</p>
+        <button class="error-button" (click)="volverAProductos()">
+            Volver a productos
+        </button>
+    </div>
+
+    <!-- Detalles del producto -->
+    <div *ngIf="producto && !cargando && !error" class="producto-detalles">
+
+        <!-- Breadcrumb de navegación -->
+        <nav class="breadcrumb">
+            <a routerLink="/productos" class="breadcrumb-link">Productos</a>
+            <span class="breadcrumb-separator">›</span>
+            <span class="breadcrumb-current">{{ nombreCompleto }}</span>
+        </nav>
+
+        <!-- Contenedor principal con estructura de dos columnas -->
+        <div class="producto-layout-container">
+
+            <!-- Columna Izquierda: Imagen -->
+            <div class="producto-columna-izquierda">
+
+                <!-- Contenedor de imagen principal -->
+                <div class="imagen-principal-wrapper">
+                    <div class="producto-imagen-container" (mousemove)="onImageMouseMove($event)"
+                        (mouseleave)="onImageMouseLeave()">
+                        <div class="producto-imagen-wrapper">
+                            <img [src]="imagenPrincipal" [alt]="nombreCompleto" class="producto-imagen"
+                                [style.--zoom-x]="zoomX + '%'" [style.--zoom-y]="zoomY + '%'" />
+                            <div class="imagen-overlay"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Indicadores de imagen -->
+                <div class="indicadores-wrapper" *ngIf="producto && producto.imagenes && producto.imagenes.length > 1">
+                    <div class="imagen-indicadores">
+                        <button *ngFor="let imagen of producto.imagenes; let i = index" class="indicador-imagen"
+                            [class.activo]="imagenSeleccionadaIndex === i" (click)="seleccionarImagen(i)"
+                            [title]="'Ver imagen ' + (i + 1)">
+                            <img [src]="imagen" [alt]="'Imagen ' + (i + 1)" class="thumbnail" />
+                            <span class="numero">{{ i + 1 }}</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Columna Derecha: Información del Producto -->
+            <div class="producto-columna-derecha">
+
+                <!-- Encabezado -->
+                <div class="producto-header">
+                    <div class="producto-categorias">
+                        <span class="categoria-badge" *ngIf="producto.categoria">{{ producto.categoria }}</span>
+                        <span class="subcategoria-badge" *ngIf="producto.subcategoria">{{ producto.subcategoria
+                            }}</span>
+                    </div>
+                    <h1 class="producto-nombre">{{ nombreCompleto }}</h1>
+                </div>
+
+                <!-- Información del producto -->
+                <div class="producto-info-section">
+
+                    <!-- Precio y Cantidad -->
+                    <div class="precio-cantidad-container">
+                        <div class="precio-display">
+                            <span class="precio-label">Precio:</span>
+                            <span class="precio-valor">{{ formatearPrecio(producto.precio) }}</span>
+                        </div>
+                        <div class="cantidad-display" *ngIf="producto.cantidad">
+                            <span class="cantidad-label">Disponibles:</span>
+                            <span class="cantidad-valor">{{ producto.cantidad }} unidades</span>
+                        </div>
+                    </div>
+
+                    <!-- Descripción -->
+                    <div class="descripcion-container">
+                        <h3 class="descripcion-title">Descripción</h3>
+                        <p class="descripcion-text">{{ producto.descripcion || 'Descripción no disponible' }}</p>
+                    </div>
+
+                    <!-- Información adicional -->
+                    <div class="info-adicional">
+                        <div class="info-item">
+                            <div class="info-content">
+                                <span class="info-label">Categoría:</span>
+                                <span class="info-value">{{ producto.categoria || 'Sin categoría' }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Acciones rápidas -->
+                    <div class="acciones-rapidas-container">
+                        <a [href]="generarWhatsAppLink()" target="_blank" rel="noopener noreferrer nofollow"
+                            class="btn-whatsapp" aria-label="Consultar por WhatsApp" title="Consultar por WhatsApp">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                                </path>
+                            </svg>
+                            <span class="btn-text">Consultar por WhatsApp</span>
+                        </a>
+
+                        <button class="btn-compartir" (click)="copiarEnlace()" title="Copiar enlace">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="18" cy="5" r="3"></circle>
+                                <circle cx="6" cy="12" r="3"></circle>
+                                <circle cx="18" cy="19" r="3"></circle>
+                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                            </svg>
+                            <span class="btn-text">Copiar enlace</span>
+                        </button>
+
+                        <div class="mensaje-copiado" *ngIf="enlaceCopiado">
+                            ✓ Enlace copiado
+                        </div>
+                    </div>
+
+                    <!-- Acciones principales -->
+                    <div class="acciones-principales">
+                        <button class="btn-volver" (click)="volverAProductos()" title="Volver al catálogo">
+                            <span class="btn-icon">←</span>
+                            <span class="btn-text">Volver al catálogo</span>
+                        </button>
+
+                        <button class="btn-categoria" (click)="verMasDeEstaCategoria()" *ngIf="producto.categoria"
+                            title="Ver más productos">
+                            <span class="btn-icon">→</span>
+                            <span class="btn-text">Más productos</span>
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

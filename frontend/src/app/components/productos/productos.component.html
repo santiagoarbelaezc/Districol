@@ -1,0 +1,135 @@
+<section id="productos-seccion">
+    <!-- Encabezado elegante con manejo de búsqueda -->
+    <div class="section-header">
+        <h2 *ngIf="!cargando">
+            <span class="title-text">{{ mensajeResultados }}</span>
+            <span class="product-count" *ngIf="!modoBusqueda && productos.length > 0">({{productos.length}})</span>
+        </h2>
+
+        <!-- Controles de búsqueda -->
+        <div class="search-controls" *ngIf="modoBusqueda && terminoBusqueda">
+            <div class="search-info">
+                <span class="search-term">Buscaste: "{{ terminoBusqueda }}"</span>
+                <button class="clear-search-btn" (click)="limpiarBusqueda()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                    Limpiar búsqueda
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estados de carga -->
+    <div *ngIf="cargando" class="loading-state">
+        <div class="loading-animation">
+            <div class="loading-dot"></div>
+            <div class="loading-dot"></div>
+            <div class="loading-dot"></div>
+        </div>
+        <p class="loading-text">
+            {{ modoBusqueda ? 'Buscando productos...' : 'Cargando productos...' }}
+        </p>
+    </div>
+
+    <!-- Estado sin resultados de búsqueda -->
+    <div *ngIf="!cargando && modoBusqueda && productos.length === 0" class="no-results-state">
+        <div class="no-results-icon">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="11" cy="11" r="7" stroke="#999" stroke-width="1.5" />
+                <line x1="16.5" y1="16.5" x2="20" y2="20" stroke="#999" stroke-width="1.5" />
+                <line x1="8" y1="7" x2="14" y2="13" stroke="#ff6b6b" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+        </div>
+        <h3 class="no-results-title">No se encontraron productos</h3>
+        <p class="no-results-text">
+            No encontramos productos que coincidan con "{{ terminoBusqueda }}"
+        </p>
+        <div class="no-results-suggestions">
+            <p class="suggestions-title">Sugerencias:</p>
+            <ul class="suggestions-list">
+                <li>Verifica la ortografía de tu búsqueda</li>
+                <li>Utiliza términos más generales</li>
+                <li>Intenta con sinónimos o palabras relacionadas</li>
+            </ul>
+            <button class="explore-all-btn" (click)="limpiarBusqueda()">
+                Explorar todos los productos
+            </button>
+        </div>
+    </div>
+
+    <!-- Estado sin productos (sin búsqueda) -->
+    <div *ngIf="!cargando && !modoBusqueda && productos.length === 0" class="empty-state">
+        <div class="empty-icon">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+        </div>
+        <p class="empty-text">No hay productos disponibles</p>
+        <p class="empty-subtext">Intenta más tarde</p>
+    </div>
+
+    <!-- Grid de productos -->
+    <div class="products-grid-container" [class.productos-cambiando]="cargando" *ngIf="productos.length && !cargando">
+
+        <div class="products-grid">
+            <div class="product-card-wrapper" *ngFor="let producto of productos; let i = index">
+
+                <!-- Tarjeta de producto -->
+                <div class="product-card-container" (click)="verDetalles(producto)" tabindex="0" role="button">
+
+                    <!-- Contenedor superior: Imagen -->
+                    <div class="product-image-section">
+                        <div class="product-image-wrapper">
+                            <div class="product-image-container">
+                                <img *ngIf="getProductoImagen(producto)" [src]="getProductoImagen(producto)"
+                                    [alt]="producto.nombre" class="product-image" (error)="handleImageError($event)">
+                                <div class="image-overlay"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contenedor medio: Información -->
+                    <div class="product-info-section">
+
+                        <!-- Contenedor de texto -->
+                        <div class="product-text-container">
+                            <div class="product-title-wrapper">
+                                <h3 class="product-title">{{producto.nombre}}</h3>
+                                <div class="product-subtitle" *ngIf="producto.categoria || producto.subcategoria">
+                                    {{ producto.categoria || producto.subcategoria || 'Productos' }}
+                                </div>
+                            </div>
+
+                            <div class="product-description-container">
+                                <p class="product-description">
+                                    {{producto.descripcion || 'Descripción no disponible'}}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Contenedor de detalles - Solo precio -->
+                        <div class="product-details-container">
+                            <div class="product-price-section">
+                                <div class="price-display">
+                                    <span class="price-label">Precio:</span>
+                                    <span class="price-value">{{formatearPrecio(producto.precio)}}</span>
+                                </div>
+                                <div class="stock-indicator" [class.available]="producto.cantidad > 0"
+                                    [class.unavailable]="producto.cantidad === 0">
+                                    {{ producto.cantidad > 0 ? 'Disponible' : 'Agotado' }}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

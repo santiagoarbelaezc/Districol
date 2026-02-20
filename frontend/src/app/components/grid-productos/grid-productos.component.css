@@ -1,0 +1,161 @@
+/* ===== GRID PRODUCTOS DE INTERES ===== */
+
+.grid-interes-section {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px 40px 64px;
+}
+
+/* Header */
+.grid-header {
+    text-align: center;
+    margin-bottom: 36px;
+}
+
+.grid-titulo {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--color-negro, #1A120B);
+    margin: 0 0 8px;
+}
+
+.grid-subtitulo {
+    font-size: 0.85rem;
+    color: var(--color-complementario-5, #4A3C31);
+    margin: 0;
+    font-weight: 400;
+}
+
+/* Grid */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+/* Cards */
+.grid-card {
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--color-surface, #FFFFFF);
+    border: 1px solid rgba(139, 90, 43, 0.06);
+    box-shadow: 0 2px 12px rgba(26, 18, 11, 0.04);
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.grid-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(26, 18, 11, 0.1);
+    border-color: rgba(139, 90, 43, 0.12);
+}
+
+.grid-card-image-wrapper {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    position: relative;
+}
+
+.grid-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.grid-card:hover .grid-card-image {
+    transform: scale(1.06);
+}
+
+.grid-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(26, 18, 11, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.grid-card:hover .grid-card-overlay {
+    opacity: 1;
+}
+
+.ver-detalle {
+    color: #fff;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 8px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+}
+
+.ver-detalle:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #fff;
+}
+
+.grid-card-info {
+    padding: 16px 18px;
+}
+
+.grid-card-categoria {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-principal, #8B5A2B);
+    display: block;
+    margin-bottom: 6px;
+}
+
+.grid-card-nombre {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--color-negro, #1A120B);
+    margin: 0 0 6px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.grid-card-precio {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--color-principal, #8B5A2B);
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .grid-interes-section {
+        padding: 32px 16px 48px;
+    }
+
+    .grid-container {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .grid-titulo {
+        font-size: 1.3rem;
+    }
+}

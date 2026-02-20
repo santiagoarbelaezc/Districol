@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
 import { HeaderComponent } from '../../components/header/header.component';
 import { AlmohadaVideoComponent } from '../../components/almohada-video/almohada-video.component';
@@ -6,6 +6,7 @@ import { CarruselColchonesComponent } from '../../components/carrusel-home/carru
 import { CarruselAlmohadasComponent } from '../../components/carrusel-home/carrusel-almohadas/carrusel-almohadas.component';
 import { CardHomeComponent } from '../../components/card-home/card-home.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
+import { AosService } from '../../services/aos.service';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,11 @@ import { FooterComponent } from '../../shared/footer/footer.component';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
+  constructor(private aosService: AosService) { }
+
+  ngOnInit(): void {
+    this.aosService.init();
+  }
 }

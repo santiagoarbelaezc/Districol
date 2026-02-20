@@ -1,13 +1,10 @@
-:host {
-  display: block;
-  margin-top: 40px;
-}
+.nosotros-root { background-color: #0a0a0a; color: var(--color-blanco); }
 
 /* ===== HIGHLIGHTS SECTION ===== */
 .highlights-section {
   background-color: #0a0a0a;
   padding: 110px 40px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
 }
 
 .highlights-container {
@@ -23,7 +20,7 @@
   padding: 40px 25px;
   background: #151515;
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.02);
   transition: all 0.4s ease;
 }
 
@@ -89,7 +86,7 @@
   padding: 50px 35px;
   background: rgba(255, 255, 255, 0.02);
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.02);
   transition: all 0.4s ease;
   position: relative;
   overflow: hidden;

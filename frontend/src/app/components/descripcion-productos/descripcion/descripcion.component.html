@@ -1,1 +1,35 @@
-<p>descripcion works!</p>
+<section class="carrusel-category-section" *ngIf="productos.length > 0">
+    <div class="carrusel-header">
+        <div class="carrusel-titles">
+            <h2 class="carrusel-titulo">{{ titulo }}</h2>
+            <p class="carrusel-subtitulo" *ngIf="subtitulo">{{ subtitulo }}</p>
+        </div>
+        <div class="carrusel-controles">
+            <button class="carrusel-nav-btn prev" (click)="scrollCarousel('prev')" aria-label="Anterior">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 18l-6-6 6-6" />
+                </svg>
+            </button>
+            <button class="carrusel-nav-btn next" (click)="scrollCarousel('next')" aria-label="Siguiente">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18l6-6-6-6" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="carrusel-track" [id]="'cat-carousel-' + categoriaId">
+        <div class="carrusel-card" *ngFor="let producto of productos" (click)="verProducto(producto)">
+            <div class="card-image-wrapper">
+                <img [src]="producto.imagen" [alt]="producto.nombre" class="card-image" />
+                <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-info">
+                <h4 class="card-nombre">{{ producto.nombre }}</h4>
+                <p class="card-precio">{{ formatearPrecio(producto.precio) }}</p>
+            </div>
+        </div>
+    </div>
+</section>

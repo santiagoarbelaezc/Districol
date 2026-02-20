@@ -1,47 +1,118 @@
-<nav class="navbar">
+<nav class="navbar" [class.scrolled]="scrolled">
   <div class="container d-flex justify-between items-center">
     <!-- Logo -->
     <div class="navbar-logo">
-      <img src="assets/img/logo.png" alt="Districol Logo" class="logo-img">
+      <a href="/" (click)="onLogoClick($event)">
+        <img src="assets/img/logo.png" alt="Districol Logo" class="logo-img">
+      </a>
     </div>
 
-    <!-- Menú principal -->
-    <ul class="navbar-menu d-flex">
-      <li><a href="/" class="navbar-link">Inicio</a></li>
-      <li><a href="/productos" class="navbar-link">Colchones</a></li>
-      <li><a href="/nosotros" class="navbar-link">Nosotros</a></li>
-      <li><a href="/contacto" class="navbar-link">Contacto</a></li>
+    <!-- Menú principal (desktop) -->
+    <ul class="navbar-menu d-flex" [class.abierto]="menuAbierto">
+      <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+          (click)="navigateAndClose()" class="navbar-link">Inicio</a></li>
+      <li><a routerLink="/productos" routerLinkActive="active" (click)="navigateAndClose()"
+          class="navbar-link">Colchones</a></li>
+      <li><a routerLink="/nosotros" routerLinkActive="active" (click)="navigateAndClose()"
+          class="navbar-link">Nosotros</a></li>
+      <li><a routerLink="/contacto" routerLinkActive="active" (click)="navigateAndClose()"
+          class="navbar-link">Contacto</a></li>
     </ul>
 
-    <!-- Acciones -->
+    <!-- Acciones: buscador + login + hamburguesa -->
     <div class="navbar-actions d-flex items-center">
-      <input type="text" placeholder="Busca colchones a tu medida" class="search-input">
-      <a href="/login" class="btn btn-outline" aria-label="Iniciar Sesión">
+
+      <!-- Contenedor de búsqueda -->
+      <div class="search-container" [class.expandido]="searchExpanded">
+        <form (submit)="onSearchSubmit($event)" class="search-wrapper">
+          <div class="search-input-wrapper">
+            <input #searchInput type="text" class="search-input" placeholder="Busca colchones, almohadas..."
+              [(ngModel)]="searchQuery" (input)="onSearchInput($event)" (focus)="onSearchFocus()"
+              (blur)="onSearchBlur()" name="searchQuery" [class.has-text]="searchQuery" autocomplete="off">
+
+            <!-- Botón limpiar -->
+            <button *ngIf="searchQuery" type="button" class="clear-btn" (click)="clearSearch()"
+              aria-label="Limpiar búsqueda">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </button>
+
+            <!-- Botón buscar -->
+            <button type="submit" class="search-btn" aria-label="Buscar">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path
+                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.442.656a5 5 0 1 1 0-10 5 5 0 0 1 0 10z" />
+              </svg>
+            </button>
+          </div>
+        </form>
+
+        <!-- Sugerencias dropdown -->
+        <div class="suggestions-container" *ngIf="showSuggestions && filteredSuggestions.length > 0">
+          <div class="suggestions-header">
+            <span class="suggestions-title">Recomendaciones</span>
+          </div>
+          <div class="suggestions-list">
+            <div *ngFor="let suggestion of filteredSuggestions" class="suggestion-item"
+              (click)="selectSuggestion(suggestion)" (mousedown)="$event.preventDefault()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"
+                class="suggestion-icon">
+                <path
+                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.442.656a5 5 0 1 1 0-10 5 5 0 0 1 0 10z" />
+              </svg>
+              <span class="suggestion-text">{{ suggestion }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón búsqueda (mobile) -->
+      <button class="search-toggle-btn" (click)="toggleSearch()" aria-label="Buscar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+          <path
+            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.442.656a5 5 0 1 1 0-10 5 5 0 0 1 0 10z" />
+        </svg>
+      </button>
+
+      <!-- Login -->
+      <a routerLink="/login" class="btn btn-outline" aria-label="Iniciar Sesión" (click)="navigateAndClose()">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-          <path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+          <path
+            d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
         </svg>
       </a>
+
+      <!-- Hamburguesa (mobile) -->
+      <button class="hamburger-btn" (click)="toggleMenu()" aria-label="Menú" [class.abierto]="menuAbierto">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
     </div>
   </div>
 </nav>
 
+<!-- Overlay para cerrar menú -->
+<div class="menu-overlay" [class.active]="menuAbierto" (click)="closeMenu()"></div>
+
 <!-- Barra de información -->
-<div class="info-bar">
+<div class="info-bar" [class.scrolled]="scrolled">
   <div class="info-content">
-    <a href="/productos" class="info-item">
+    <a routerLink="/productos" class="info-item">
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
-        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+        <path
+          d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
       </svg>
       <span class="info-text">Colchones importados</span>
-      <span class="info-desc">& de alta gama</span>
+      <span class="info-desc">&amp; de alta gama</span>
     </a>
 
-    <a href="https://www.google.com/maps/dir/?api=1&destination=Cra.19+%23+19-35+Armenia+Quindio"
-       target="_blank"
-       rel="noopener noreferrer"
-       class="info-item">
+    <a href="https://www.google.com/maps/dir/?api=1&destination=Cra.19+%23+19-35+Armenia+Quindio" target="_blank"
+      rel="noopener noreferrer" class="info-item">
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
-        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
       </svg>
       <span class="info-text">Centro de experiencia</span>
       <span class="info-desc">en Armenia</span>
@@ -49,8 +120,8 @@
 
     <div class="info-item highlight">
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
-        <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5V5.6z"/>
-        <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64l.456-.328a.5.5 0 1 1 .576.788l-.408.293c.182.27.354.567.516.875l.548-.328a.5.5 0 1 1 .548.838l-.293.176c.437.696.645 1.47.645 2.294 0 2.697-2.261 4.891-5 4.891-2.739 0-5-2.194-5-4.891 0-1.516.709-2.898 1.839-3.663.205-.149.323-.382.323-.627a.5.5 0 0 1 .5-.5c.223 0 .434.053.63.146a4.393 4.393 0 0 1 1.71-.614V1.5a.5.5 0 0 1 .5-.5zM5 6.5c0 .763.192 1.468.5 2.044V6.5a.5.5 0 0 1 1 0v2.044c.308-.576.5-1.281.5-2.044a.5.5 0 0 1 1 0c0 .763.192 1.468.5 2.044V6.5a.5.5 0 0 1 1 0v2.044c.308-.576.5-1.281.5-2.044 0-2.137-1.128-3.848-2.5-4.356v2.115a.5.5 0 0 1-1 0V2.144C6.128 2.652 5 4.363 5 6.5z"/>
+        <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
+        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
       </svg>
       <span class="info-text">Agenda tu visita</span>
       <span class="info-desc">duerme diferente</span>

@@ -1,0 +1,7 @@
+/* ===== ROOT ===== */
+.contacto-root {
+    background: #0a0a0a;
+    min-height: 100vh;
+    color: var(--color-blanco);
+    margin-top: 110px;
+}

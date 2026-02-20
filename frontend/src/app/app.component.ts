@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AosService } from './services/aos.service';
+import { ScrollService } from './services/scroll.service';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +13,13 @@ import { AosService } from './services/aos.service';
 export class AppComponent implements OnInit {
   title = 'frontend';
 
-  constructor(private aosService: AosService) { }
+  constructor(
+    private aosService: AosService,
+    private scrollService: ScrollService
+  ) { }
 
   ngOnInit(): void {
     this.aosService.init();
+    this.scrollService.init();
   }
 }
