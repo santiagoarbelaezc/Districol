@@ -1,6 +1,6 @@
-/* ===== SECCIÓN TIMELINE ===== */
+﻿/* ===== SECCIÓN TIMELINE ===== */
 .timeline-section {
-  background-color: #0a0a0a;
+  background-color: #002530;
   padding: 100px 40px;
   font-family: var(--fuente-principal);
 }
@@ -55,9 +55,9 @@
   height: 100%;
   background: linear-gradient(to bottom,
       transparent,
-      rgba(139, 90, 43, 0.3) 10%,
-      rgba(139, 90, 43, 0.5) 50%,
-      rgba(139, 90, 43, 0.3) 90%,
+      rgba(0, 59, 74, 0.3) 10%,
+      rgba(0, 59, 74, 0.5) 50%,
+      rgba(0, 59, 74, 0.3) 90%,
       transparent);
 }
 
@@ -97,7 +97,7 @@
   top: 30px;
   width: 20px;
   height: 2px;
-  background: rgba(139, 90, 43, 0.5);
+  background: rgba(0, 59, 74, 0.5);
 }
 
 .timeline-item:not(.reverse) .timeline-content::before {
@@ -111,7 +111,7 @@
 .timeline-content:hover {
   transform: translateY(-5px);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-  border-color: rgba(139, 90, 43, 0.3);
+  border-color: rgba(0, 59, 74, 0.3);
 }
 
 /* ===== AÑO ===== */
@@ -123,7 +123,7 @@
   letter-spacing: 2px;
   margin-bottom: 15px;
   padding: 6px 14px;
-  background: rgba(139, 90, 43, 0.15);
+  background: rgba(0, 59, 74, 0.15);
   border-radius: 20px;
 }
 
@@ -153,7 +153,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #0a0a0a;
+  background: #002530;
   border: 2px solid var(--color-principal);
   display: flex;
   align-items: center;

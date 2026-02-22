@@ -1,4 +1,4 @@
-/* ===== SECCIÓN CARD ===== */
+﻿/* ===== SECCIÓN CARD ===== */
 .card-section {
   width: 100%;
   padding: 80px 60px;
@@ -7,7 +7,7 @@
 
 /* ===== TEMAS ===== */
 .theme-dark {
-  background-color: #0a0a0a;
+  background-color: #002530;
 }
 
 .theme-light {
@@ -42,7 +42,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(139, 90, 43, 0.1) 0%, transparent 50%);
+  background: linear-gradient(135deg, rgba(0, 59, 74, 0.1) 0%, transparent 50%);
   z-index: 1;
   pointer-events: none;
   opacity: 0;

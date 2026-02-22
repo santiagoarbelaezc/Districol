@@ -1,21 +1,34 @@
 :root {
-  --color-principal: #8B5A2B;       /* Café medio cálido */
-  --color-secundario: #A6714B;      /* Café claro */
-  --color-negro: #1A120B;           /* Casi negro con tinte café */
-  --color-blanco: #FDF8F2;          /* Blanco roto (hueso) */
+  --color-principal: #003B4A;
+  /* Teal oscuro - color primario */
+  --color-secundario: #A4AE9D;
+  /* Verde salvia - color secundario */
+  --color-negro: #003B4A;
+  /* Teal oscuro para textos */
+  --color-blanco: #F6F4F2;
+  /* Blanco cálido */
 
-  --color-complementario-1: #5C3B1E; /* Café muy oscuro (chocolate) */
-  --color-complementario-2: #C69C6D; /* Café claro arenoso */
-  --color-complementario-3: #B87C4B; /* Canela */
-  --color-complementario-4: #7B5E3F; /* Café verdoso/oliva */
-  --color-complementario-5: #4A3C31; /* Gris café oscuro */
-  --color-complementario-6: #D9B382; /* Crema café */
+  --color-complementario-1: #002530;
+  /* Teal muy oscuro */
+  --color-complementario-2: #B8C1B3;
+  /* Verde salvia claro */
+  --color-complementario-3: #7A8A76;
+  /* Verde oliva medio */
+  --color-complementario-4: #4D6A5E;
+  /* Verde bosque */
+  --color-complementario-5: #3A5A52;
+  /* Teal medio para textos secundarios */
+  --color-complementario-6: #C8CFC4;
+  /* Salvia muy suave para bordes */
 
   --color-whatsapp: #25D366;
   --color-facebook: #1877F2;
   --color-instagram: #E1306C;
-  --color-background: rgba(253, 248, 242, 0.95); /* Blanco roto con transparencia */
-  --color-shadow: rgba(60, 40, 20, 0.15);        /* Sombra café */
-  --color-text: #2C1E12;             /* Texto café oscuro */
+  --color-background: rgba(246, 244, 242, 0.95);
+  /* Blanco cálido con transparencia */
+  --color-shadow: rgba(0, 59, 74, 0.12);
+  /* Sombra teal */
+  --color-text: #1C3D47;
+  /* Texto oscuro teal */
   --transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
 }

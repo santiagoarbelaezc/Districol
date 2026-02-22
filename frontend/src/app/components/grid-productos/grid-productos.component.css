@@ -1,4 +1,4 @@
-/* ===== GRID PRODUCTOS DE INTERES ===== */
+﻿/* ===== GRID PRODUCTOS DE INTERES ===== */
 
 .grid-interes-section {
     max-width: 1280px;
@@ -13,16 +13,16 @@
 }
 
 .grid-titulo {
-    font-family: 'Inter Tight', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 1.6rem;
     font-weight: 700;
-    color: var(--color-negro, #1A120B);
+    color: var(--color-negro, #003B4A);
     margin: 0 0 8px;
 }
 
 .grid-subtitulo {
     font-size: 0.85rem;
-    color: var(--color-complementario-5, #4A3C31);
+    color: var(--color-complementario-5, #3A5A52);
     margin: 0;
     font-weight: 400;
 }
@@ -39,16 +39,16 @@
     border-radius: 14px;
     overflow: hidden;
     background: var(--color-surface, #FFFFFF);
-    border: 1px solid rgba(139, 90, 43, 0.06);
-    box-shadow: 0 2px 12px rgba(26, 18, 11, 0.04);
+    border: 1px solid rgba(0, 59, 74, 0.06);
+    box-shadow: 0 2px 12px rgba(0, 59, 74, 0.04);
     cursor: pointer;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .grid-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 12px 32px rgba(26, 18, 11, 0.1);
-    border-color: rgba(139, 90, 43, 0.12);
+    box-shadow: 0 12px 32px rgba(0, 59, 74, 0.1);
+    border-color: rgba(0, 59, 74, 0.12);
 }
 
 .grid-card-image-wrapper {
@@ -71,7 +71,7 @@
 .grid-card-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(26, 18, 11, 0.4);
+    background: rgba(0, 59, 74, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -85,7 +85,7 @@
 
 .ver-detalle {
     color: #fff;
-    font-family: 'Inter Tight', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 0.82rem;
     font-weight: 600;
     padding: 8px 20px;
@@ -111,16 +111,16 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--color-principal, #8B5A2B);
+    color: var(--color-principal, #003B4A);
     display: block;
     margin-bottom: 6px;
 }
 
 .grid-card-nombre {
-    font-family: 'Inter Tight', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 0.92rem;
     font-weight: 700;
-    color: var(--color-negro, #1A120B);
+    color: var(--color-negro, #003B4A);
     margin: 0 0 6px;
     line-height: 1.3;
     display: -webkit-box;
@@ -131,10 +131,10 @@
 }
 
 .grid-card-precio {
-    font-family: 'Inter Tight', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 1rem;
     font-weight: 800;
-    color: var(--color-principal, #8B5A2B);
+    color: var(--color-principal, #003B4A);
     margin: 0;
 }
 

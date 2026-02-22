@@ -1,8 +1,8 @@
-/* ===== PRODUCTOS PAGE LAYOUT ===== */
+﻿/* ===== PRODUCTOS PAGE LAYOUT ===== */
 
 :host {
     display: block;
-    background: var(--color-blanco, #FDF8F2);
+    background: var(--color-blanco, #F6F4F2);
     min-height: 100vh;
 }
 
@@ -27,8 +27,8 @@
     height: 52px;
     border-radius: 50%;
     border: none;
-    background: var(--color-principal, #8B5A2B);
-    box-shadow: 0 4px 20px rgba(139, 90, 43, 0.35);
+    background: var(--color-principal, #003B4A);
+    box-shadow: 0 4px 20px rgba(0, 59, 74, 0.35);
     cursor: pointer;
     align-items: center;
     justify-content: center;
@@ -37,7 +37,7 @@
 
 .menu-toggle-categorias:hover {
     transform: scale(1.08);
-    box-shadow: 0 6px 28px rgba(139, 90, 43, 0.45);
+    box-shadow: 0 6px 28px rgba(0, 59, 74, 0.45);
 }
 
 .toggle-arrow {
@@ -61,7 +61,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(26, 18, 11, 0.4);
+    background: rgba(0, 59, 74, 0.4);
     backdrop-filter: blur(2px);
     z-index: 999;
     opacity: 0;

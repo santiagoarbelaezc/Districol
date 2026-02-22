@@ -1,4 +1,4 @@
-.video-banner {
+﻿.video-banner {
   position: relative;
   width: 100%;
   padding: 40px 0;
@@ -33,7 +33,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(26, 18, 11, 0.4) 100%);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 59, 74, 0.4) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,7 +67,7 @@
   opacity: 0;
   transform: translateY(40px);
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
-  filter: drop-shadow(0 8px 40px rgba(139, 90, 43, 0.6));
+  filter: drop-shadow(0 8px 40px rgba(0, 59, 74, 0.6));
   display: block;
 }
 
@@ -148,10 +148,10 @@
 }
 
 .play-button:hover {
-  background: rgba(139, 90, 43, 0.8);
+  background: rgba(0, 59, 74, 0.8);
   border-color: var(--color-blanco);
   transform: scale(1.1);
-  box-shadow: 0 4px 20px rgba(139, 90, 43, 0.5);
+  box-shadow: 0 4px 20px rgba(0, 59, 74, 0.5);
 }
 
 .play-button svg {

@@ -1,25 +1,25 @@
 /* Districol - Luxury Mattress E-commerce Styles */
 
 /* Font Imports */
-@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Comfortaa:wght@300;400;500;600;700&display=swap');
 @import './app/themes/colors.css';
 
 :root {
-  /* Coffee Palette */
-  --color-primary: var(--color-negro);     /* Casi negro con tinte café */
-  --color-secondary: var(--color-principal);   /* Café medio cálido */
-  --color-accent: var(--color-secundario);      /* Café claro */
-  --color-background: var(--color-blanco);  /* Blanco roto (hueso) */
-  --color-surface: #FFFFFF;     /* Pure White */
-  --color-text: var(--color-text);        /* Texto café oscuro */
-  --color-text-light: var(--color-complementario-5);  /* Gris café oscuro */
-  --color-border: var(--color-complementario-6); /* Crema café */
+  /* Palette */
+  --color-primary: var(--color-negro);
+  --color-secondary: var(--color-principal);
+  --color-accent: var(--color-secundario);
+  --color-background: var(--color-blanco);
+  --color-surface: #FFFFFF;
+  --color-text: var(--color-text);
+  --color-text-light: var(--color-complementario-5);
+  --color-border: var(--color-complementario-6);
 
   /* Shadows */
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
-  --shadow-gold: 0 4px 20px rgba(92, 59, 30, 0.2); /* Adjusted to coffee color */
+  --shadow-gold: 0 4px 20px rgba(0, 59, 74, 0.2);
 
   /* Transitions */
   --transition-fast: 0.2s ease;
@@ -34,15 +34,20 @@
 }
 
 body {
-  font-family: 'Inter Tight';
+  font-family: 'Comfortaa', 'Montserrat', sans-serif;
   background-color: var(--color-background);
   color: var(--color-text);
   line-height: 1.6;
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Inter Tight';
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Montserrat', sans-serif;
   color: var(--color-primary);
   font-weight: 700;
   margin-bottom: 1rem;
@@ -70,12 +75,29 @@ img {
   padding: 0 20px;
 }
 
-.text-gold { color: var(--color-secondary); }
-.bg-gold { background-color: var(--color-secondary); }
-.text-center { text-align: center; }
-.d-flex { display: flex; }
-.justify-between { justify-content: space-between; }
-.items-center { align-items: center; }
+.text-gold {
+  color: var(--color-secondary);
+}
+
+.bg-gold {
+  background-color: var(--color-secondary);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.items-center {
+  align-items: center;
+}
 
 /* Buttons */
 .btn {
@@ -83,7 +105,7 @@ img {
   padding: 12px 32px;
   border: 1px solid transparent;
   cursor: pointer;
-  font-family: 'Inter Tight';
+  font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -138,7 +160,7 @@ img {
 .section-subtitle {
   text-align: center;
   color: var(--color-secondary);
-  font-family: 'Inter Tight';
+  font-family: 'Montserrat', sans-serif;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-size: 0.9rem;
