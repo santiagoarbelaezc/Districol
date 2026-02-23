@@ -20,6 +20,7 @@ export class VideoBannerComponent implements AfterViewInit, OnDestroy {
   private hideTimeout: any;
   private videoPlayAttempted = false;
   private timeUpdateListener: any;
+  private intersectionObserver: IntersectionObserver | undefined;
 
   @ViewChild('heroVideo', { static: true }) heroVideo!: ElementRef<HTMLVideoElement>;
 
@@ -31,19 +32,26 @@ export class VideoBannerComponent implements AfterViewInit, OnDestroy {
     this.showOverlay = false;
     this.cdr.detectChanges();
 
+    // Intersection Observer to pause/play based on visibility
+    this.intersectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {
+            // Might fail due to autoplay policy if user hasn't interacted
+            this.showOverlay = true;
+            this.cdr.detectChanges();
+          });
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.2 }); // Trigger when at least 20% is visible
+
+    this.intersectionObserver.observe(video);
+
     if (!this.videoPlayAttempted) {
       this.videoPlayAttempted = true;
-
-      video.play()
-        .then(() => {
-          console.log('Video reproduciéndose correctamente');
-          this.scheduleOverlay();
-        })
-        .catch((error) => {
-          console.log('Autoplay bloqueado:', error);
-          this.showOverlay = true;
-          this.cdr.detectChanges();
-        });
+      // Initial play attempt handled by observer usually, but keeping logic for robustness
     }
 
     video.addEventListener('playing', () => {
@@ -105,14 +113,7 @@ export class VideoBannerComponent implements AfterViewInit, OnDestroy {
   }
 
   onVideoLoaded() {
-    const video = this.heroVideo.nativeElement;
-    video.play().then(() => {
-      this.isPlaying = true;
-      this.cdr.detectChanges();
-    }).catch(() => {
-      this.isPlaying = false;
-      this.cdr.detectChanges();
-    });
+    // Logic now primarily handled by the observer
   }
 
   playVideo() {
@@ -132,6 +133,9 @@ export class VideoBannerComponent implements AfterViewInit, OnDestroy {
     const video = this.heroVideo?.nativeElement;
     if (video && this.timeUpdateListener) {
       video.removeEventListener('timeupdate', this.timeUpdateListener);
+    }
+    if (this.intersectionObserver) {
+      this.intersectionObserver.disconnect();
     }
   }
 

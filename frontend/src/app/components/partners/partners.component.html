@@ -1,1 +1,16 @@
-<p>partners works!</p>
+<section class="partners-section" data-aos="fade-up">
+    <div class="partners-container">
+        <div class="partners-header">
+            <h2 class="partners-titulo">Nuestros Aliados</h2>
+            <div class="partners-linea"></div>
+        </div>
+
+        <div class="partners-grid">
+            <div class="partner-card" *ngFor="let aliado of aliados" data-aos="zoom-in" data-aos-delay="100">
+                <div class="partner-logo-wrapper">
+                    <img [src]="aliado.logo" [alt]="aliado.nombre" class="partner-logo">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

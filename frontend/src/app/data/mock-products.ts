@@ -2,9 +2,14 @@ import { ProductoCarrusel } from '../components/carrusel-home/carrusel-home.comp
 
 export const PRODUCTOS_COLCHONES: ProductoCarrusel[] = [
   {
-    imagen: 'assets/img/alcoba1.jpg',
-    nombre: 'Colchón Intelli Sleep',
-    descripcion: 'Tejido de punto de alta calidad con acolchado de poliéster para una frescura natural. Sistema pocket de 5 zonas que se adapta a cada movimiento.'
+    imagen: 'assets/img/colchon1.png',
+    nombre: 'Colchón Ágata Premium',
+    descripcion: 'Colección exclusiva con espuma viscoelástica de última generación. Adaptación perfecta a la anatomía corporal.'
+  },
+  {
+    imagen: 'assets/img/espumas-med.jpg',
+    nombre: 'Colchón Espumas Medellín Café',
+    descripcion: 'Elegancia y firmeza en color café. Un colchón diseñado para durar y brindar el mejor soporte.'
   },
   {
     imagen: 'assets/img/alcoba2.jpg',
@@ -12,9 +17,19 @@ export const PRODUCTOS_COLCHONES: ProductoCarrusel[] = [
     descripcion: 'Espuma troquelada de alta densidad que se adapta a tu forma. Espuma látex con fibras de bambú para un descanso premium.'
   },
   {
+    imagen: 'assets/img/colchon-espumas-santafe.jpg',
+    nombre: 'Colchón Santa Fe Rosa',
+    descripcion: 'Inspiración y suavidad en cada capa. El equilibrio perfecto entre estilo y descanso.'
+  },
+  {
     imagen: 'assets/img/alcoba3.jpg',
     nombre: 'Colchón Tech Confort',
     descripcion: 'Tecnología avanzada con espuma dura de alta densidad y sistema pocket con foam case. Relleno de algodón natural para máximo confort.'
+  },
+  {
+    imagen: 'assets/img/espumas-med2.jpg',
+    nombre: 'Colchón Espumas Medellín Gris',
+    descripcion: 'Diseño sobrio y moderno en color gris con tecnología de punta para noches de confort absoluto.'
   },
   {
     imagen: 'assets/img/alcoba4.jpg',
@@ -22,24 +37,19 @@ export const PRODUCTOS_COLCHONES: ProductoCarrusel[] = [
     descripcion: 'Sistema pocket de 5 zonas con soporte individual. Espuma suave combinada con capas de alta densidad para un equilibrio perfecto.'
   },
   {
-    imagen: 'assets/img/alcoba5.jpg',
-    nombre: 'Colchón Royal Dream',
-    descripcion: 'Diseño exclusivo con múltiples capas de espuma. Tejido premium transpirable y acolchado de 7cm para noches de ensueño.'
+    imagen: 'assets/img/alcoba7.jpg',
+    nombre: 'Colchón Espumas Medellín',
+    descripcion: 'Tradición y soporte de la mano de Espumas Medellín. Calidad garantizada para un descanso profundo.'
   },
   {
-    imagen: 'assets/img/colchon1.png',
-    nombre: 'Colchón Ágata Premium',
-    descripcion: 'Colección exclusiva con espuma viscoelástica de última generación. Adaptación perfecta a la anatomía corporal.'
+    imagen: 'assets/img/alcoba5.jpg',
+    nombre: 'Colchón Royal Dream',
+    descripcion: 'Diseño exclusivo con múltiples capas de espuma. Tejido premium transpirable and acolchado de 7cm para noches de ensueño.'
   },
   {
     imagen: 'assets/img/colchon2.png',
     nombre: 'Colchón Essence',
     descripcion: 'Capas de confort superior con núcleo de alta resistencia. Sistema de ventilación integrado para noches frescas.'
-  },
-  {
-    imagen: 'assets/img/colchon3.png',
-    nombre: 'Colchón Cloud Nine',
-    descripcion: 'Sensación de flotar en las nubes con su sistema de micro resortes independientes. Terminaciones de lujo en cada detalle.'
   }
 ];
 
@@ -96,6 +106,16 @@ export const PRODUCTOS_COMPLEMENTOS: ProductoCarrusel[] = [
     imagen: 'assets/img/colchon-districol.jpeg',
     nombre: 'Set Completo Districol',
     descripcion: 'Conjunto premium que incluye colchón, base y almohadas. Todo lo necesario para transformar tu descanso.'
+  },
+  {
+    imagen: 'assets/img/protector.jpg',
+    nombre: 'Protector Districol',
+    descripcion: 'Máxima protección para tu colchón contra líquidos y alérgenos. Prolonga la vida útil de tu inversión.'
+  },
+  {
+    imagen: 'assets/img/protector-blanco.jpg',
+    nombre: 'Protector Confort Blanco',
+    descripcion: 'Funda protectora transpirable y suave. Higiene y frescura garantizada en cada noche.'
   }
 ];
 
@@ -119,7 +139,7 @@ export const PRODUCTOS_ALMOHADAS: ProductoCarrusel[] = [
 
 export const PRODUCTOS_SABANAS: ProductoCarrusel[] = [
   {
-    imagen: 'assets/img/sabanas.jpg',
+    imagen: 'assets/img/sabana-colchon.jpg',
     nombre: 'Sábanas Premium 400 Hilos',
     descripcion: 'Algodón egipcio de 400 hilos con acabado satinado. Suavidad excepcional que mejora con cada lavado.'
   },
@@ -137,6 +157,11 @@ export const PRODUCTOS_SABANAS: ProductoCarrusel[] = [
     imagen: 'assets/img/sabana3.jpg',
     nombre: 'Sábanas Silky Touch',
     descripcion: 'Mezcla de algodón y seda natural. Sensación de lujo incomparable para un descanso de ensueño.'
+  },
+  {
+    imagen: 'assets/img/sabana-colchon.jpg',
+    nombre: 'Sábana Blanca Premium',
+    descripcion: 'Blancura impecable y suavidad al tacto. Algodón de alta calidad para una experiencia de hotel en casa.'
   }
 ];
 
@@ -240,5 +265,40 @@ export const MOCK_PRODUCTOS: Producto[] = [
     id: 15, nombre: 'Ambiente Sereno', categoriaId: 5, subcategoriaId: 501,
     descripcion: 'Diseño de interiores inspirado en la calma. Colores neutros y texturas suaves.',
     precio: 4500000, cantidad: 2, imagen: 'assets/img/distri1.jpg', categoria: 'Ambientes', subcategoria: 'Ambientaciones Premium'
+  },
+  {
+    id: 16, nombre: 'Colchón Espumas Medellín', categoriaId: 1, subcategoriaId: 101,
+    descripcion: 'Colchón de alta calidad fabricado por Espumas Medellín. Firmeza y durabilidad.',
+    precio: 1450000, cantidad: 10, imagen: 'assets/img/alcoba7.jpg', categoria: 'Colchones', subcategoria: 'Colchones Premium'
+  },
+  {
+    id: 17, nombre: 'Colchón Espumas Medellín Café', categoriaId: 1, subcategoriaId: 101,
+    descripcion: 'Versión elegante en color café. Soporte ortopédico superior.',
+    precio: 1550000, cantidad: 5, imagen: 'assets/img/espumas-med.jpg', categoria: 'Colchones', subcategoria: 'Colchones Premium'
+  },
+  {
+    id: 18, nombre: 'Colchón Espumas Medellín Gris', categoriaId: 1, subcategoriaId: 101,
+    descripcion: 'Acabado moderno en gris con tecnología de confort avanzado.',
+    precio: 1550000, cantidad: 7, imagen: 'assets/img/espumas-med2.jpg', categoria: 'Colchones', subcategoria: 'Colchones Premium'
+  },
+  {
+    id: 19, nombre: 'Colchón Santa Fe Rosa', categoriaId: 1, subcategoriaId: 103,
+    descripcion: 'Línea Santa Fe con acolchado especial de alta suavidad.',
+    precio: 1680000, cantidad: 4, imagen: 'assets/img/colchon-espumas-santafe.jpg', categoria: 'Colchones', subcategoria: 'Colchones Memory Foam'
+  },
+  {
+    id: 20, nombre: 'Sábana Blanca Premium', categoriaId: 3, subcategoriaId: 301,
+    descripcion: 'Sábana de algodón puro en color blanco. Frescura y elegancia.',
+    precio: 180000, cantidad: 15, imagen: 'assets/img/sabana-colchon.jpg', categoria: 'Sábanas', subcategoria: 'Sábanas 400 Hilos'
+  },
+  {
+    id: 21, nombre: 'Protector Districol', categoriaId: 4, subcategoriaId: 401,
+    descripcion: 'Protector de alta densidad para mayor vida útil de tu colchón.',
+    precio: 95000, cantidad: 25, imagen: 'assets/img/protector.jpg', categoria: 'Complementos', subcategoria: 'Protectores'
+  },
+  {
+    id: 22, nombre: 'Protector Blanco Confort', categoriaId: 4, subcategoriaId: 401,
+    descripcion: 'Protector acolchado blanco. Suavidad y protección hipoalergénica.',
+    precio: 110000, cantidad: 20, imagen: 'assets/img/protector-blanco.jpg', categoria: 'Complementos', subcategoria: 'Protectores'
   }
 ];
