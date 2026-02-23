@@ -59,6 +59,14 @@ Plataforma e-commerce desarrollada para empresa de **distribución comercial**. 
 
 ---
 
+
+---
+
+### **Diseño Interactivo**
+- Adicion de videos de productos que hacen ver la pagina mas interactiva, y mejor para la experiencia del usuario 
+
+---
+
 ## 🔧 **Tech Stack**
 
 ### **Frontend**
@@ -299,5 +307,6 @@ Estudiante Ingeniería de Sistemas – Universidad del Quindío
 <div align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=90&section=footer&animation=fadeIn" />
 </div>
+
 
 
