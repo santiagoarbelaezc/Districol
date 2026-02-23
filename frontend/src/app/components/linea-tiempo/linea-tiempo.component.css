@@ -1,6 +1,5 @@
-﻿/* ===== SECCIÓN TIMELINE ===== */
-.timeline-section {
-  background-color: #002530;
+﻿.timeline-section {
+  background-color: #000000;
   padding: 100px 40px;
   font-family: var(--fuente-principal);
 }
@@ -30,12 +29,12 @@
   transform: translateX(-50%);
   width: 80px;
   height: 2px;
-  background: var(--color-principal);
+  background: #A4AE9E;
 }
 
 .section-subtitulo {
   font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.4);
   margin: 25px 0 0 0;
 }
 
@@ -55,9 +54,9 @@
   height: 100%;
   background: linear-gradient(to bottom,
       transparent,
-      rgba(0, 59, 74, 0.3) 10%,
-      rgba(0, 59, 74, 0.5) 50%,
-      rgba(0, 59, 74, 0.3) 90%,
+      rgba(164, 174, 158, 0.2) 10%,
+      rgba(164, 174, 158, 0.4) 50%,
+      rgba(164, 174, 158, 0.2) 90%,
       transparent);
 }
 
@@ -97,7 +96,8 @@
   top: 30px;
   width: 20px;
   height: 2px;
-  background: rgba(0, 59, 74, 0.5);
+  background: #A4AE9E;
+  opacity: 0.5;
 }
 
 .timeline-item:not(.reverse) .timeline-content::before {
@@ -110,21 +110,22 @@
 
 .timeline-content:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-  border-color: rgba(0, 59, 74, 0.3);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  border-color: #A4AE9E;
 }
 
 /* ===== AÑO ===== */
 .timeline-anio {
   display: inline-block;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--color-principal);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #A4AE9E;
   letter-spacing: 2px;
   margin-bottom: 15px;
-  padding: 6px 14px;
-  background: rgba(0, 59, 74, 0.15);
+  padding: 6px 16px;
+  background: rgba(164, 174, 158, 0.1);
   border-radius: 20px;
+  border: 1px solid rgba(164, 174, 158, 0.2);
 }
 
 /* ===== TÍTULO ===== */
@@ -153,8 +154,8 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #002530;
-  border: 2px solid var(--color-principal);
+  background: #000000;
+  border: 2px solid #A4AE9E;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -165,7 +166,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--color-principal);
+  background: #A4AE9E;
   transition: transform 0.3s ease;
 }
 

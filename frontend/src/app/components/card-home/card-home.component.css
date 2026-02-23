@@ -17,7 +17,7 @@
 /* ===== CONTENEDOR ===== */
 .card-container {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: 80px;
   max-width: 1400px;
   margin: 0 auto;
@@ -77,6 +77,10 @@
 .card-content {
   flex: 1;
   padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .card-titulo {
@@ -109,10 +113,37 @@
 }
 
 .card-descripcion {
-  font-size: 1.1rem;
+  font-size: 1rem;
   line-height: 1.9;
   margin: 0;
-  max-width: 500px;
+  max-width: 100%;
+  flex: 1;
+  min-height: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 14px;
+  scrollbar-width: thin;
+  scrollbar-color: #A4AE9D rgba(255, 255, 255, 0.08);
+}
+
+.card-descripcion::-webkit-scrollbar {
+  width: 6px !important;
+  display: block !important;
+}
+
+.card-descripcion::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 100px !important;
+}
+
+.card-descripcion::-webkit-scrollbar-thumb {
+  background: #A4AE9D !important;
+  border-radius: 100px !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.card-descripcion::-webkit-scrollbar-thumb:hover {
+  background: #C8CFC4 !important;
 }
 
 .theme-dark .card-descripcion {

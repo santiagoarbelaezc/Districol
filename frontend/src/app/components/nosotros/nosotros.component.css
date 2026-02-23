@@ -1,10 +1,14 @@
-﻿.nosotros-root { background-color: #002530; color: var(--color-blanco); }
+﻿.nosotros-root {
+  background-color: #000000;
+  color: var(--color-blanco);
+  padding-top: 125px;
+}
 
 /* ===== HIGHLIGHTS SECTION ===== */
 .highlights-section {
-  background-color: #002530;
+  background-color: #000000;
   padding: 110px 40px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(164, 174, 158, 0.1);
 }
 
 .highlights-container {
@@ -26,8 +30,8 @@
 
 .highlight-item:hover {
   transform: translateY(-8px);
-  border-color: rgba(0, 59, 74, 0.3);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  border-color: #A4AE9E;
+  box-shadow: 0 20px 50px rgba(164, 174, 158, 0.2);
 }
 
 .highlight-icon {
@@ -50,7 +54,7 @@
 .highlight-icon svg {
   width: 32px;
   height: 32px;
-  color: var(--color-principal);
+  color: #A4AE9E;
 }
 
 .highlight-titulo {
@@ -69,8 +73,9 @@
 
 /* ===== MISIÓN Y VISIÓN ===== */
 .mision-vision-section {
-  background-color: #151515;
-  padding: 100px 40px;
+  background-color: #A4AE9E;
+  padding: 120px 40px;
+  color: #003B4A;
 }
 
 .mv-container {
@@ -84,12 +89,13 @@
 .mv-card {
   text-align: center;
   padding: 50px 35px;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.02);
-  transition: all 0.4s ease;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 24px;
+  border: 1px solid rgba(0, 59, 74, 0.1);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
 .mv-card::before {
@@ -98,8 +104,8 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--color-principal), transparent);
+  height: 4px;
+  background: #003B4A;
   opacity: 0;
   transition: opacity 0.4s ease;
 }
@@ -109,9 +115,9 @@
 }
 
 .mv-card:hover {
-  transform: translateY(-10px);
-  background: rgba(0, 59, 74, 0.05);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  transform: translateY(-12px);
+  background: #ffffff;
+  box-shadow: 0 30px 60px rgba(0, 59, 74, 0.15);
 }
 
 .mv-icon {
@@ -121,59 +127,60 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 59, 74, 0.15);
+  background: rgba(0, 59, 74, 0.08);
   border-radius: 50%;
-  border: 2px solid rgba(0, 59, 74, 0.3);
+  border: 2px solid rgba(0, 59, 74, 0.1);
 }
 
 .mv-icon svg {
   width: 36px;
   height: 36px;
-  color: var(--color-principal);
+  color: #003B4A;
 }
 
 .mv-titulo {
   font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--color-blanco);
+  font-weight: 700;
+  color: #003B4A;
   margin: 0 0 20px 0;
   letter-spacing: 2px;
   text-transform: uppercase;
 }
 
 .mv-descripcion {
-  font-size: 0.95rem;
-  line-height: 1.9;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #333;
   margin: 0;
 }
 
 /* ===== COMPROMISO SECTION ===== */
 .compromiso-section {
-  background-color: #002530;
-  padding: 100px 40px;
+  background-color: #000000;
+  padding: 120px 40px;
 }
 
 .compromiso-container {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   text-align: center;
 }
 
 .compromiso-titulo {
-  font-size: 2.2rem;
-  font-weight: 600;
+  font-size: 2.5rem;
+  font-weight: 700;
   color: var(--color-blanco);
   margin: 0 0 20px 0;
-  letter-spacing: 3px;
+  letter-spacing: 4px;
   text-transform: uppercase;
 }
 
 .compromiso-linea {
-  width: 100px;
-  height: 3px;
-  background: var(--color-principal);
-  margin: 0 auto 40px;
+  width: 120px;
+  height: 4px;
+  background: #A4AE9E;
+  margin: 0 auto 50px;
+  border-radius: 2px;
 }
 
 .compromiso-texto {

@@ -264,7 +264,7 @@
   text-transform: uppercase;
   cursor: pointer;
   transition: var(--transition-smooth);
-  color: var(--color-principal);
+  color: #A4AE9D;
 }
 
 .btn-ver-mas span {
@@ -278,7 +278,7 @@
   left: 0;
   width: 0;
   height: 1px;
-  background: var(--color-principal);
+  background: #A4AE9D;
   transition: width 0.3s ease;
 }
 
