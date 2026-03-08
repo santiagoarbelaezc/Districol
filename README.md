@@ -36,6 +36,7 @@ Plataforma e-commerce desarrollada para empresa de **distribución comercial**. 
 - Escalado automático y balanceo de carga
 - Distribución global mediante **Amazon CloudFront**
 - Alta disponibilidad y bajo latencia
+- ⚠️ **Nota de migración:** Se está planificando una migración del backend actual basado en Node.js hacia una implementación en PHP. El repositorio incluye la carpeta `backend-php` que contendrá la nueva versión una vez comience la migración.
 
 ### **🗄️ Base de Datos (Hostinger)**
 - MySQL alojado en **Hostinger**
@@ -304,6 +305,9 @@ Estudiante Ingeniería de Sistemas – Universidad del Quindío
 <div align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=90&section=footer&animation=fadeIn" />
 </div>
+
+
+
 
 
 
