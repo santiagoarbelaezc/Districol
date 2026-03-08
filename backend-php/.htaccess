@@ -1,0 +1,7 @@
+Options -Indexes
+
+# Redirigir todas las peticiones a index.php (excepto archivos reales)
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L,QSA]
