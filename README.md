@@ -21,7 +21,7 @@ Plataforma e-commerce desarrollada para empresa de **distribución comercial**. 
 ---
 
 ### 🔧 **Version Beta**
-- Pensado para produccion el 25 de febrero
+- Migración a PHP backend para Hostinger
 
 ---
 
