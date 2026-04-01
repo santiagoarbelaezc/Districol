@@ -3,10 +3,12 @@ import { RouterOutlet } from '@angular/router';
 import { AosService } from './services/aos.service';
 import { ScrollService } from './services/scroll.service';
 
+import { RedesSocialesComponent } from './shared/redes-sociales/redes-sociales.component';
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RedesSocialesComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
