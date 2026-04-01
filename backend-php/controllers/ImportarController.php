@@ -70,30 +70,33 @@ class ImportarController
                 $checkStmt->execute([$hostingerId]);
                 $existe = $checkStmt->fetch();
 
+                // Resolver categoría → subcategoría para este producto
+                $subcatId = self::resolverSubcategoria($dbLocal, $product['category'] ?? 'Districol');
+
                 if ($existe) {
                     // Update
                     $updStmt = $dbLocal->prepare('
                         UPDATE products 
-                        SET name=?, description=?, material=?, category=?, options=?, isNew=?, isFeatured=?, marca=?, gramaje=?, brandIconUrl=?
+                        SET name=?, description=?, material=?, category=?, options=?, isNew=?, isFeatured=?, marca=?, gramaje=?, brandIconUrl=?, subcategoria_id=?
                         WHERE id=?
                     ');
                     $updStmt->execute([
                         $product['name'], $product['description'], $product['material'], $product['category'],
                         $product['options'], $product['isNew'], $product['isFeatured'], $product['marca'], 
-                        $product['gramaje'], $product['brandIconUrl'], $hostingerId
+                        $product['gramaje'], $product['brandIconUrl'], $subcatId, $hostingerId
                     ]);
 
                     $actualizados++;
                 } else {
                     // Insert con ID explícito
                     $insStmt = $dbLocal->prepare('
-                        INSERT INTO products (id, name, description, material, category, options, isNew, isFeatured, marca, gramaje, brandIconUrl, created_at)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        INSERT INTO products (id, name, description, material, category, options, isNew, isFeatured, marca, gramaje, brandIconUrl, subcategoria_id, created_at)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     ');
                     $insStmt->execute([
                         $hostingerId, $product['name'], $product['description'], $product['material'], $product['category'],
                         $product['options'], $product['isNew'], $product['isFeatured'], $product['marca'], 
-                        $product['gramaje'], $product['brandIconUrl'], $product['created_at']
+                        $product['gramaje'], $product['brandIconUrl'], $subcatId, $product['created_at']
                     ]);
                     $importados++;
                 }
@@ -135,4 +138,33 @@ class ImportarController
             ResponseHandler::error('Error fatal durante la importación: ' . $e->getMessage(), 500);
         }
     }
+
+    // ─── Helper: obtener o crear categoría + subcategoría "General" ─────────
+    private static function resolverSubcategoria(PDO $db, string $categoryName): int
+    {
+        // 1. Buscar o crear la categoría
+        $stmt = $db->prepare("SELECT id FROM categorias WHERE nombre = ? LIMIT 1");
+        $stmt->execute([$categoryName]);
+        $cat = $stmt->fetch();
+
+        if ($cat) {
+            $catId = (int)$cat['id'];
+        } else {
+            $db->prepare("INSERT INTO categorias (nombre) VALUES (?)")->execute([$categoryName]);
+            $catId = (int)$db->lastInsertId();
+        }
+
+        // 2. Buscar o crear subcategoría "General" para esta categoría
+        $stmt = $db->prepare("SELECT id FROM subcategorias WHERE nombre = 'General' AND categoria_id = ? LIMIT 1");
+        $stmt->execute([$catId]);
+        $sub = $stmt->fetch();
+
+        if ($sub) {
+            return (int)$sub['id'];
+        }
+
+        $db->prepare("INSERT INTO subcategorias (nombre, categoria_id) VALUES ('General', ?)")->execute([$catId]);
+        return (int)$db->lastInsertId();
+    }
 }
+
