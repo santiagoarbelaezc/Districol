@@ -1,4 +1,4 @@
-﻿/* ===== NAVBAR ===== */
+/* ===== NAVBAR ===== */
 .navbar {
   background-color: #003B4A;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
@@ -290,6 +290,8 @@
   box-shadow: 0 4px 20px rgba(164, 174, 157, 0.2);
 }
 
+
+
 /* ===== HAMBURGUESA ===== */
 .hamburger-btn {
   display: none;
@@ -400,6 +402,12 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
 /* ===== BARRA DE INFORMACIÓN ===== */
 .info-bar {
   position: fixed;
@@ -505,6 +513,86 @@
 
 .info-item:hover .info-text {
   color: var(--color-principal);
+}
+
+/* ===== DROPDOWN NUESTRAS EMPRESAS ===== */
+.dropdown-container {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-container .navbar-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dropdown-container .navbar-link svg {
+  transition: transform 0.3s ease;
+}
+
+.dropdown-container:hover .navbar-link svg {
+  transform: rotate(180deg);
+}
+
+.info-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: var(--color-blanco, #fff);
+  border: 1px solid rgba(0,0,0,0.05);
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  padding: 8px 0;
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+}
+
+.dropdown-container:hover .info-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(15px); /* Espacio con el hover padding */
+}
+
+.info-dropdown-item {
+  display: block;
+  padding: 10px 20px;
+  color: var(--color-negro, #003B4A);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.info-dropdown-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: var(--color-secundario);
+  transform: scaleY(0);
+  transition: transform 0.2s ease;
+}
+
+.info-dropdown-item:hover {
+  background: rgba(0, 59, 74, 0.04);
+  color: var(--color-principal, #003B4A);
+  padding-left: 25px;
+}
+
+.info-dropdown-item:hover::before {
+  transform: scaleY(1);
 }
 
 /* Info bar responsive */
