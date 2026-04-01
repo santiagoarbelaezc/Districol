@@ -1,7 +1,9 @@
 import { Component, Input, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 export interface ProductoCarrusel {
+  id: number;
   imagen: string;
   nombre: string;
   descripcion: string;
@@ -20,6 +22,8 @@ export class CarruselHomeComponent implements AfterViewInit {
   @Input() titulo: string = '';
   @Input() tema: 'light' | 'dark' = 'dark';
   @Input() carouselId: string = 'home';
+
+  constructor(private router: Router) {}
 
   ngAfterViewInit(): void {
     this.disableManualScroll();
@@ -70,7 +74,6 @@ export class CarruselHomeComponent implements AfterViewInit {
   }
 
   verMas(producto: ProductoCarrusel): void {
-    console.log('Ver más:', producto.nombre);
-    // Aquí puedes agregar navegación o emitir evento
+    this.router.navigate(['/productos', producto.id]);
   }
 }

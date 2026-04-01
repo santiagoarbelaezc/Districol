@@ -1,369 +1,279 @@
 <?php
 /**
  * controllers/ProductoController.php
- * CRUD de productos + múltiples imágenes en Cloudinary, con transacciones PDO
- * Equivalente a controllers/producto.controller.js del backend Node.js
+ * CRUD de productos + imágenes en Cloudinary, con esquema exacto de Plaxtilineas
  */
 
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../config/cloudinary.php';
+require_once __DIR__ . '/../utils/ResponseHandler.php';
+require_once __DIR__ . '/../utils/Logger.php';
 
-class ProductoController {
+class ProductoController
+{
+    // ─── Query base reutilizable ─────────────────────────────────────────────
+    private static string $baseSelect = "
+        SELECT 
+            p.id, p.name, p.description, p.material, p.category, p.options, 
+            p.isNew, p.isFeatured, p.marca, p.gramaje, p.brandIconUrl,
+            p.created_at, p.updated_at
+        FROM products p
+        WHERE p.deleted_at IS NULL
+    ";
 
-    // ─── Helper: cargar imágenes de productos dado un array de IDs ───────────
-    private static function adjuntarImagenes(PDO $db, array &$productos): array {
+    // ─── Helper: adjuntar imágenes y variantes ──────────────────────────────
+    private static function adjuntarRelaciones(PDO $db, array &$productos): array
+    {
         if (empty($productos)) return $productos;
 
         $ids          = array_column($productos, 'id');
         $placeholders = implode(',', array_fill(0, count($ids), '?'));
 
-        $stmt = $db->prepare("SELECT producto_id, imagen_url FROM producto_imagenes WHERE producto_id IN ($placeholders)");
-        $stmt->execute($ids);
-        $imagenes = $stmt->fetchAll();
+        // Imágenes
+        $stmtImg = $db->prepare("SELECT product_id, url FROM product_images WHERE product_id IN ($placeholders)");
+        $stmtImg->execute($ids);
+        $imagenes = $stmtImg->fetchAll();
 
-        // Agrupar URLs por producto_id
         $mapaImagenes = [];
         foreach ($imagenes as $img) {
-            $mapaImagenes[$img['producto_id']][] = $img['imagen_url'];
+            $mapaImagenes[$img['product_id']][] = $img['url'];
+        }
+
+        // Variantes (para obtener precio)
+        $stmtVar = $db->prepare("SELECT product_id, price FROM product_variants WHERE product_id IN ($placeholders) AND available = 1");
+        $stmtVar->execute($ids);
+        $variantes = $stmtVar->fetchAll();
+
+        $mapaVariantes = [];
+        foreach ($variantes as $var) {
+            if (!isset($mapaVariantes[$var['product_id']])) {
+                $mapaVariantes[$var['product_id']] = (float)$var['price'];
+            }
         }
 
         foreach ($productos as &$prod) {
             $prod['imagenes'] = $mapaImagenes[$prod['id']] ?? [];
+            $prod['precio']   = $mapaVariantes[$prod['id']] ?? 0;
+            
+            // Compatibilidad con frontend Angular temporal
+            $prod['nombre'] = $prod['name'];
+            $prod['descripcion'] = $prod['description'];
         }
         unset($prod);
 
         return $productos;
     }
 
-    // ─── Query base de productos ──────────────────────────────────────────────
-    private static function baseQuery(): string {
-        return '
-            SELECT p.id, p.nombre, p.descripcion, p.cantidad, p.precio,
-                   p.subcategoria_id,
-                   s.nombre AS subcategoria,
-                   c.nombre AS categoria
-            FROM productos p
-            JOIN subcategorias s ON p.subcategoria_id = s.id
-            JOIN categorias c ON s.categoria_id = c.id
-        ';
-    }
-
-    // 🔍 Obtener productos (con filtro opcional por subcategoria_id)
-    public static function obtenerProductos(): void {
-        try {
-            $db            = getDB();
-            $subcategoriaId = $_GET['subcategoria_id'] ?? null;
-
-            $sql    = self::baseQuery();
-            $params = [];
-
-            if ($subcategoriaId) {
-                $sql    .= ' WHERE p.subcategoria_id = ?';
-                $params[] = (int) $subcategoriaId;
-            }
-
-            $stmt = $db->prepare($sql);
-            $stmt->execute($params);
-            $productos = $stmt->fetchAll();
-
-            self::adjuntarImagenes($db, $productos);
-            echo json_encode($productos);
-        } catch (Throwable $e) {
-            error_log('Error al obtener productos: ' . $e->getMessage());
-            http_response_code(500);
-            echo json_encode(['error' => 'No se pudieron obtener los productos']);
-        }
-    }
-
-    // 🎲 Productos aleatorios
-    public static function obtenerProductosAleatorios(): void {
-        try {
-            $cantidad = max(1, (int) ($_GET['cantidad'] ?? 5));
-            $db       = getDB();
-
-            $stmt = $db->prepare(self::baseQuery() . ' ORDER BY RAND() LIMIT ?');
-            $stmt->bindValue(1, $cantidad, PDO::PARAM_INT);
-            $stmt->execute();
-            $productos = $stmt->fetchAll();
-
-            self::adjuntarImagenes($db, $productos);
-            echo json_encode($productos);
-        } catch (Throwable $e) {
-            error_log('Error al obtener productos aleatorios: ' . $e->getMessage());
-            http_response_code(500);
-            echo json_encode(['error' => 'No se pudieron obtener productos aleatorios']);
-        }
-    }
-
-    // 📦 Productos por categoría
-    public static function obtenerProductosPorCategoria(int $categoriaId): void {
-        try {
-            $db   = getDB();
-            $stmt = $db->prepare(self::baseQuery() . ' WHERE c.id = ?');
-            $stmt->execute([$categoriaId]);
-            $productos = $stmt->fetchAll();
-
-            self::adjuntarImagenes($db, $productos);
-            echo json_encode($productos);
-        } catch (Throwable $e) {
-            error_log('Error al obtener productos por categoría: ' . $e->getMessage());
-            http_response_code(500);
-            echo json_encode(['error' => 'No se pudieron obtener productos por categoría']);
-        }
-    }
-
-    // 🔎 Buscar productos por nombre
-    public static function buscarProductosPorNombre(): void {
-        $nombre = trim($_GET['nombre'] ?? '');
-
-        if ($nombre === '') {
-            http_response_code(400);
-            echo json_encode(['error' => 'Debes proporcionar un nombre para buscar.']);
-            return;
-        }
-
-        try {
-            $db   = getDB();
-            $stmt = $db->prepare(self::baseQuery() . ' WHERE p.nombre LIKE ?');
-            $stmt->execute(['%' . $nombre . '%']);
-            $productos = $stmt->fetchAll();
-
-            self::adjuntarImagenes($db, $productos);
-            echo json_encode($productos);
-        } catch (Throwable $e) {
-            error_log('Error al buscar productos por nombre: ' . $e->getMessage());
-            http_response_code(500);
-            echo json_encode(['error' => 'No se pudo realizar la búsqueda de productos']);
-        }
-    }
-
-    // 🔍 Obtener un producto por ID
-    public static function obtenerProductoPorId(int $id): void {
-        try {
-            $db   = getDB();
-            $stmt = $db->prepare(self::baseQuery() . ' WHERE p.id = ?');
-            $stmt->execute([$id]);
-            $producto = $stmt->fetch();
-
-            if (!$producto) {
-                http_response_code(404);
-                echo json_encode(['error' => 'Producto no encontrado']);
-                return;
-            }
-
-            $imgStmt = $db->prepare('SELECT imagen_url FROM producto_imagenes WHERE producto_id = ?');
-            $imgStmt->execute([$id]);
-            $producto['imagenes'] = array_column($imgStmt->fetchAll(), 'imagen_url');
-
-            echo json_encode($producto);
-        } catch (Throwable $e) {
-            error_log('Error al obtener producto por ID: ' . $e->getMessage());
-            http_response_code(500);
-            echo json_encode(['error' => 'No se pudo obtener el producto']);
-        }
-    }
-
-    // ─── Helper: subir archivos de $_FILES['imagenes'] a Cloudinary ──────────
-    private static function subirImagenes(): array {
+    // ─── Helper: subir imágenes de $_FILES['imagenes'] a Cloudinary ─────────
+    private static function subirImagenes(): array
+    {
         if (empty($_FILES['imagenes'])) return [];
 
-        $files = $_FILES['imagenes'];
+        $files          = $_FILES['imagenes'];
         $uploadedImages = [];
-
-        // Normalizar estructura de $_FILES cuando hay múltiples archivos
-        $count = is_array($files['name']) ? count($files['name']) : 1;
+        $count          = is_array($files['name']) ? count($files['name']) : 1;
 
         for ($i = 0; $i < $count; $i++) {
-            $tmpName  = is_array($files['tmp_name']) ? $files['tmp_name'][$i] : $files['tmp_name'];
-            $error    = is_array($files['error'])    ? $files['error'][$i]    : $files['error'];
+            $tmpName = is_array($files['tmp_name']) ? $files['tmp_name'][$i] : $files['tmp_name'];
+            $error   = is_array($files['error'])    ? $files['error'][$i]    : $files['error'];
 
             if ($error !== UPLOAD_ERR_OK || !$tmpName) continue;
 
-            $result = uploadToCloudinary($tmpName, 'districol_productos');
-            $uploadedImages[] = [
-                'url'      => $result['url'],
-                'publicId' => $result['publicId'],
-            ];
+            $result           = uploadToCloudinary($tmpName, 'districol_productos');
+            $uploadedImages[] = ['url' => $result['url'], 'publicId' => $result['publicId']];
         }
 
         return $uploadedImages;
     }
 
-    // 📦 Crear producto con múltiples imágenes (mínimo 1)
-    public static function crearProductoDesdeRuta(): void {
-        $nombre        = trim($_POST['nombre'] ?? '');
-        $descripcion   = trim($_POST['descripcion'] ?? '');
-        $cantidad      = (int) ($_POST['cantidad'] ?? 0);
-        $precio        = (float) ($_POST['precio'] ?? 0);
-        $subcategoriaId = (int) ($_POST['subcategoria_id'] ?? 0);
-
-        if (!$nombre || !$precio || !$cantidad || !$subcategoriaId) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Datos inválidos. Verifica los campos del formulario.']);
-            return;
-        }
-
-        // Subir imágenes a Cloudinary
+    // ─── GET /api/productos ──────────────────────────────────────────────────
+    public static function obtenerProductos(): void
+    {
         try {
-            $imagesInfo = self::subirImagenes();
+            $db = getDB();
+            $stmt = $db->prepare(self::$baseSelect . ' ORDER BY p.id DESC');
+            $stmt->execute();
+            $productos = $stmt->fetchAll();
+
+            self::adjuntarRelaciones($db, $productos);
+            ResponseHandler::success($productos);
+
+        } catch (PDOException $e) {
+            Logger::error('ProductoController::obtenerProductos – DB', ['exception' => $e->getMessage()]);
+            ResponseHandler::error('Error al obtener productos', 500);
         } catch (Throwable $e) {
-            error_log('Error subiendo imágenes: ' . $e->getMessage());
-            http_response_code(500);
-            echo json_encode(['error' => 'Error interno al subir imágenes a Cloudinary']);
-            return;
-        }
-
-        if (empty($imagesInfo)) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Debes subir al menos una imagen del producto.']);
-            return;
-        }
-
-        $db = getDB();
-        try {
-            $db->beginTransaction();
-
-            // Insertar producto
-            $stmt = $db->prepare('
-                INSERT INTO productos (nombre, descripcion, cantidad, precio, subcategoria_id)
-                VALUES (?, ?, ?, ?, ?)
-            ');
-            $stmt->execute([$nombre, $descripcion, $cantidad, $precio, $subcategoriaId]);
-            $productoId = $db->lastInsertId();
-
-            // Insertar imágenes
-            $imgStmt = $db->prepare('
-                INSERT INTO producto_imagenes (producto_id, imagen_url, public_id) VALUES (?, ?, ?)
-            ');
-            foreach ($imagesInfo as $img) {
-                $imgStmt->execute([$productoId, $img['url'], $img['publicId']]);
-            }
-
-            $db->commit();
-
-            http_response_code(201);
-            echo json_encode([
-                'mensaje'    => 'Producto creado exitosamente con sus imágenes',
-                'productoId' => $productoId,
-            ]);
-        } catch (Throwable $e) {
-            $db->rollBack();
-            error_log('Error al crear producto: ' . $e->getMessage());
-            http_response_code(500);
-            echo json_encode(['error' => 'Error interno al crear el producto']);
+            Logger::error('ProductoController::obtenerProductos – inesperado', ['exception' => $e->getMessage()]);
+            ResponseHandler::error('Error inesperado al obtener productos', 500);
         }
     }
 
-    // ✏️ Actualizar producto (datos + imágenes opcionales)
-    public static function actualizarProducto(int $id): void {
-        // Parsear multipart/form-data en PUT
-        $nombre        = trim($_POST['nombre'] ?? '');
-        $descripcion   = trim($_POST['descripcion'] ?? '');
-        $cantidad      = (int) ($_POST['cantidad'] ?? 0);
-        $precio        = (float) ($_POST['precio'] ?? 0);
-        $subcategoriaId = (int) ($_POST['subcategoria_id'] ?? 0);
-
-        $db = getDB();
-
+    // ─── GET /api/productos/:id ──────────────────────────────────────────────
+    public static function obtenerProductoPorId(int $id): void
+    {
         try {
-            // Verificar existencia
-            $check = $db->prepare('SELECT id FROM productos WHERE id = ?');
-            $check->execute([$id]);
-            if (!$check->fetch()) {
-                http_response_code(404);
-                echo json_encode(['error' => 'Producto no encontrado']);
+            $db = getDB();
+            $stmt = $db->prepare(self::$baseSelect . ' AND p.id = ?');
+            $stmt->execute([$id]);
+            $producto = $stmt->fetchAll();
+
+            if (empty($producto)) {
+                ResponseHandler::error('Producto no encontrado', 404);
                 return;
             }
 
+            self::adjuntarRelaciones($db, $producto);
+            ResponseHandler::success($producto[0]);
+
+        } catch (PDOException $e) {
+            Logger::error('ProductoController::obtenerProductoPorId – DB', ['exception' => $e->getMessage()]);
+            ResponseHandler::error('Error al obtener el producto', 500);
+        } catch (Throwable $e) {
+            Logger::error('ProductoController::obtenerProductoPorId – inesperado', ['exception' => $e->getMessage()]);
+            ResponseHandler::error('Error inesperado al obtener el producto', 500);
+        }
+    }
+
+    // ─── POST /api/productos ─────────────────────────────────────────────────
+    public static function crearProducto(): void
+    {
+        try {
+            $name        = ResponseHandler::sanitize($_POST['nombre'] ?? '');
+            $description = ResponseHandler::sanitize($_POST['descripcion'] ?? '');
+            $category    = ResponseHandler::sanitize($_POST['category'] ?? 'Districol');
+            $precio      = (float)($_POST['precio'] ?? 0);
+
+            if (!$name) {
+                throw new InvalidArgumentException("El campo 'nombre' es requerido");
+            }
+
+            $imagesInfo = self::subirImagenes();
+
+            $db = getDB();
             $db->beginTransaction();
 
-            // Actualizar datos del producto
-            $db->prepare('
-                UPDATE productos SET nombre = ?, descripcion = ?, cantidad = ?, precio = ?, subcategoria_id = ?
-                WHERE id = ?
-            ')->execute([$nombre, $descripcion, $cantidad, $precio, $subcategoriaId, $id]);
+            $stmt = $db->prepare('INSERT INTO products (name, description, category) VALUES (?, ?, ?)');
+            $stmt->execute([$name, $description, $category]);
+            $productId = $db->lastInsertId();
 
-            // Si vienen nuevas imágenes, reemplazar las anteriores
-            if (!empty($_FILES['imagenes']['name'][0]) || (!is_array($_FILES['imagenes']['name'] ?? null) && !empty($_FILES['imagenes']['tmp_name']))) {
-                // Obtener imágenes actuales de BD
-                $oldImgStmt = $db->prepare('SELECT public_id FROM producto_imagenes WHERE producto_id = ?');
+            if ($precio > 0) {
+                $db->prepare('INSERT INTO product_variants (product_id, name, price) VALUES (?, ?, ?)')
+                   ->execute([$productId, 'Única', $precio]);
+            }
+
+            $imgStmt = $db->prepare('INSERT INTO product_images (product_id, url, description) VALUES (?, ?, ?)');
+            foreach ($imagesInfo as $img) {
+                $imgStmt->execute([$productId, $img['url'], $img['publicId']]);
+            }
+
+            $db->commit();
+            Logger::info('ProductoController::crearProducto – OK', ['id' => $productId]);
+            ResponseHandler::success(['mensaje' => 'Producto creado', 'id' => $productId], 201);
+
+        } catch (PDOException $e) {
+            if (isset($db) && $db->inTransaction()) $db->rollBack();
+            Logger::error('ProductoController::crearProducto – DB', ['exception' => $e->getMessage()]);
+            ResponseHandler::error('Error al crear el producto', 500);
+        } catch (InvalidArgumentException $e) {
+            ResponseHandler::error($e->getMessage(), 400);
+        } catch (Throwable $e) {
+            if (isset($db) && $db->inTransaction()) $db->rollBack();
+            Logger::error('ProductoController::crearProducto – inesperado', ['exception' => $e->getMessage()]);
+            ResponseHandler::error('Error inesperado al crear el producto', 500);
+        }
+    }
+
+    // ─── PUT /api/productos/:id ──────────────────────────────────────────────
+    public static function actualizarProducto(int $id): void
+    {
+        try {
+            $name        = ResponseHandler::sanitize($_POST['nombre'] ?? '');
+            $description = ResponseHandler::sanitize($_POST['descripcion'] ?? '');
+            $category    = ResponseHandler::sanitize($_POST['category'] ?? 'Districol');
+            $precio      = (float)($_POST['precio'] ?? 0);
+
+            if (!$name) {
+                throw new InvalidArgumentException("El campo 'nombre' es requerido");
+            }
+
+            $db = getDB();
+            $db->beginTransaction();
+
+            $db->prepare('UPDATE products SET name = ?, description = ?, category = ? WHERE id = ?')
+               ->execute([$name, $description, $category, $id]);
+
+            $db->prepare('UPDATE product_variants SET price = ? WHERE product_id = ?')
+               ->execute([$precio, $id]);
+
+            $hayNuevasImagenes = (!empty($_FILES['imagenes']['name'][0]) || !empty($_FILES['imagenes']['tmp_name']));
+
+            if ($hayNuevasImagenes) {
+                $oldImgStmt = $db->prepare('SELECT description FROM product_images WHERE product_id = ?');
                 $oldImgStmt->execute([$id]);
                 $oldImages = $oldImgStmt->fetchAll();
 
-                // Eliminar de Cloudinary
                 foreach ($oldImages as $img) {
-                    if ($img['public_id']) {
-                        deleteFromCloudinary($img['public_id']);
+                    if ($img['description']) {
+                        try { deleteFromCloudinary($img['description']); } catch (Throwable $e) {}
                     }
                 }
 
-                // Eliminar de BD
-                $db->prepare('DELETE FROM producto_imagenes WHERE producto_id = ?')->execute([$id]);
+                $db->prepare('DELETE FROM product_images WHERE product_id = ?')->execute([$id]);
 
-                // Subir nuevas imágenes
                 $newImages = self::subirImagenes();
-                $imgStmt   = $db->prepare('INSERT INTO producto_imagenes (producto_id, imagen_url, public_id) VALUES (?, ?, ?)');
+                $imgStmt   = $db->prepare('INSERT INTO product_images (product_id, url, description) VALUES (?, ?, ?)');
                 foreach ($newImages as $img) {
                     $imgStmt->execute([$id, $img['url'], $img['publicId']]);
                 }
             }
 
             $db->commit();
-            echo json_encode(['mensaje' => 'Producto actualizado con éxito']);
+            Logger::info('ProductoController::actualizarProducto – OK', ['id' => $id]);
+            ResponseHandler::success(['mensaje' => 'Producto actualizado']);
+
+        } catch (PDOException $e) {
+            if (isset($db) && $db->inTransaction()) $db->rollBack();
+            Logger::error('ProductoController::actualizarProducto – DB', ['exception' => $e->getMessage()]);
+            ResponseHandler::error('Error al actualizar', 500);
+        } catch (InvalidArgumentException $e) {
+            ResponseHandler::error($e->getMessage(), 400);
         } catch (Throwable $e) {
-            $db->rollBack();
-            error_log('Error al actualizar producto: ' . $e->getMessage());
-            http_response_code(500);
-            echo json_encode(['error' => 'No se pudo actualizar el producto']);
+            if (isset($db) && $db->inTransaction()) $db->rollBack();
+            Logger::error('ProductoController::actualizarProducto – inesperado', ['exception' => $e->getMessage()]);
+            ResponseHandler::error('Error inesperado', 500);
         }
     }
 
-    // 🗑️ Eliminar producto + imágenes de Cloudinary
-    public static function eliminarProducto(int $id): void {
-        $db = getDB();
-
+    // ─── DELETE /api/productos/:id ───────────────────────────────────────────
+    public static function eliminarProducto(int $id): void
+    {
         try {
-            // Verificar existencia
-            $check = $db->prepare('SELECT id FROM productos WHERE id = ?');
-            $check->execute([$id]);
-            if (!$check->fetch()) {
-                http_response_code(404);
-                echo json_encode(['error' => 'Producto no encontrado']);
-                return;
-            }
-
+            $db = getDB();
             $db->beginTransaction();
 
-            // Obtener public_ids de las imágenes
-            $imgStmt = $db->prepare('SELECT public_id FROM producto_imagenes WHERE producto_id = ?');
+            $imgStmt = $db->prepare('SELECT description FROM product_images WHERE product_id = ?');
             $imgStmt->execute([$id]);
             $imagenes = $imgStmt->fetchAll();
 
-            // Eliminar de Cloudinary
             foreach ($imagenes as $img) {
-                if ($img['public_id']) {
-                    deleteFromCloudinary($img['public_id']);
+                if ($img['description']) {
+                    try { deleteFromCloudinary($img['description']); } catch (Throwable $e) {}
                 }
             }
 
-            // Eliminar producto (ON DELETE CASCADE elimina imagen_imagenes también)
-            $delStmt = $db->prepare('DELETE FROM productos WHERE id = ?');
-            $delStmt->execute([$id]);
-
-            if ($delStmt->rowCount() === 0) {
-                $db->rollBack();
-                http_response_code(400);
-                echo json_encode(['error' => 'No se pudo eliminar el producto']);
-                return;
-            }
+            $db->prepare('UPDATE products SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?')->execute([$id]);
 
             $db->commit();
-            echo json_encode(['mensaje' => 'Producto e imágenes eliminados correctamente de la base de datos y de Cloudinary']);
+            Logger::info('ProductoController::eliminarProducto – OK', ['id' => $id]);
+            ResponseHandler::success(['mensaje' => 'Producto eliminado (Soft Delete)']);
+
+        } catch (PDOException $e) {
+            if (isset($db) && $db->inTransaction()) $db->rollBack();
+            Logger::error('ProductoController::eliminarProducto – DB', ['exception' => $e->getMessage()]);
+            ResponseHandler::error('Error al eliminar', 500);
         } catch (Throwable $e) {
-            $db->rollBack();
-            error_log('Error al eliminar producto: ' . $e->getMessage());
-            http_response_code(500);
-            echo json_encode(['error' => 'Error interno al eliminar el producto']);
+            if (isset($db) && $db->inTransaction()) $db->rollBack();
+            Logger::error('ProductoController::eliminarProducto – inesperado', ['exception' => $e->getMessage()]);
+            ResponseHandler::error('Error inesperado', 500);
         }
     }
 }

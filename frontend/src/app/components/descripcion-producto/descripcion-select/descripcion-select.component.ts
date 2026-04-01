@@ -50,15 +50,23 @@ export class DescripcionSeleccionadoComponent implements OnInit, OnChanges {
     this.error = false;
 
     setTimeout(() => {
-      this.producto = this.productoService.getProductoPorId(id);
-      if (this.producto) {
-        this.nombreCompleto = this.producto.nombre;
-        this.imagenPrincipal = this.producto.imagen;
-        this.imagenSeleccionadaIndex = 0;
-      } else {
-        this.error = true;
-      }
-      this.cargando = false;
+      this.productoService.getProductoPorId(id).subscribe({
+        next: (producto) => {
+          this.producto = producto;
+          if (this.producto) {
+            this.nombreCompleto = this.producto.nombre;
+            this.imagenPrincipal = this.producto.imagen;
+            this.imagenSeleccionadaIndex = 0;
+          } else {
+            this.error = true;
+          }
+          this.cargando = false;
+        },
+        error: () => {
+          this.error = true;
+          this.cargando = false;
+        }
+      });
     }, 400);
   }
 

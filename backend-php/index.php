@@ -13,6 +13,10 @@ require_once __DIR__ . '/vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
+// ─── Utilerías compartidas ────────────────────────────────────────────────────
+require_once __DIR__ . '/utils/ResponseHandler.php';
+require_once __DIR__ . '/utils/Logger.php';
+
 // ─── Cabeceras CORS y JSON ────────────────────────────────────────────────────
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
@@ -58,12 +62,12 @@ switch ($resource) {
         require_once __DIR__ . '/routes/categorias.php';
         break;
 
-    case 'subcategorias':
-        require_once __DIR__ . '/routes/subcategorias.php';
-        break;
-
     case 'productos':
         require_once __DIR__ . '/routes/productos.php';
+        break;
+
+    case 'importar':
+        require_once __DIR__ . '/routes/importar.php';
         break;
 
     default:

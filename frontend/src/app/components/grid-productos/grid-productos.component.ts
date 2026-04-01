@@ -33,7 +33,14 @@ export class GridProductosInteresComponent implements OnInit, OnChanges {
   }
 
   private cargarProductos(): void {
-    this.productos = this.productoService.getProductosDeInteres(this.productoActualId, 6);
+    this.productoService.getProductosDeInteres(this.productoActualId, 6).subscribe({
+      next: (productos) => {
+        this.productos = productos;
+      },
+      error: () => {
+        this.productos = [];
+      }
+    });
   }
 
   formatearPrecio(precio: number): string {

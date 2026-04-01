@@ -2,51 +2,61 @@ import { ProductoCarrusel } from '../components/carrusel-home/carrusel-home.comp
 
 export const PRODUCTOS_COLCHONES: ProductoCarrusel[] = [
   {
+    id: 6,
     imagen: 'assets/img/colchon1.png',
     nombre: 'Colchón Ágata Premium',
     descripcion: 'Colección exclusiva con espuma viscoelástica de última generación. Adaptación perfecta a la anatomía corporal.'
   },
   {
+    id: 17,
     imagen: 'assets/img/espumas-med.jpg',
     nombre: 'Colchón Espumas Medellín Café',
     descripcion: 'Elegancia y firmeza en color café. Un colchón diseñado para durar y brindar el mejor soporte.'
   },
   {
+    id: 2,
     imagen: 'assets/img/alcoba2.jpg',
     nombre: 'Colchón Sleep Well',
     descripcion: 'Espuma troquelada de alta densidad que se adapta a tu forma. Espuma látex con fibras de bambú para un descanso premium.'
   },
   {
+    id: 19,
     imagen: 'assets/img/colchon-espumas-santafe.jpg',
     nombre: 'Colchón Santa Fe Rosa',
     descripcion: 'Inspiración y suavidad en cada capa. El equilibrio perfecto entre estilo y descanso.'
   },
   {
+    id: 3,
     imagen: 'assets/img/alcoba3.jpg',
     nombre: 'Colchón Tech Confort',
     descripcion: 'Tecnología avanzada con espuma dura de alta densidad y sistema pocket con foam case. Relleno de algodón natural para máximo confort.'
   },
   {
+    id: 18,
     imagen: 'assets/img/espumas-med2.jpg',
     nombre: 'Colchón Espumas Medellín Gris',
     descripcion: 'Diseño sobrio y moderno en color gris con tecnología de punta para noches de confort absoluto.'
   },
   {
+    id: 4,
     imagen: 'assets/img/alcoba4.jpg',
     nombre: 'Colchón Pocket Bliss',
     descripcion: 'Sistema pocket de 5 zonas con soporte individual. Espuma suave combinada con capas de alta densidad para un equilibrio perfecto.'
   },
   {
+    id: 16,
     imagen: 'assets/img/alcoba7.jpg',
     nombre: 'Colchón Espumas Medellín',
     descripcion: 'Tradición y soporte de la mano de Espumas Medellín. Calidad garantizada para un descanso profundo.'
   },
   {
+    id: 5,
     imagen: 'assets/img/alcoba5.jpg',
     nombre: 'Colchón Royal Dream',
     descripcion: 'Diseño exclusivo con múltiples capas de espuma. Tejido premium transpirable and acolchado de 7cm para noches de ensueño.'
   },
   {
+    id: 1,
     imagen: 'assets/img/colchon2.png',
     nombre: 'Colchón Essence',
     descripcion: 'Capas de confort superior con núcleo de alta resistencia. Sistema de ventilación integrado para noches frescas.'
@@ -55,26 +65,31 @@ export const PRODUCTOS_COLCHONES: ProductoCarrusel[] = [
 
 export const PRODUCTOS_AMBIENTES: ProductoCarrusel[] = [
   {
+    id: 15,
     imagen: 'assets/img/distri1.jpg',
     nombre: 'Ambiente Sereno',
     descripcion: 'Diseño de interiores inspirado en la calma. Colores neutros y texturas suaves para un espacio de descanso ideal.'
   },
   {
+    id: 15, // Reusing ID for simplicity or if they go to a generic room category
     imagen: 'assets/img/distri3.jpg',
     nombre: 'Suite Elegance',
     descripcion: 'Ambientación premium para habitaciones principales. Combinación perfecta de estilo contemporáneo y confort clásico.'
   },
   {
+    id: 15,
     imagen: 'assets/img/distri4.jpg',
     nombre: 'Espacio Zen',
     descripcion: 'Minimalismo y armonía en cada rincón. Creado para quienes buscan la máxima relajación en su dormitorio.'
   },
   {
+    id: 15,
     imagen: 'assets/img/distri5.jpg',
     nombre: 'Habitación Luxury',
     descripcion: 'El máximo exponente del lujo en descanso. Acabados de alta gama y diseño exclusivo para clientes exigentes.'
   },
   {
+    id: 15,
     imagen: 'assets/img/agata.jpg',
     nombre: 'Colección Ágata',
     descripcion: 'Inspirada en la piedra preciosa, esta línea combina elegancia atemporal con la más alta tecnología en descanso.'
@@ -83,36 +98,43 @@ export const PRODUCTOS_AMBIENTES: ProductoCarrusel[] = [
 
 export const PRODUCTOS_COMPLEMENTOS: ProductoCarrusel[] = [
   {
+    id: 7,
     imagen: 'assets/img/almohadas.jpg',
     nombre: 'Almohadas Premium',
     descripcion: 'Relleno de fibra siliconada con funda de algodón egipcio. Altura ajustable para cada tipo de durmiente.'
   },
   {
+    id: 10,
     imagen: 'assets/img/sabanas.jpg',
     nombre: 'Sábanas Luxury',
     descripcion: 'Algodón de 400 hilos con acabado satinado. Suavidad incomparable y durabilidad garantizada lavado tras lavado.'
   },
   {
+    id: 13,
     imagen: 'assets/img/colchon-prueba1.jpg',
     nombre: 'Protector Imperial',
     descripcion: 'Protección total contra ácaros y humedad. Tejido hipoalergénico con barrera impermeable invisible.'
   },
   {
+    id: 14,
     imagen: 'assets/img/colchon-prueba2.jpg',
     nombre: 'Base Box Spring',
     descripcion: 'Sistema de soporte con resortes internos. Extiende la vida útil del colchón y mejora la firmeza del conjunto.'
   },
   {
+    id: 106, // Placeholder if not found elsewhere
     imagen: 'assets/img/colchon-districol.jpeg',
     nombre: 'Set Completo Districol',
     descripcion: 'Conjunto premium que incluye colchón, base y almohadas. Todo lo necesario para transformar tu descanso.'
   },
   {
+    id: 21,
     imagen: 'assets/img/protector.jpg',
     nombre: 'Protector Districol',
     descripcion: 'Máxima protección para tu colchón contra líquidos y alérgenos. Prolonga la vida útil de tu inversión.'
   },
   {
+    id: 22,
     imagen: 'assets/img/protector-blanco.jpg',
     nombre: 'Protector Confort Blanco',
     descripcion: 'Funda protectora transpirable y suave. Higiene y frescura garantizada en cada noche.'
@@ -121,16 +143,19 @@ export const PRODUCTOS_COMPLEMENTOS: ProductoCarrusel[] = [
 
 export const PRODUCTOS_ALMOHADAS: ProductoCarrusel[] = [
   {
+    id: 7,
     imagen: 'assets/img/almohadas.jpg',
     nombre: 'Almohada Comfort Plus',
     descripcion: 'Relleno de fibra siliconada de alta densidad. Soporte ergonómico que se adapta a la curvatura natural del cuello.'
   },
   {
+    id: 8,
     imagen: 'assets/img/almohada2.jpg',
     nombre: 'Almohada Memory Foam',
     descripcion: 'Espuma viscoelástica con efecto memoria. Distribución uniforme del peso para aliviar puntos de presión.'
   },
   {
+    id: 9,
     imagen: 'assets/img/almohada3.jpg',
     nombre: 'Almohada Gel Fresh',
     descripcion: 'Tecnología gel infused para noches frescas. Funda removible de algodón hipoalergénico lavable a máquina.'
@@ -139,26 +164,31 @@ export const PRODUCTOS_ALMOHADAS: ProductoCarrusel[] = [
 
 export const PRODUCTOS_SABANAS: ProductoCarrusel[] = [
   {
+    id: 10,
     imagen: 'assets/img/sabana-colchon.jpg',
     nombre: 'Sábanas Premium 400 Hilos',
     descripcion: 'Algodón egipcio de 400 hilos con acabado satinado. Suavidad excepcional que mejora con cada lavado.'
   },
   {
+    id: 11,
     imagen: 'assets/img/sabana.jpg',
     nombre: 'Sábanas Luxury Collection',
     descripcion: 'Tejido de microfibra premium con acabado perlado. Resistentes a las arrugas y de secado rápido.'
   },
   {
+    id: 12,
     imagen: 'assets/img/sabana2.jpg',
     nombre: 'Sábanas Organic Cotton',
     descripcion: 'Algodón 100% orgánico certificado. Tejido transpirable ideal para pieles sensibles y alérgicos.'
   },
   {
+    id: 12,
     imagen: 'assets/img/sabana3.jpg',
     nombre: 'Sábanas Silky Touch',
     descripcion: 'Mezcla de algodón y seda natural. Sensación de lujo incomparable para un descanso de ensueño.'
   },
   {
+    id: 20,
     imagen: 'assets/img/sabana-colchon.jpg',
     nombre: 'Sábana Blanca Premium',
     descripcion: 'Blancura impecable y suavidad al tacto. Algodón de alta calidad para una experiencia de hotel en casa.'

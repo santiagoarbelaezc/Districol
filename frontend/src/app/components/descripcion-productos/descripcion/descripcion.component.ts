@@ -25,7 +25,14 @@ export class CarruselCategoryComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.categoriaId) {
-      this.productos = this.productoService.getProductosPorCategoria(this.categoriaId);
+      this.productoService.getProductosPorCategoria(this.categoriaId).subscribe({
+        next: (productos) => {
+          this.productos = productos;
+        },
+        error: () => {
+          this.productos = [];
+        }
+      });
     }
   }
 

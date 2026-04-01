@@ -1,60 +1,59 @@
 <?php
 /**
  * controllers/AuthController.php
- * Autenticación: login, register, logout, refresh-token
- * Equivalente a controllers/auth.controller.js del backend Node.js
+ * Autenticación JWT con manejo de errores estructurado
  */
 
 require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../utils/ResponseHandler.php';
+require_once __DIR__ . '/../utils/Logger.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Firebase\JWT\JWT;
 
-class AuthController {
-
-    // 🔐 LOGIN
-    public static function login(): void {
-        $body = json_decode(file_get_contents('php://input'), true);
-
-        $correo   = isset($body['correo']) ? strtolower(trim($body['correo'])) : '';
-        $password = $body['password'] ?? '';
-
-        if (!$correo || !$password) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Correo y contraseña son requeridos']);
-            return;
-        }
-
+class AuthController
+{
+    // ─── POST /api/auth/login ────────────────────────────────────────────────
+    public static function login(): void
+    {
         try {
-            $db   = getDB();
-            $stmt = $db->prepare('SELECT * FROM usuarios WHERE correo = ?');
+            $body = ResponseHandler::getBody();
+
+            $correo   = isset($body['correo'])   ? strtolower(trim($body['correo']))   : '';
+            $password = $body['password'] ?? '';
+
+            if (!$correo || !$password) {
+                throw new InvalidArgumentException('Correo y contraseña son requeridos');
+            }
+
+            $db      = getDB();
+            $stmt    = $db->prepare('SELECT * FROM usuarios WHERE correo = ?');
             $stmt->execute([$correo]);
             $usuario = $stmt->fetch();
 
             if (!$usuario) {
-                http_response_code(401);
-                echo json_encode(['error' => 'Usuario no encontrado']);
+                ResponseHandler::error('Usuario no encontrado', 401);
                 return;
             }
 
             if (!password_verify($password, $usuario['password'])) {
-                http_response_code(401);
-                echo json_encode(['error' => 'Contraseña incorrecta']);
+                ResponseHandler::error('Contraseña incorrecta', 401);
                 return;
             }
 
-            $secret = $_ENV['JWT_SECRET'] ?? '';
+            $secret  = $_ENV['JWT_SECRET'] ?? 'secret';
             $payload = [
                 'id'     => $usuario['id'],
                 'correo' => $usuario['correo'],
                 'rol'    => $usuario['rol'],
                 'iat'    => time(),
-                'exp'    => time() + 3600, // 1 hora
+                'exp'    => time() + 3600,
             ];
 
             $token = JWT::encode($payload, $secret, 'HS256');
 
-            echo json_encode([
+            Logger::info('AuthController::login – OK', ['correo' => $correo]);
+            ResponseHandler::success([
                 'mensaje' => 'Login exitoso',
                 'token'   => $token,
                 'usuario' => [
@@ -64,27 +63,33 @@ class AuthController {
                     'nombre' => $usuario['nombre'],
                 ],
             ]);
+
+        } catch (PDOException $e) {
+            Logger::error('AuthController::login – DB', ['exception' => $e->getMessage()]);
+            ResponseHandler::error('Error al conectar con la base de datos', 500);
+        } catch (InvalidArgumentException $e) {
+            ResponseHandler::error($e->getMessage(), 400);
         } catch (Throwable $e) {
-            error_log('Error en login: ' . $e->getMessage());
-            http_response_code(500);
-            echo json_encode(['error' => 'Error interno del servidor']);
+            Logger::error('AuthController::login – inesperado', ['exception' => $e->getMessage()]);
+            ResponseHandler::error('Error interno del servidor', 500);
         }
     }
 
-    // 🟢 REGISTER (no implementado)
-    public static function register(): void {
-        http_response_code(501);
-        echo json_encode(['error' => 'Funcionalidad no implementada']);
+    // ─── POST /api/auth/logout ───────────────────────────────────────────────
+    public static function logout(): void
+    {
+        ResponseHandler::success(['mensaje' => 'Logout exitoso (solo frontend)']);
     }
 
-    // 🔴 LOGOUT (frontend-only)
-    public static function logout(): void {
-        echo json_encode(['mensaje' => 'Logout exitoso (solo frontend)']);
+    // ─── POST /api/auth/register ─────────────────────────────────────────────
+    public static function register(): void
+    {
+        ResponseHandler::error('Registro deshabilitado. Contacta al administrador.', 403);
     }
 
-    // 🔁 REFRESH TOKEN (no implementado)
-    public static function refreshToken(): void {
-        http_response_code(501);
-        echo json_encode(['error' => 'Funcionalidad no implementada']);
+    // ─── POST /api/auth/refresh-token ────────────────────────────────────────
+    public static function refreshToken(): void
+    {
+        ResponseHandler::error('Refresh token no implementado', 501);
     }
 }

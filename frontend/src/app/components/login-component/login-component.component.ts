@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login-component',
@@ -17,7 +18,7 @@ export class LoginComponentComponent {
   isLoading: boolean = false;
   errorMessage: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;
@@ -33,11 +34,16 @@ export class LoginComponentComponent {
 
     this.isLoading = true;
     
-    // Simular login - aquí conectarías con tu servicio de autenticación
-    setTimeout(() => {
-      this.isLoading = false;
-      // this.router.navigate(['/dashboard']);
-    }, 1500);
+    this.authService.login(this.email, this.password).subscribe({
+      next: (res) => {
+        this.isLoading = false;
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.errorMessage = err.error?.error || 'Error al iniciar sesión. Verifica tus credenciales.';
+      }
+    });
   }
 
   goToHome(): void {
