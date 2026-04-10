@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ApiService {
-  private readonly baseUrl = 'http://localhost:8000/api';
+  private readonly baseUrl = 'https://colchonesdistricol.com/api';
 
   getApiUrl(endpoint: string): string {
     return `${this.baseUrl}/${endpoint}`;

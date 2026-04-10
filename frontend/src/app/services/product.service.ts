@@ -35,7 +35,7 @@ export class ProductService {
 
   // ─── UPDATE ──────────────────────────────────────────────────────────────
   actualizarProducto(id: number, formData: FormData): Observable<any> {
-    return this.http.put<any>(this.api.getApiUrl(`productos/${id}`), formData);
+    return this.http.post<any>(this.api.getApiUrl(`productos/${id}`), formData);
   }
 
   // ─── DELETE ──────────────────────────────────────────────────────────────
