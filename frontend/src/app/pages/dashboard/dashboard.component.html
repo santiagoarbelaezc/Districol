@@ -197,7 +197,7 @@
         <button class="btn-modal btn-cancelar" (click)="cerrarModal()" [disabled]="guardando">
           Cancelar
         </button>
-        <button class="btn-modal btn-guardar" (click)="guardarProducto()" [disabled]="guardando || !form.nombre">
+        <button class="btn-modal btn-guardar" (click)="guardarProducto()" [disabled]="guardando || !isFormDirty() || !form.nombre">
           @if (guardando) {
             <span class="loader loader-sm"></span>
             Procesando...
@@ -205,7 +205,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
               <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
             </svg>
-            {{ modoEdicion ? 'Actualizar Producto' : 'Confirmar Registro' }}
+            {{ modoEdicion ? 'Guardar Cambios' : 'Confirmar Registro' }}
           }
         </button>
       </div>

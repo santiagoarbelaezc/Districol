@@ -37,6 +37,7 @@ export class DashboardComponent implements OnInit {
 
   // Form
   form: ProductoForm = this.formVacio();
+  originalForm: ProductoForm = this.formVacio();
   archivosSeleccionados: File[] = [];
   productoAEliminar: any = null;
 
@@ -83,6 +84,7 @@ export class DashboardComponent implements OnInit {
       category:    producto.category || 'Districol',
       precio:      producto.precio || 0,
     };
+    this.originalForm = { ...this.form };
     this.archivosSeleccionados = [];
     this.modoEdicion = true;
     this.modalAbierto = true;
@@ -99,6 +101,23 @@ export class DashboardComponent implements OnInit {
     if (input.files) {
       this.archivosSeleccionados = Array.from(input.files);
     }
+  }
+
+  isFormDirty(): boolean {
+    if (!this.modoEdicion) {
+      // For creating, it's dirty if it has a name
+      return !!this.form.nombre || this.archivosSeleccionados.length > 0;
+    }
+
+    // Compare with originalForm
+    const changed = 
+      this.form.nombre !== this.originalForm.nombre ||
+      this.form.descripcion !== this.originalForm.descripcion ||
+      this.form.category !== this.originalForm.category ||
+      this.form.precio !== this.originalForm.precio ||
+      this.archivosSeleccionados.length > 0;
+
+    return changed;
   }
 
   guardarProducto(): void {
