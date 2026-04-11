@@ -129,8 +129,11 @@ export class DashboardComponent implements OnInit {
     fd.append('category', this.form.category);
     fd.append('precio', String(this.form.precio));
 
-    for (const file of this.archivosSeleccionados) {
-      fd.append('imagenes[]', file);
+    // Añadir archivos con el nombre correcto para PHP
+    if (this.archivosSeleccionados.length > 0) {
+      for (let i = 0; i < this.archivosSeleccionados.length; i++) {
+        fd.append('imagenes', this.archivosSeleccionados[i]);
+      }
     }
 
     this.guardando = true;
