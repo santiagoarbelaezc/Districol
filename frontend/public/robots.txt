@@ -1,0 +1,25 @@
+# Robots.txt para Districol - Optimización para motores de búsqueda
+
+# Permitir a todos los robots indexar contenido
+User-agent: *
+Allow: /
+Disallow: /node_modules/
+Disallow: /assets/videos/
+Disallow: /.env
+Disallow: /*.map
+Disallow: /admin/
+Disallow: /private/
+
+# Permitir específicamente a Google
+User-agent: Googlebot
+Allow: /
+
+# Permitir específicamente a Bing
+User-agent: Bingbot
+Allow: /
+
+# Velocidad de rastreo
+Crawl-delay: 1
+
+# Ubicación del sitemap
+Sitemap: https://districol.com/sitemap.xml
