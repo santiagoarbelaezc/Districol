@@ -61,6 +61,7 @@ function uploadToCloudinary(string $tmpPath, string $folder): array {
         'allowed_formats'      => ['jpg', 'jpeg', 'png', 'webp', 'gif'],
         'transformation'       => [['width' => 800, 'height' => 600, 'crop' => 'limit']],
         'overwrite'            => true,
+        'verify'               => false, // Bypass SSL verification locally
     ]);
 
     return [
@@ -82,7 +83,7 @@ function deleteFromCloudinary(string $publicId): bool {
 
     try {
         $uploadApi = new UploadApi();
-        $result = $uploadApi->destroy($publicId);
+        $result = $uploadApi->destroy($publicId, ['verify' => false]);
         return ($result['result'] ?? '') === 'ok';
     } catch (Throwable $e) {
         error_log('Error eliminando de Cloudinary: ' . $e->getMessage());

@@ -67,22 +67,63 @@ class ProductoController
     // ─── Helper: subir imágenes de $_FILES['imagenes'] a Cloudinary ─────────
     private static function subirImagenes(): array
     {
-        if (empty($_FILES['imagenes'])) return [];
+        if (empty($_FILES) || empty($_FILES['imagenes'])) {
+            Logger::debug("📁 No hay archivos en la petición");
+            return [];
+        }
 
         $files          = $_FILES['imagenes'];
         $uploadedImages = [];
-        $count          = is_array($files['name']) ? count($files['name']) : 1;
+        
+        // Determinar si es un único archivo o múltiples
+        $isMultiple = is_array($files['name']);
+        $count      = $isMultiple ? count($files['name']) : 1;
+
+        Logger::debug("📁 Procesando $count archivo(s) de imágenes");
 
         for ($i = 0; $i < $count; $i++) {
-            $tmpName = is_array($files['tmp_name']) ? $files['tmp_name'][$i] : $files['tmp_name'];
-            $error   = is_array($files['error'])    ? $files['error'][$i]    : $files['error'];
+            $tmpName = $isMultiple ? $files['tmp_name'][$i] : $files['tmp_name'];
+            $error   = $isMultiple ? $files['error'][$i]    : $files['error'];
+            $name    = $isMultiple ? $files['name'][$i]     : $files['name'];
 
-            if ($error !== UPLOAD_ERR_OK || !$tmpName) continue;
+            if ($error !== UPLOAD_ERR_OK) {
+                Logger::warning("⚠️ Error en upload de archivo", ['file' => $name, 'code' => $error]);
+                continue;
+            }
 
-            $result           = uploadToCloudinary($tmpName, 'districol_productos');
-            $uploadedImages[] = ['url' => $result['url'], 'publicId' => $result['publicId']];
+            if (!$tmpName || !file_exists($tmpName)) {
+                Logger::warning("⚠️ Archivo temporal no encontrado", ['tmpName' => $tmpName]);
+                continue;
+            }
+
+            if (!is_readable($tmpName)) {
+                Logger::warning("⚠️ Archivo temporal no legible", ['tmpName' => $tmpName]);
+                continue;
+            }
+
+            try {
+                Logger::debug("📤 Iniciando upload a Cloudinary", ['file' => $name, 'size' => filesize($tmpName)]);
+                $result           = uploadToCloudinary($tmpName, 'districol_productos');
+                
+                if (!isset($result['url']) || !isset($result['publicId'])) {
+                    Logger::error("❌ Respuesta de Cloudinary incompleta", ['result' => json_encode($result)]);
+                    continue;
+                }
+                
+                $uploadedImages[] = ['url' => $result['url'], 'publicId' => $result['publicId']];
+                Logger::info("✅ Imagen subida a Cloudinary exitosamente", ['url' => substr($result['url'], 0, 50)]);
+            } catch (Throwable $e) {
+                Logger::error("❌ Error al subir a Cloudinary", [
+                    'file' => $name,
+                    'error' => $e->getMessage(),
+                    'class' => get_class($e)
+                ]);
+                // NO lanzar excepción - solo loguear y continuar
+                continue;
+            }
         }
 
+        Logger::info("📸 Total de imágenes subidas: " . count($uploadedImages));
         return $uploadedImages;
     }
 
@@ -186,60 +227,137 @@ class ProductoController
     public static function actualizarProducto(int $id): void
     {
         try {
+            Logger::info("━━━━━ INICIO actualizarProducto ━━━━━", ['id' => $id]);
+            
             $name        = ResponseHandler::sanitize($_POST['nombre'] ?? '');
             $description = ResponseHandler::sanitize($_POST['descripcion'] ?? '');
             $category    = ResponseHandler::sanitize($_POST['category'] ?? 'Districol');
             $precio      = (float)($_POST['precio'] ?? 0);
 
+            Logger::info("📥 Datos recibidos", [
+                'id' => $id, 
+                'nombre' => $name, 
+                'precio' => $precio,
+                'imagenes_count' => isset($_FILES['imagenes']) ? 'si' : 'no'
+            ]);
+
             if (!$name) {
+                Logger::warning("⚠️ Nombre vacío - rechazando actualización");
                 throw new InvalidArgumentException("El campo 'nombre' es requerido");
             }
 
             $db = getDB();
+            
+            // Verificar que el producto existe
+            Logger::debug("🔍 Verificando si existe el producto ($id)...");
+            $checkStmt = $db->prepare('SELECT id FROM products WHERE id = ?');
+            $checkStmt->execute([$id]);
+            $existe = $checkStmt->fetch();
+            
+            if (!$existe) {
+                Logger::warning("❌ Producto no encontrado", ['id' => $id]);
+                throw new InvalidArgumentException("Producto con ID $id no encontrado");
+            }
+            
+            Logger::info("✅ Producto existe");
+
             $db->beginTransaction();
+            Logger::debug("🔄 Iniciada transacción");
 
-            $db->prepare('UPDATE products SET name = ?, description = ?, category = ? WHERE id = ?')
-               ->execute([$name, $description, $category, $id]);
+            // 1. Actualizar datos del producto
+            Logger::debug("📝 Actualizando datos del producto");
+            $updateStmt = $db->prepare('UPDATE products SET name = ?, description = ?, category = ? WHERE id = ?');
+            $updateStmt->execute([$name, $description, $category, $id]);
+            Logger::info("✅ Datos del producto actualizados");
 
-            $db->prepare('UPDATE product_variants SET price = ? WHERE product_id = ?')
-               ->execute([$precio, $id]);
+            // 2. Actualizar o crear variante de precio
+            if ($precio > 0) {
+                Logger::debug("💰 Procesando precio: $precio");
+                $checkVar = $db->prepare('SELECT id FROM product_variants WHERE product_id = ?');
+                $checkVar->execute([$id]);
+                $variantExiste = $checkVar->fetch();
+                
+                if ($variantExiste) {
+                    Logger::debug("Variante existe - haciendo UPDATE");
+                    $db->prepare('UPDATE product_variants SET price = ? WHERE product_id = ?')
+                       ->execute([$precio, $id]);
+                } else {
+                    Logger::debug("Variante NO existe - haciendo INSERT");
+                    $db->prepare('INSERT INTO product_variants (product_id, name, price, available) VALUES (?, ?, ?, 1)')
+                       ->execute([$id, 'Única', $precio]);
+                }
+                Logger::info("✅ Variante de precio procesada");
+            }
 
-            $hayNuevasImagenes = (!empty($_FILES['imagenes']['name'][0]) || !empty($_FILES['imagenes']['tmp_name']));
+            // 3. Procesar imágenes si existen
+            $hayNuevasImagenes = false;
+            if (!empty($_FILES) && isset($_FILES['imagenes'])) {
+                $files = $_FILES['imagenes'];
+                if (is_array($files['name'])) {
+                    $hayNuevasImagenes = !empty($files['name'][0]);
+                } else {
+                    $hayNuevasImagenes = !empty($files['name']);
+                }
+            }
 
             if ($hayNuevasImagenes) {
+                Logger::info("🖼️ Procesando nuevas imágenes");
+                
                 $oldImgStmt = $db->prepare('SELECT description FROM product_images WHERE product_id = ?');
                 $oldImgStmt->execute([$id]);
                 $oldImages = $oldImgStmt->fetchAll();
 
+                Logger::debug("Eliminando " . count($oldImages) . " imágenes antiguas");
+                
                 foreach ($oldImages as $img) {
                     if ($img['description']) {
-                        try { deleteFromCloudinary($img['description']); } catch (Throwable $e) {}
+                        try { 
+                            deleteFromCloudinary($img['description']); 
+                            Logger::debug("✅ Imagen eliminada de Cloudinary: " . $img['description']);
+                        } catch (Throwable $e) {
+                            Logger::warning("⚠️ No se pudo eliminar imagen de Cloudinary", ['file' => $img['description'], 'error' => $e->getMessage()]);
+                        }
                     }
                 }
 
                 $db->prepare('DELETE FROM product_images WHERE product_id = ?')->execute([$id]);
+                Logger::debug("✅ Registros de imágenes antiguas eliminados");
 
                 $newImages = self::subirImagenes();
-                $imgStmt   = $db->prepare('INSERT INTO product_images (product_id, url, description) VALUES (?, ?, ?)');
-                foreach ($newImages as $img) {
-                    $imgStmt->execute([$id, $img['url'], $img['publicId']]);
+                Logger::info("✅ Imágenes subidas a Cloudinary", ['count' => count($newImages)]);
+                
+                if (count($newImages) > 0) {
+                    $imgStmt   = $db->prepare('INSERT INTO product_images (product_id, url, description) VALUES (?, ?, ?)');
+                    foreach ($newImages as $img) {
+                        $imgStmt->execute([$id, $img['url'], $img['publicId']]);
+                        Logger::debug("✅ Imagen insertada en BD", ['url' => substr($img['url'], 0, 50) . '...']);
+                    }
+                } else {
+                    Logger::warning("⚠️ No se subieron nuevas imágenes a Cloudinary");
                 }
+            } else {
+                Logger::debug("ℹ️ No hay nuevas imágenes");
             }
 
             $db->commit();
-            Logger::info('ProductoController::actualizarProducto – OK', ['id' => $id]);
-            ResponseHandler::success(['mensaje' => 'Producto actualizado']);
+            Logger::info("✅ Transacción completada exitosamente");
+            Logger::info("━━━━━ FIN actualizarProducto ━━━━━", ['id' => $id, 'status' => 'success']);
+            ResponseHandler::success(['mensaje' => 'Producto actualizado correctamente', 'id' => $id]);
 
         } catch (PDOException $e) {
             if (isset($db) && $db->inTransaction()) $db->rollBack();
-            Logger::error('ProductoController::actualizarProducto – DB', ['exception' => $e->getMessage()]);
-            ResponseHandler::error('Error al actualizar', 500);
+            Logger::error('❌ Error de base de datos en actualización', ['exception' => $e->getMessage(), 'code' => $e->getCode()]);
+            Logger::info("━━━━━ FIN actualizarProducto ━━━━━", ['id' => $id, 'status' => 'error_db']);
+            ResponseHandler::error('Error de base de datos: ' . $e->getMessage(), 500);
         } catch (InvalidArgumentException $e) {
+            Logger::warning('⚠️ Argumentos inválidos en actualización', ['exception' => $e->getMessage()]);
+            Logger::info("━━━━━ FIN actualizarProducto ━━━━━", ['id' => $id, 'status' => 'error_validation']);
             ResponseHandler::error($e->getMessage(), 400);
         } catch (Throwable $e) {
             if (isset($db) && $db->inTransaction()) $db->rollBack();
-            Logger::error('ProductoController::actualizarProducto – inesperado', ['exception' => $e->getMessage()]);
-            ResponseHandler::error('Error inesperado', 500);
+            Logger::error('❌ Error inesperado en actualización', ['exception' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            Logger::info("━━━━━ FIN actualizarProducto ━━━━━", ['id' => $id, 'status' => 'error_unknown']);
+            ResponseHandler::error('Error: ' . $e->getMessage(), 500);
         }
     }
 
