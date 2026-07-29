@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ProductoDetailService } from '../../services/producto-detail.service';
 import { Producto } from '../../data/mock-products';
+import { getProductSlug } from '../../utils/seo-slug.util';
 
 @Component({
     selector: 'app-util-grid-productos-interes',
+    standalone: true,
     imports: [CommonModule],
     templateUrl: './grid-productos.component.html',
     styleUrl: './grid-productos.component.css'
@@ -52,6 +54,7 @@ export class GridProductosInteresComponent implements OnInit, OnChanges {
   }
 
   verProducto(producto: Producto): void {
-    this.router.navigate(['/productos', producto.id]);
+    const slug = getProductSlug(producto.id, producto.nombre);
+    this.router.navigate(['/productos', slug]);
   }
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { ProductoDetailService } from '../../../services/producto-detail.service';
 import { Producto } from '../../../data/mock-products';
+import { getProductSlug } from '../../../utils/seo-slug.util';
 
 @Component({
     selector: 'app-descripcion-seleccionado',
@@ -24,8 +25,12 @@ export class DescripcionSeleccionadoComponent implements OnInit, OnChanges {
   zoomX = 50;
   zoomY = 50;
 
+  // Estado del Modal de Descripción y Cotización
+  mostrarModalDescripcion: boolean = false;
+
   constructor(
     private router: Router,
+    private location: Location,
     private productoService: ProductoDetailService
   ) { }
 
@@ -56,6 +61,13 @@ export class DescripcionSeleccionadoComponent implements OnInit, OnChanges {
             this.nombreCompleto = this.producto.nombre;
             this.imagenPrincipal = this.producto.imagen;
             this.imagenSeleccionadaIndex = 0;
+
+            // Actualizar silenciosamente la barra de direcciones al slug canónico SEO
+            const seoslug = getProductSlug(this.producto.id, this.producto.nombre);
+            const canonicalUrl = `/productos/${seoslug}`;
+            if (this.location.path() !== canonicalUrl) {
+              this.location.replaceState(canonicalUrl);
+            }
           } else {
             this.error = true;
           }
@@ -67,6 +79,14 @@ export class DescripcionSeleccionadoComponent implements OnInit, OnChanges {
         }
       });
     }, 400);
+  }
+
+  abrirModalDescripcion(): void {
+    this.mostrarModalDescripcion = true;
+  }
+
+  cerrarModalDescripcion(): void {
+    this.mostrarModalDescripcion = false;
   }
 
   seleccionarImagen(index: number): void {
@@ -99,7 +119,7 @@ export class DescripcionSeleccionadoComponent implements OnInit, OnChanges {
 
   generarWhatsAppLink(): string {
     const mensaje = encodeURIComponent(
-      `Hola, estoy interesado en el producto: ${this.nombreCompleto}. ¿Me pueden dar más información?`
+      `Hola, estoy interesado en cotizar el producto: ${this.nombreCompleto}. ¿Me pueden enviar una cotización y detalles de disponibilidad?`
     );
     return `https://wa.me/573001234567?text=${mensaje}`;
   }
@@ -113,10 +133,6 @@ export class DescripcionSeleccionadoComponent implements OnInit, OnChanges {
   }
 
   volverAProductos(): void {
-    this.router.navigate(['/productos']);
-  }
-
-  verMasDeEstaCategoria(): void {
     this.router.navigate(['/productos']);
   }
 }

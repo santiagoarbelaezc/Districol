@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ProductoDetailService } from '../../../services/producto-detail.service';
 import { Producto } from '../../../data/mock-products';
+import { getProductSlug } from '../../../utils/seo-slug.util';
 
 @Component({
     selector: 'app-carrusel-category',
+    standalone: true,
     imports: [CommonModule],
     templateUrl: './descripcion.component.html',
     styleUrl: './descripcion.component.css'
@@ -45,7 +47,8 @@ export class CarruselCategoryComponent implements OnInit {
   }
 
   verProducto(producto: Producto): void {
-    this.router.navigate(['/productos', producto.id]);
+    const slug = getProductSlug(producto.id, producto.nombre);
+    this.router.navigate(['/productos', slug]);
   }
 
   scrollCarousel(direction: 'prev' | 'next'): void {

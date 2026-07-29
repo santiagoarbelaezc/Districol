@@ -1,6 +1,7 @@
 import { Component, Input, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { getProductSlug } from '../../utils/seo-slug.util';
 
 export interface ProductoCarrusel {
   id: number;
@@ -73,7 +74,8 @@ export class CarruselHomeComponent implements AfterViewInit {
   }
 
   verMas(producto: ProductoCarrusel): void {
-    this.router.navigate(['/productos', producto.id]);
+    const slug = getProductSlug(producto.id, producto.nombre);
+    this.router.navigate(['/productos', slug]);
   }
 
   formatPrecio(precio?: number): string {

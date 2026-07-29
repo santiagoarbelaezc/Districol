@@ -26,16 +26,15 @@
             <span class="breadcrumb-current">{{ nombreCompleto }}</span>
         </nav>
 
-        <!-- Contenedor principal con estructura de dos columnas -->
+        <!-- Contenedor principal de 2 columnas -->
         <div class="producto-layout-container">
 
-            <!-- Columna Izquierda: Imagen -->
+            <!-- COLUMNA IZQUIERDA: IMAGEN + ASESOR + COMPARTIR/VOLVER -->
             <div class="producto-columna-izquierda">
-
-                <!-- Contenedor de imagen principal -->
-                <div class="imagen-principal-wrapper">
-                    <div class="producto-imagen-container" (mousemove)="onImageMouseMove($event)"
-                        (mouseleave)="onImageMouseLeave()">
+                
+                <!-- Card de la Imagen Principal -->
+                <div class="imagen-card">
+                    <div class="producto-imagen-container" (mousemove)="onImageMouseMove($event)" (mouseleave)="onImageMouseLeave()">
                         <div class="producto-imagen-wrapper">
                             <img [src]="imagenPrincipal" [alt]="nombreCompleto" class="producto-imagen"
                                 [style.--zoom-x]="zoomX + '%'" [style.--zoom-y]="zoomY + '%'" />
@@ -44,114 +43,217 @@
                     </div>
                 </div>
 
-                <!-- Indicadores de imagen -->
-                <div class="indicadores-wrapper" *ngIf="producto && producto.imagenes && producto.imagenes.length > 1">
+                <!-- Indicadores / Thumbnails si hay más de 1 -->
+                <div class="indicadores-wrapper" *ngIf="producto.imagenes && producto.imagenes.length > 1">
                     <div class="imagen-indicadores">
-                        <button *ngFor="let imagen of producto.imagenes; let i = index" class="indicador-imagen"
-                            [class.activo]="imagenSeleccionadaIndex === i" (click)="seleccionarImagen(i)"
+                        <button *ngFor="let imagen of producto.imagenes; let i = index" 
+                            class="indicador-imagen"
+                            [class.activo]="imagenSeleccionadaIndex === i" 
+                            (click)="seleccionarImagen(i)"
                             [title]="'Ver imagen ' + (i + 1)">
                             <img [src]="imagen" [alt]="'Imagen ' + (i + 1)" class="thumbnail" />
-                            <span class="numero">{{ i + 1 }}</span>
                         </button>
                     </div>
                 </div>
 
-            </div>
+                <!-- BLOQUE DE ACCIONES DEBAJO DE LA IMAGEN -->
+                <div class="acciones-debajo-imagen">
+                    <!-- 1. Botón Consultar con Asesor debajo de la imagen -->
+                    <a [href]="generarWhatsAppLink()" target="_blank" rel="noopener noreferrer nofollow" class="btn-consultar-asesor">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
+                        </svg>
+                        <span>Consultar con asesor</span>
+                    </a>
 
-            <!-- Columna Derecha: Información del Producto -->
-            <div class="producto-columna-derecha">
-
-                <!-- Encabezado -->
-                <div class="producto-header">
-                    <div class="producto-categorias">
-                        <span class="categoria-badge" *ngIf="producto.categoria">{{ producto.categoria }}</span>
-                        <span class="subcategoria-badge" *ngIf="producto.subcategoria">{{ producto.subcategoria
-                            }}</span>
-                    </div>
-                    <h1 class="producto-nombre">{{ nombreCompleto }}</h1>
-                </div>
-
-                <!-- Información del producto -->
-                <div class="producto-info-section">
-
-                    <!-- Precio y Cantidad -->
-                    <div class="precio-cantidad-container">
-                        <div class="precio-display">
-                            <span class="precio-label">Precio:</span>
-                            <span class="precio-valor">{{ formatearPrecio(producto.precio) }}</span>
-                        </div>
-                        <div class="cantidad-display" *ngIf="producto.cantidad">
-                            <span class="cantidad-label">Disponibles:</span>
-                            <span class="cantidad-valor">{{ producto.cantidad }} unidades</span>
-                        </div>
-                    </div>
-
-                    <!-- Descripción -->
-                    <div class="descripcion-container">
-                        <h3 class="descripcion-title">Descripción</h3>
-                        <p class="descripcion-text">{{ producto.descripcion || 'Descripción no disponible' }}</p>
-                    </div>
-
-                    <!-- Información adicional -->
-                    <div class="info-adicional">
-                        <div class="info-item">
-                            <div class="info-content">
-                                <span class="info-label">Categoría:</span>
-                                <span class="info-value">{{ producto.categoria || 'Sin categoría' }}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Acciones rápidas -->
-                    <div class="acciones-rapidas-container">
-                        <a [href]="generarWhatsAppLink()" target="_blank" rel="noopener noreferrer nofollow"
-                            class="btn-whatsapp" aria-label="Consultar por WhatsApp" title="Consultar por WhatsApp">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path
-                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-                                </path>
-                            </svg>
-                            <span class="btn-text">Consultar por WhatsApp</span>
-                        </a>
-
-                        <button class="btn-compartir" (click)="copiarEnlace()" title="Copiar enlace">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- 2. Botones Compartir Producto y Volver a Productos debajo del Botón Asesor -->
+                    <div class="secondary-actions-under-asesor">
+                        <button class="btn-share-link" (click)="copiarEnlace()" title="Compartir producto">
+                            <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <circle cx="18" cy="5" r="3"></circle>
                                 <circle cx="6" cy="12" r="3"></circle>
                                 <circle cx="18" cy="19" r="3"></circle>
                                 <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
                                 <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
                             </svg>
-                            <span class="btn-text">Copiar enlace</span>
+                            <span>{{ enlaceCopiado ? '✓ Copiado' : 'Compartir producto' }}</span>
                         </button>
 
-                        <div class="mensaje-copiado" *ngIf="enlaceCopiado">
-                            ✓ Enlace copiado
+                        <button class="btn-back-link" (click)="volverAProductos()" title="Volver a productos">
+                            ← Volver a productos
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- COLUMNA DERECHA: TITULO + PRECIO + BOTÓN MODAL DESCRIPCION + TRUST BOXES -->
+            <div class="producto-columna-derecha">
+
+                <!-- Header: Categorías + Nombre del producto -->
+                <div class="producto-header">
+                    <div class="producto-categorias">
+                        <span class="categoria-badge" *ngIf="producto.categoria">{{ producto.categoria }}</span>
+                        <span class="subcategoria-badge" *ngIf="producto.subcategoria">{{ producto.subcategoria }}</span>
+                    </div>
+
+                    <h1 class="producto-nombre">{{ nombreCompleto }}</h1>
+                    <p class="producto-subtitle-brand">{{ producto.categoria || 'Garantía Ortopédica' }}, Districol</p>
+
+                    <!-- Rating Estrellas Satisfacción -->
+                    <div class="rating-row">
+                        <div class="stars">★★★★★</div>
+                        <span class="rating-count">(55 valoraciones verificadas)</span>
+                    </div>
+                </div>
+
+                <!-- BLOQUE DE PRECIO DEBAJO DEL TÍTULO -->
+                <div class="precio-block-right">
+                    <!-- Stock badge -->
+                    <div class="stock-status-row">
+                        <span class="stock-dot">●</span>
+                        <span class="stock-text">Disponible ({{ producto.cantidad || 12 }})</span>
+                    </div>
+
+                    <!-- Precio Principal -->
+                    <div class="precio-main-display">
+                        <span class="precio-valor">{{ formatearPrecio(producto.precio) }}</span>
+                    </div>
+                    <span class="precio-subtext">Precio válido hasta agotar existencias</span>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- Botón: Ver descripción del producto (Abre Modal de Descripción & Cotización) -->
+                <div class="modal-trigger-section">
+                    <button class="btn-open-modal-desc" (click)="abrirModalDescripcion()">
+                        <div class="trigger-icon-box">
+                            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div class="trigger-text">
+                            <span class="trigger-title">Ver descripción del producto</span>
+                            <span class="trigger-subtitle">Conoce los detalles completos, especificaciones y cotiza</span>
+                        </div>
+                        <span class="trigger-arrow">›</span>
+                    </button>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- Sección: Cómo conseguirlo (Opciones de entrega y tienda) -->
+                <div class="como-conseguirlo-section">
+                    <h3 class="conseguirlo-title">Cómo conseguirlo</h3>
+
+                    <div class="trust-boxes-list">
+                        <!-- Cajas 1: Entrega -->
+                        <div class="trust-box-item">
+                            <div class="trust-icon">
+                                <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
+                                </svg>
+                            </div>
+                            <div class="trust-info">
+                                <h4 class="trust-box-title">Entrega y despacho</h4>
+                                <p class="trust-box-sub">Ver opciones y tiempos al coordinar con nuestro equipo</p>
+                            </div>
+                        </div>
+
+                        <!-- Cajas 2: Tienda Física -->
+                        <div class="trust-box-item">
+                            <div class="trust-icon">
+                                <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                                </svg>
+                            </div>
+                            <div class="trust-info">
+                                <h4 class="trust-box-title">Centro de Experiencia</h4>
+                                <p class="trust-box-sub">Probar firmeza en tienda física (Armenia, Quindío)</p>
+                            </div>
+                            <span class="trust-arrow">›</span>
                         </div>
                     </div>
-
-                    <!-- Acciones principales -->
-                    <div class="acciones-principales">
-                        <button class="btn-volver" (click)="volverAProductos()" title="Volver al catálogo">
-                            <span class="btn-icon">←</span>
-                            <span class="btn-text">Volver al catálogo</span>
-                        </button>
-
-                        <button class="btn-categoria" (click)="verMasDeEstaCategoria()" *ngIf="producto.categoria"
-                            title="Ver más productos">
-                            <span class="btn-icon">→</span>
-                            <span class="btn-text">Más productos</span>
-                        </button>
-                    </div>
-
                 </div>
 
             </div>
 
         </div>
 
+    </div>
+
+    <!-- MODAL DE DESCRIPCIÓN Y COTIZACIÓN -->
+    <div class="modal-backdrop" *ngIf="mostrarModalDescripcion && producto" (click)="cerrarModalDescripcion()">
+        <div class="modal-content-card" (click)="$event.stopPropagation()">
+            
+            <!-- Encabezado del Modal -->
+            <div class="modal-header">
+                <div class="modal-header-info">
+                    <span class="modal-category-tag" *ngIf="producto.categoria">{{ producto.categoria }}</span>
+                    <h2 class="modal-title">{{ nombreCompleto }}</h2>
+                </div>
+                <button class="modal-close-btn" (click)="cerrarModalDescripcion()" title="Cerrar ventana">✕</button>
+            </div>
+
+            <!-- Cuerpo del Modal en 2 columnas (Izquierda: Imagen + Cotizar | Derecha: Descripción completa) -->
+            <div class="modal-body-grid">
+                
+                <!-- Columna Izquierda Modal: Imagen + Precio + WhatsApp -->
+                <div class="modal-col-left">
+                    <div class="modal-image-wrapper">
+                        <img [src]="imagenPrincipal" [alt]="nombreCompleto" class="modal-product-img" />
+                    </div>
+
+                    <div class="modal-price-box">
+                        <span class="modal-price-label">Precio publicado:</span>
+                        <span class="modal-price-val">{{ formatearPrecio(producto.precio) }}</span>
+                        <span class="modal-stock-badge">● Stock disponible ({{ producto.cantidad || 12 }})</span>
+                    </div>
+
+                    <a [href]="generarWhatsAppLink()" target="_blank" rel="noopener noreferrer nofollow" class="modal-btn-whatsapp">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
+                        </svg>
+                        <span>Cotizar vía WhatsApp</span>
+                    </a>
+                </div>
+
+                <!-- Columna Derecha Modal: Descripción Completa & Especificaciones -->
+                <div class="modal-col-right">
+                    <h3 class="modal-subtitle">Descripción Completa</h3>
+                    <p class="modal-desc-full">{{ producto.descripcion || 'Producto de alta calidad ortopédica confeccionado con materiales seleccionados para brindar el máximo soporte y confort durante tus horas de sueño.' }}</p>
+
+                    <h3 class="modal-subtitle">Especificaciones y Beneficios</h3>
+                    <ul class="modal-specs-list">
+                        <li>
+                            <span class="spec-bullet">✓</span>
+                            <span>Soporte cervical de precisión y alivio inmediato de puntos de presión.</span>
+                        </li>
+                        <li>
+                            <span class="spec-bullet">✓</span>
+                            <span>Garantía ortopédica directa y respaldo institucional Districol S.A.S.</span>
+                        </li>
+                        <li>
+                            <span class="spec-bullet">✓</span>
+                            <span>Materiales transpirables de alta densidad y durabilidad comprobada.</span>
+                        </li>
+                    </ul>
+
+                    <!-- Tarjeta de Cotización Directa -->
+                    <div class="modal-cotizar-card">
+                        <div class="cotizar-card-text">
+                            <h4>¿Deseas una cotización personalizada?</h4>
+                            <p>Cotiza medidas especiales, combos o envíos al Eje Cafetero al instante.</p>
+                        </div>
+                        <a [href]="generarWhatsAppLink()" target="_blank" rel="noopener noreferrer nofollow" class="modal-btn-cotizar-action">
+                            💬 Enviar Cotización
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
     </div>
 
 </div>

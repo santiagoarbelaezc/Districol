@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CategoriasMockService } from '../../services/categorias-mock.service';
 import { Producto } from '../../data/mock-products';
+import { getProductSlug } from '../../utils/seo-slug.util';
 
 @Component({
     selector: 'app-productos-list',
@@ -164,7 +165,8 @@ export class ProductosListComponent implements OnInit, OnDestroy {
   }
 
   verDetalles(producto: Producto): void {
-    this.router.navigate(['/productos', producto.id]);
+    const slug = getProductSlug(producto.id, producto.nombre);
+    this.router.navigate(['/productos', slug]);
   }
 
   limpiarBusqueda(): void {

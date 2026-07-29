@@ -5,9 +5,11 @@ import { FooterComponent } from '../../shared/footer/footer.component';
 import { DescripcionSeleccionadoComponent } from './descripcion-select/descripcion-select.component';
 import { CarruselCategoryComponent } from '../descripcion-productos/descripcion/descripcion.component';
 import { GridProductosInteresComponent } from '../grid-productos/grid-productos.component';
+import { parseProductIdFromParam } from '../../utils/seo-slug.util';
 
 @Component({
     selector: 'app-descripcion-producto',
+    standalone: true,
     imports: [
         NavbarComponent,
         FooterComponent,
@@ -20,12 +22,14 @@ import { GridProductosInteresComponent } from '../grid-productos/grid-productos.
 })
 export class DescripcionProductoComponent implements OnInit {
   productoId: number = 0;
+  rawSlug: string = '';
 
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.productoId = Number(params['id']) || 0;
+      this.rawSlug = params['id'] || '';
+      this.productoId = parseProductIdFromParam(this.rawSlug);
     });
   }
 }

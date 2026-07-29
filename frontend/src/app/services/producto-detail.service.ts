@@ -4,6 +4,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { ApiService } from './api.service';
 import { map, catchError } from 'rxjs/operators';
 import { MOCK_PRODUCTOS } from '../data/mock-products';
+import { parseProductIdFromParam } from '../utils/seo-slug.util';
 
 @Injectable({
     providedIn: 'root'
@@ -22,12 +23,13 @@ export class ProductoDetailService {
         };
     }
 
-    getProductoPorId(id: number): Observable<any> {
-        return this.http.get<any>(this.api.getApiUrl(`productos/${id}`))
+    getProductoPorId(idOrParam: any): Observable<any> {
+        const numericId = parseProductIdFromParam(idOrParam);
+        return this.http.get<any>(this.api.getApiUrl(`productos/${numericId}`))
             .pipe(
                 map(p => this.mapProduct(p)),
                 catchError(err => {
-                    const mock = MOCK_PRODUCTOS.find(p => p.id === Number(id));
+                    const mock = MOCK_PRODUCTOS.find(p => p.id === numericId);
                     if (mock) {
                         return of(this.mapProduct(mock));
                     }
@@ -37,7 +39,8 @@ export class ProductoDetailService {
     }
 
     getProductosRelacionados(categoriaId: number, excludeId: number, limit: number = 4): Observable<any[]> {
-        return this.http.get<any[]>(this.api.getApiUrl(`productos?categoria_id=${categoriaId}&exclude_id=${excludeId}&limit=${limit}`))
+        const numericExclude = parseProductIdFromParam(excludeId);
+        return this.http.get<any[]>(this.api.getApiUrl(`productos?categoria_id=${categoriaId}&exclude_id=${numericExclude}&limit=${limit}`))
             .pipe(map(arr => (Array.isArray(arr) ? arr : []).map(p => this.mapProduct(p))));
     }
 
@@ -47,7 +50,8 @@ export class ProductoDetailService {
     }
 
     getProductosDeInteres(excludeId: number, limit: number = 6): Observable<any[]> {
-        return this.http.get<any[]>(this.api.getApiUrl(`productos/random?cantidad=${limit}&exclude_id=${excludeId}`))
+        const numericExclude = parseProductIdFromParam(excludeId);
+        return this.http.get<any[]>(this.api.getApiUrl(`productos/random?cantidad=${limit}&exclude_id=${numericExclude}`))
             .pipe(map(arr => (Array.isArray(arr) ? arr : []).map(p => this.mapProduct(p))));
     }
 }
