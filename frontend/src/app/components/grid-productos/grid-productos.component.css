@@ -1,128 +1,137 @@
-﻿/* ===== GRID PRODUCTOS DE INTERES ===== */
+/* ===== SECCIÓN PRODUCTOS DE INTERÉS (ESTILO PRODUCT LIST EN 1720PX) ===== */
 
 .grid-interes-section {
-    max-width: 1280px;
+    max-width: 1720px;
+    width: 100%;
     margin: 0 auto;
-    padding: 48px 40px 64px;
+    padding: 30px 2.5vw 70px;
+    box-sizing: border-box;
 }
 
 /* Header */
 .grid-header {
-    text-align: center;
-    margin-bottom: 36px;
+    text-align: left;
+    margin-bottom: 28px;
 }
 
 .grid-titulo {
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--color-negro, #003B4A);
-    margin: 0 0 8px;
+    font-size: clamp(1.6rem, 2.3vw, 2.2rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: #003B4A;
+    margin: 0 0 6px 0;
 }
 
 .grid-subtitulo {
-    font-size: 0.85rem;
-    color: var(--color-complementario-5, #3A5A52);
+    font-family: 'Comfortaa', sans-serif;
+    font-size: 0.9rem;
+    color: #6B7280;
     margin: 0;
-    font-weight: 400;
 }
 
-/* Grid */
-.grid-container {
+/* Grid de 4 Columnas en Desktop */
+.products-grid-container {
+    width: 100%;
+}
+
+.products-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 24px;
 }
 
-/* Cards */
-.grid-card {
-    border-radius: 14px;
+/* Tarjetas Estilo Product List / Carrusel Home */
+.producto-card {
+    background-color: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 18px;
     overflow: hidden;
-    background: var(--color-surface, #FFFFFF);
-    border: 1px solid rgba(0, 59, 74, 0.06);
-    box-shadow: 0 2px 12px rgba(0, 59, 74, 0.04);
-    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.grid-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 32px rgba(0, 59, 74, 0.1);
-    border-color: rgba(0, 59, 74, 0.12);
-}
-
-.grid-card-image-wrapper {
-    aspect-ratio: 4 / 3;
-    overflow: hidden;
     position: relative;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
 }
 
-.grid-card-image {
+.producto-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border-color: #003B4A;
+}
+
+/* Imagen & Badges */
+.card-imagen-wrapper {
+    position: relative;
+    width: 100%;
+    height: 240px;
+    overflow: hidden;
+    background-color: #F9FAFB;
+}
+
+.card-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    object-position: center;
+    transition: transform 0.6s ease;
 }
 
-.grid-card:hover .grid-card-image {
-    transform: scale(1.06);
+.producto-card:hover .card-img {
+    transform: scale(1.05);
 }
 
-.grid-card-overlay {
+/* Badge Superior Izquierda (Fondo Negro) */
+.badge-tag-top {
     position: absolute;
-    inset: 0;
-    background: rgba(0, 59, 74, 0.4);
+    top: 12px;
+    left: 12px;
+    background-color: #000000;
+    color: #FFFFFF;
+    font-size: 10px;
+    font-weight: 800;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 5px 12px;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    z-index: 5;
+}
+
+/* Contenido de la Tarjeta */
+.card-content {
+    padding: 22px 20px 20px 20px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
-.grid-card:hover .grid-card-overlay {
-    opacity: 1;
-}
-
-.ver-detalle {
-    color: #fff;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 600;
-    padding: 8px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 20px;
+.card-nombre {
+    font-size: 1.05rem;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    backdrop-filter: blur(4px);
-    transition: all 0.3s ease;
+    letter-spacing: -0.01em;
+    font-family: 'Montserrat', sans-serif;
+    color: #111827;
+    margin: 0 0 8px 0;
+    line-height: 1.25;
 }
 
-.ver-detalle:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: #fff;
-}
-
-.grid-card-info {
-    padding: 16px 18px;
-}
-
-.grid-card-categoria {
-    font-size: 0.65rem;
+.card-descripcion {
+    font-size: 0.78rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--color-principal, #003B4A);
-    display: block;
-    margin-bottom: 6px;
-}
-
-.grid-card-nombre {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.92rem;
-    font-weight: 700;
-    color: var(--color-negro, #003B4A);
-    margin: 0 0 6px;
-    line-height: 1.3;
+    letter-spacing: 0.05em;
+    font-family: 'Comfortaa', 'Montserrat', sans-serif;
+    color: #4B5563;
+    margin: 0 0 16px 0;
+    line-height: 1.5;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     line-clamp: 2;
@@ -130,32 +139,108 @@
     overflow: hidden;
 }
 
-.grid-card-precio {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1rem;
+/* Fila de Precio y Stock */
+.card-precio-row {
+    margin-bottom: 18px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6px;
+}
+
+.precio-block {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+}
+
+.precio-amount {
+    font-size: 1.35rem;
     font-weight: 800;
-    color: var(--color-principal, #003B4A);
-    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    color: #003B4A;
+    letter-spacing: -0.02em;
 }
 
-/* Responsive */
-@media (max-width: 992px) {
-    .grid-container {
-        grid-template-columns: repeat(2, 1fr);
+.precio-unit {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #9CA3AF;
+    font-family: 'Comfortaa', sans-serif;
+}
+
+.stock-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    padding: 3px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+}
+
+.stock-badge.available {
+    background: rgba(16, 185, 129, 0.12);
+    color: #059669;
+}
+
+/* Botón Ver Detalles */
+.btn-ver-detalles {
+    width: 100%;
+    border-radius: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid #E5E7EB;
+    background-color: #FFFFFF;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.producto-card:hover .btn-ver-detalles {
+    border-color: #003B4A;
+    background-color: #003B4A;
+    color: #FFFFFF;
+}
+
+.arrow-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+.producto-card:hover .arrow-icon {
+    transform: translateX(4px);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+    .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .grid-interes-section {
-        padding: 32px 16px 48px;
+        padding: 24px 16px 40px;
     }
 
-    .grid-container {
-        grid-template-columns: 1fr;
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
         gap: 16px;
     }
+}
 
-    .grid-titulo {
-        font-size: 1.3rem;
+@media (max-width: 480px) {
+    .products-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
     }
 }
