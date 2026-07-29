@@ -1,12 +1,311 @@
-.hero-header {
-  position: relative;
+:host {
+  display: block;
   width: 100%;
-  margin-top: 115px;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .hero-header {
-    margin-top: 80px;
+/* Track & Scroll Container */
+.carousel-track-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  will-change: scroll-position;
+}
+
+.carousel-track-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Main Hero Container */
+.hero-shell {
+  position: relative;
+  width: 100%;
+  height: 75vh;
+  min-height: 32rem;
+  max-height: 60rem;
+  background-color: #050505;
+}
+
+@media (min-width: 768px) {
+  .hero-shell {
+    height: 85vh;
+    min-height: 40rem;
   }
+}
+
+.carousel-flex-row {
+  display: flex;
+  height: 100%;
+  width: max-content;
+}
+
+/* Individual Slide */
+.hero-slide {
+  position: relative;
+  height: 100%;
+  width: 100vw;
+  flex: 0 0 100vw;
+  scroll-snap-align: center;
+  overflow: hidden;
+}
+
+/* Dual Image Container */
+.hero-dual-image-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-img-col-left {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-img-col-right {
+  display: none;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@media (min-width: 768px) {
+  .hero-img-col-left {
+    width: 50%;
+  }
+  .hero-img-col-right {
+    display: block;
+  }
+}
+
+.hero-slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  filter: brightness(0.88) contrast(1.02);
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-slide:hover .hero-slide-img {
+  transform: scale(1.03);
+}
+
+/* Gradient Overlay */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.45) 50%, rgba(0, 0, 0, 0.15) 100%);
+  pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+  .hero-overlay {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.1) 80%, transparent 100%);
+  }
+}
+
+/* Text Layer Superposition */
+.hero-content-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: flex-start;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.hero-content-layer * {
+  pointer-events: auto;
+}
+
+.hero-page-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  color: #ffffff;
+  padding: 6.5rem 1.5rem 2rem 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .hero-page-container {
+    padding-top: 9.5rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+.hero-max-w {
+  max-width: 48rem;
+}
+
+/* Promo Tag */
+.hero-promo-tag {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  color: #EAC7D2;
+  margin-bottom: 0.75rem;
+}
+
+/* Title */
+.hero-title {
+  font-size: clamp(2.3rem, 5.8vw, 5.2rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  margin-bottom: 0.5rem;
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* Subtitle */
+.hero-subtitle {
+  font-size: clamp(1.2rem, 2.2vw, 1.875rem);
+  font-weight: 500;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.4;
+  margin-bottom: 1rem;
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Description */
+.hero-description {
+  font-size: clamp(0.875rem, 1.1vw, 1rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 36rem;
+  margin-bottom: 1.5rem;
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+}
+
+/* Badge */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 9999px;
+  background-color: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.375rem 1.25rem 0.375rem 0.375rem;
+  font-size: 11px;
+  font-weight: 500;
+  color: #ffffff;
+  margin-bottom: 2rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.hero-badge-icon {
+  display: inline-flex;
+  height: 1.85rem;
+  width: 1.85rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: #EAC7D2;
+  color: #111111;
+  flex-shrink: 0;
+}
+
+.hero-badge-pill {
+  font-weight: 700;
+  color: #EAC7D2;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 9px;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.15rem 0.6rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hero-badge-text {
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 500;
+  line-height: 1;
+}
+
+/* CTA Button */
+.hero-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: #ffffff;
+  padding: 1rem 2.2rem;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #111111;
+  text-decoration: none;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+}
+
+.hero-cta-btn:hover {
+  background-color: #EAC7D2;
+  color: #111111;
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px rgba(234, 199, 210, 0.4);
+}
+
+/* Navigation Dots */
+.hero-dots-wrap {
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.carousel-dot {
+  height: 0.75rem;
+  width: 0.75rem;
+  border-radius: 9999px;
+  border: 0;
+  padding: 0;
+  background-color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-dot.active {
+  width: 2.5rem;
+  background-color: #ffffff;
+}
+
+.carousel-dot:hover {
+  background-color: rgba(255, 255, 255, 0.75);
 }

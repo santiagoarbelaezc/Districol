@@ -1,32 +1,62 @@
 <app-navbar></app-navbar>
 
-
+<!-- Hero Section con Banner Carousel -->
 <div data-aos="fade-down" data-aos-duration="1000">
   <app-header></app-header>
 </div>
 
-<!-- Sección de Introducción con descripción SEO -->
+<!-- Sección de Introducción SEO & Experiencia Districol -->
 <div class="introduccion-districol" data-aos="fade-up" data-aos-duration="900">
   <div class="introduccion-container">
+    <span class="introduccion-subtitle-badge">Tradición & Innovación Ortopédica</span>
     <h1 class="introduccion-titulo">Bienvenido a Districol: Tu Solución de Descanso Premium</h1>
+    
     <div class="introduccion-contenido">
-      <p class="introduccion-desc">
-        <strong>Districol es una marca colombiana con amplia trayectoria</strong>, reconocida por ofrecer soluciones de descanso premium que combinan calidad, tecnología y confort. A lo largo de los años, nos hemos consolidado como un referente en el sector de colchones y accesorios de descanso en Armenia, Quindío y toda Colombia, brindando productos cuidadosamente seleccionados para garantizar el bienestar y la salud postural de nuestros clientes.
-      </p>
-      <p class="introduccion-desc">
-        Con un firme compromiso por la excelencia, trabajamos día a día para que más personas disfruten de un descanso reparador. En Districol ofrecemos una amplia gama de productos: <strong>colchones premium, bases cama reforzadas, almohadas ergonómicas y sábanas de algodón orgánico</strong>, todos diseñados con tecnología de vanguardia para optimizar tu descanso.
-      </p>
-      <p class="introduccion-desc">
-        Bajo nuestro lema <em>"Tradición que renueva el descanso"</em>, honramos nuestra historia mientras miramos hacia el futuro, adaptándonos a las nuevas necesidades del mercado sin perder la esencia que nos ha hecho permanecer como líderes en el sector.
-      </p>
+      <div class="introduccion-card">
+        <div class="card-icon-wrapper">
+          <svg class="card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+          </svg>
+        </div>
+        <h3 class="card-title">Trayectoria & Calidad</h3>
+        <p class="introduccion-desc">
+          <strong>Districol es una marca colombiana con amplia trayectoria</strong>, reconocida por ofrecer soluciones de descanso premium que combinan calidad, tecnología y confort. Nos hemos consolidado como referentes en colchones y lencería en Armenia, Quindío y toda Colombia.
+        </p>
+      </div>
+
+      <div class="introduccion-card">
+        <div class="card-icon-wrapper">
+          <svg class="card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+        </div>
+        <h3 class="card-title">Tecnología en Descanso</h3>
+        <p class="introduccion-desc">
+          Ofrecemos una amplia gama de productos: <strong>colchones premium, bases cama reforzadas, almohadas ergonómicas y sábanas de algodón orgánico</strong>, diseñados con tecnología de vanguardia para garantizar tu salud postural.
+        </p>
+      </div>
+
+      <div class="introduccion-card">
+        <div class="card-icon-wrapper">
+          <svg class="card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+        </div>
+        <h3 class="card-title">Tradición que Renueva</h3>
+        <p class="introduccion-desc">
+          Bajo nuestro lema <em>"Tradición que renueva el descanso"</em>, honramos nuestra historia mientras miramos hacia el futuro, adaptándonos a las nuevas necesidades del mercado sin perder la esencia que nos caracteriza.
+        </p>
+      </div>
     </div>
   </div>
 </div>
 
+<!-- Carrusel de Colchones Destacados -->
 <div data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
   <app-carrusel-colchones></app-carrusel-colchones>
 </div>
 
+<!-- Cards Destacados Home -->
 <div data-aos="fade-right" data-aos-duration="800" data-aos-delay="50">
   <app-card-home imagen="assets/img/protector.jpg" titulo="Protector de Colchón Impermeable"
     descripcion="Protege tu inversión y garantiza un entorno de sueño más saludable. Nuestro protector impermeable de alta tecnología ofrece una barrera total contra líquidos, ácaros y alérgenos, sin sacrificar la suavidad ni la transpirabilidad. Diseñado con tejidos hipoalergénicos que mantienen tu colchón impecable por más tiempo, asegurando higiene y frescura noche tras noche."
@@ -41,14 +71,58 @@
   </app-card-home>
 </div>
 
-<div data-aos="zoom-in" data-aos-duration="900" data-aos-delay="100">
-  <app-almohada-video></app-almohada-video>
-</div>
+<!-- Showcase Panorámico de Almohadas & Ergonomía (Reemplaza el video anterior) -->
+<section class="showcase-banner-districol" data-aos="zoom-in" data-aos-duration="900">
+  <div class="showcase-container">
+    <div class="showcase-grid">
+      <div class="showcase-image-wrapper">
+        <img src="assets/img/almohadas.jpg" alt="Almohadas Ergonómicas Districol" class="showcase-main-img" />
+        <div class="showcase-badge-floating">
+          <span class="badge-accent">Memory Foam</span>
+          <span class="badge-text">Termosensible 100%</span>
+        </div>
+      </div>
+      <div class="showcase-content">
+        <span class="showcase-tag">Confort Anatómico</span>
+        <h2 class="showcase-title">Almohadas Ergonómicas Districol</h2>
+        <p class="showcase-subtitle">Soporte cervical de precisión y alivio inmediato de puntos de presión.</p>
+        <p class="showcase-desc">
+          Diseñadas con núcleos de espuma Viscoelástica Memory Foam y fundas removibles lavables en fibra de bambú. Mantienen la alineación natural de tu columna durante toda la noche, reduciendo tensión en cuello y hombros.
+        </p>
+        <div class="showcase-features">
+          <div class="feature-item">
+            <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span>Funda lavable transpirable</span>
+          </div>
+          <div class="feature-item">
+            <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span>Antialérgicas & Antiácaros</span>
+          </div>
+          <div class="feature-item">
+            <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span>Adaptación anatómica continua</span>
+          </div>
+        </div>
+        <div class="showcase-actions">
+          <a routerLink="/productos" class="showcase-btn">Ver Colección de Almohadas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- Carrusel de Almohadas -->
 <div data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
   <app-carrusel-almohadas></app-carrusel-almohadas>
 </div>
 
+<!-- Lencería & Colección Ágata -->
 <div data-aos="fade-right" data-aos-duration="800" data-aos-delay="50">
   <app-card-home imagen="assets/img/sabana2.jpg" titulo="Sábanas Organic Cotton"
     descripcion="Envuélvete en la suavidad del algodón 100% orgánico certificado. Tejido transpirable que regula la temperatura durante toda la noche. Hipoalergénico y perfecto para pieles sensibles. Cada hilo cuenta una historia de confort y sostenibilidad. Descubre el placer de dormir en armonía con la naturaleza."
@@ -64,24 +138,16 @@
 </div>
 
 <div data-aos="fade-right" data-aos-duration="800" data-aos-delay="50">
-  <app-card-home imagen="assets/img/districol-logo.jpg" titulo="Tradición que renueva el descanso" descripcion="Districol es una marca colombiana con amplia trayectoria, reconocida por ofrecer soluciones de descanso premium que combinan calidad, tecnología y confort. A lo largo de los años, nos hemos consolidado
-como un referente en el sector, brindando productos cuidadosamente
-seleccionados para garantizar el bienestar y la salud postural de
-nuestros clientes.
-Con un firme compromiso por la excelencia, trabajamos día a día para
-que más personas disfruten de un descanso reparador. Bajo nuestro
-lema “Tradición que renueva el descanso”
-, honramos nuestra historia
-mientras miramos hacia el futuro, adaptándonos a las nuevas
-necesidades del mercado sin perder la esencia que nos ha hecho
-permanecer." [invertido]="false" tema="dark">
+  <app-card-home imagen="assets/img/districol-logo.jpg" titulo="Tradición que renueva el descanso" descripcion="Districol es una marca colombiana con amplia trayectoria, reconocida por ofrecer soluciones de descanso premium que combinan calidad, tecnología y confort. A lo largo de los años, nos hemos consolidado como un referente en el sector, brindando productos cuidadosamente seleccionados para garantizar el bienestar y la salud postural de nuestros clientes. Con un firme compromiso por la excelencia, trabajamos día a día para que más personas disfruten de un descanso reparador." [invertido]="false" tema="dark">
   </app-card-home>
 </div>
 
+<!-- Partners / Aliados -->
 <div data-aos="fade-up" data-aos-duration="1000">
   <app-partners></app-partners>
 </div>
 
+<!-- Footer -->
 <div data-aos="fade-up" data-aos-duration="800">
   <app-footer></app-footer>
 </div>
