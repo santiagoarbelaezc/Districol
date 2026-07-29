@@ -2,7 +2,7 @@
 /**
  * routes/productos.php
  * Rutas de productos → /api/productos/*
- * Públicas: GET / GET /:id
+ * Públicas: GET / GET /random GET /:id
  * Protegidas (JWT): POST / PUT /:id DELETE /:id
  */
 
@@ -22,8 +22,13 @@ Logger::debug("🔍 Routing analysis", ['segment' => $segment, 'sub' => $sub, 'i
 try {
     // GET /api/productos
     if ($method === 'GET' && $segment === '') {
-        Logger::info("📨 GET /api/productos - Obteniendo todos los productos");
+        Logger::info("📨 GET /api/productos - Obteniendo productos");
         ProductoController::obtenerProductos();
+
+    // GET /api/productos/random
+    } elseif ($method === 'GET' && $segment === 'random') {
+        Logger::info("📨 GET /api/productos/random - Obteniendo productos aleatorios de interés");
+        ProductoController::obtenerProductosDeInteres();
 
     // GET /api/productos/:id
     } elseif ($method === 'GET' && $id !== null) {
@@ -38,7 +43,7 @@ try {
         Logger::debug("✅ Token válido");
         ProductoController::crearProducto();
 
-    // PUT or POST /api/productos/:id 🔒 (POST added for multipart/form-data support in PHP)
+    // PUT or POST /api/productos/:id 🔒
     } elseif (($method === 'PUT' || $method === 'POST') && $id !== null) {
         Logger::info("📨 " . $method . " /api/productos/$id - Actualizando producto", ['id' => $id]);
         Logger::debug("🔑 Verificando token JWT...");

@@ -118,7 +118,6 @@ class ProductoController
                     'error' => $e->getMessage(),
                     'class' => get_class($e)
                 ]);
-                // NO lanzar excepción - solo loguear y continuar
                 continue;
             }
         }
@@ -131,9 +130,26 @@ class ProductoController
     public static function obtenerProductos(): void
     {
         try {
+            $categoriaId = isset($_GET['categoria_id']) && is_numeric($_GET['categoria_id']) ? (int)$_GET['categoria_id'] : 0;
+            $limit       = isset($_GET['limit']) && is_numeric($_GET['limit']) ? (int)$_GET['limit'] : 0;
+
             $db = getDB();
-            $stmt = $db->prepare(self::$baseSelect . ' ORDER BY p.id DESC');
-            $stmt->execute();
+            $sql = self::$baseSelect;
+            $params = [];
+
+            if ($categoriaId > 0) {
+                $sql .= " AND p.category_id = ?";
+                $params[] = $categoriaId;
+            }
+
+            $sql .= " ORDER BY p.id DESC";
+
+            if ($limit > 0) {
+                $sql .= " LIMIT " . max(1, min(100, $limit));
+            }
+
+            $stmt = $db->prepare($sql);
+            $stmt->execute($params);
             $productos = $stmt->fetchAll();
 
             self::adjuntarRelaciones($db, $productos);
@@ -145,6 +161,40 @@ class ProductoController
         } catch (Throwable $e) {
             Logger::error('ProductoController::obtenerProductos – inesperado', ['exception' => $e->getMessage()]);
             ResponseHandler::error('Error inesperado al obtener productos', 500);
+        }
+    }
+
+    // ─── GET /api/productos/random ───────────────────────────────────────────
+    public static function obtenerProductosDeInteres(): void
+    {
+        try {
+            $cantidad  = isset($_GET['cantidad']) && is_numeric($_GET['cantidad']) ? (int)$_GET['cantidad'] : 6;
+            $excludeId = isset($_GET['exclude_id']) && is_numeric($_GET['exclude_id']) ? (int)$_GET['exclude_id'] : 0;
+
+            $db = getDB();
+            $sql = self::$baseSelect;
+            $params = [];
+
+            if ($excludeId > 0) {
+                $sql .= " AND p.id != ?";
+                $params[] = $excludeId;
+            }
+
+            $sql .= " ORDER BY RAND() LIMIT " . max(1, min(20, $cantidad));
+
+            $stmt = $db->prepare($sql);
+            $stmt->execute($params);
+            $productos = $stmt->fetchAll();
+
+            self::adjuntarRelaciones($db, $productos);
+            ResponseHandler::success($productos);
+
+        } catch (PDOException $e) {
+            Logger::error('ProductoController::obtenerProductosDeInteres – DB', ['exception' => $e->getMessage()]);
+            ResponseHandler::error('Error al obtener productos de interés', 500);
+        } catch (Throwable $e) {
+            Logger::error('ProductoController::obtenerProductosDeInteres – inesperado', ['exception' => $e->getMessage()]);
+            ResponseHandler::error('Error inesperado al obtener productos de interés', 500);
         }
     }
 
@@ -234,62 +284,39 @@ class ProductoController
             $category    = ResponseHandler::sanitize($_POST['category'] ?? 'Districol');
             $precio      = (float)($_POST['precio'] ?? 0);
 
-            Logger::info("📥 Datos recibidos", [
-                'id' => $id, 
-                'nombre' => $name, 
-                'precio' => $precio,
-                'imagenes_count' => isset($_FILES['imagenes']) ? 'si' : 'no'
-            ]);
-
             if (!$name) {
-                Logger::warning("⚠️ Nombre vacío - rechazando actualización");
                 throw new InvalidArgumentException("El campo 'nombre' es requerido");
             }
 
             $db = getDB();
             
-            // Verificar que el producto existe
-            Logger::debug("🔍 Verificando si existe el producto ($id)...");
             $checkStmt = $db->prepare('SELECT id FROM products WHERE id = ?');
             $checkStmt->execute([$id]);
             $existe = $checkStmt->fetch();
             
             if (!$existe) {
-                Logger::warning("❌ Producto no encontrado", ['id' => $id]);
                 throw new InvalidArgumentException("Producto con ID $id no encontrado");
             }
-            
-            Logger::info("✅ Producto existe");
 
             $db->beginTransaction();
-            Logger::debug("🔄 Iniciada transacción");
 
-            // 1. Actualizar datos del producto
-            Logger::debug("📝 Actualizando datos del producto");
             $updateStmt = $db->prepare('UPDATE products SET name = ?, description = ?, category = ? WHERE id = ?');
             $updateStmt->execute([$name, $description, $category, $id]);
-            Logger::info("✅ Datos del producto actualizados");
 
-            // 2. Actualizar o crear variante de precio
             if ($precio > 0) {
-                Logger::debug("💰 Procesando precio: $precio");
                 $checkVar = $db->prepare('SELECT id FROM product_variants WHERE product_id = ?');
                 $checkVar->execute([$id]);
                 $variantExiste = $checkVar->fetch();
                 
                 if ($variantExiste) {
-                    Logger::debug("Variante existe - haciendo UPDATE");
                     $db->prepare('UPDATE product_variants SET price = ? WHERE product_id = ?')
                        ->execute([$precio, $id]);
                 } else {
-                    Logger::debug("Variante NO existe - haciendo INSERT");
                     $db->prepare('INSERT INTO product_variants (product_id, name, price, available) VALUES (?, ?, ?, 1)')
                        ->execute([$id, 'Única', $precio]);
                 }
-                Logger::info("✅ Variante de precio procesada");
             }
 
-            // 3. Procesar imágenes si existen
             $hayNuevasImagenes = false;
             if (!empty($_FILES) && isset($_FILES['imagenes'])) {
                 $files = $_FILES['imagenes'];
@@ -301,62 +328,40 @@ class ProductoController
             }
 
             if ($hayNuevasImagenes) {
-                Logger::info("🖼️ Procesando nuevas imágenes");
-                
                 $oldImgStmt = $db->prepare('SELECT description FROM product_images WHERE product_id = ?');
                 $oldImgStmt->execute([$id]);
                 $oldImages = $oldImgStmt->fetchAll();
 
-                Logger::debug("Eliminando " . count($oldImages) . " imágenes antiguas");
-                
                 foreach ($oldImages as $img) {
                     if ($img['description']) {
-                        try { 
-                            deleteFromCloudinary($img['description']); 
-                            Logger::debug("✅ Imagen eliminada de Cloudinary: " . $img['description']);
-                        } catch (Throwable $e) {
-                            Logger::warning("⚠️ No se pudo eliminar imagen de Cloudinary", ['file' => $img['description'], 'error' => $e->getMessage()]);
-                        }
+                        try { deleteFromCloudinary($img['description']); } catch (Throwable $e) {}
                     }
                 }
 
                 $db->prepare('DELETE FROM product_images WHERE product_id = ?')->execute([$id]);
-                Logger::debug("✅ Registros de imágenes antiguas eliminados");
 
                 $newImages = self::subirImagenes();
-                Logger::info("✅ Imágenes subidas a Cloudinary", ['count' => count($newImages)]);
                 
                 if (count($newImages) > 0) {
                     $imgStmt   = $db->prepare('INSERT INTO product_images (product_id, url, description) VALUES (?, ?, ?)');
                     foreach ($newImages as $img) {
                         $imgStmt->execute([$id, $img['url'], $img['publicId']]);
-                        Logger::debug("✅ Imagen insertada en BD", ['url' => substr($img['url'], 0, 50) . '...']);
                     }
-                } else {
-                    Logger::warning("⚠️ No se subieron nuevas imágenes a Cloudinary");
                 }
-            } else {
-                Logger::debug("ℹ️ No hay nuevas imágenes");
             }
 
             $db->commit();
-            Logger::info("✅ Transacción completada exitosamente");
-            Logger::info("━━━━━ FIN actualizarProducto ━━━━━", ['id' => $id, 'status' => 'success']);
             ResponseHandler::success(['mensaje' => 'Producto actualizado correctamente', 'id' => $id]);
 
         } catch (PDOException $e) {
             if (isset($db) && $db->inTransaction()) $db->rollBack();
-            Logger::error('❌ Error de base de datos en actualización', ['exception' => $e->getMessage(), 'code' => $e->getCode()]);
-            Logger::info("━━━━━ FIN actualizarProducto ━━━━━", ['id' => $id, 'status' => 'error_db']);
+            Logger::error('Error de base de datos en actualización', ['exception' => $e->getMessage()]);
             ResponseHandler::error('Error de base de datos: ' . $e->getMessage(), 500);
         } catch (InvalidArgumentException $e) {
-            Logger::warning('⚠️ Argumentos inválidos en actualización', ['exception' => $e->getMessage()]);
-            Logger::info("━━━━━ FIN actualizarProducto ━━━━━", ['id' => $id, 'status' => 'error_validation']);
             ResponseHandler::error($e->getMessage(), 400);
         } catch (Throwable $e) {
             if (isset($db) && $db->inTransaction()) $db->rollBack();
-            Logger::error('❌ Error inesperado en actualización', ['exception' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
-            Logger::info("━━━━━ FIN actualizarProducto ━━━━━", ['id' => $id, 'status' => 'error_unknown']);
+            Logger::error('Error inesperado en actualización', ['exception' => $e->getMessage()]);
             ResponseHandler::error('Error: ' . $e->getMessage(), 500);
         }
     }
