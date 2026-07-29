@@ -5,11 +5,10 @@ import { ProductoDetailService } from '../../services/producto-detail.service';
 import { Producto } from '../../data/mock-products';
 
 @Component({
-  selector: 'app-util-grid-productos-interes',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './grid-productos.component.html',
-  styleUrl: './grid-productos.component.css'
+    selector: 'app-util-grid-productos-interes',
+    imports: [CommonModule],
+    templateUrl: './grid-productos.component.html',
+    styleUrl: './grid-productos.component.css'
 })
 export class GridProductosInteresComponent implements OnInit, OnChanges {
 

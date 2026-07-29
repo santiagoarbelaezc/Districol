@@ -5,11 +5,10 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-login-component',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './login-component.component.html',
-  styleUrl: './login-component.component.css'
+    selector: 'app-login-component',
+    imports: [CommonModule, FormsModule],
+    templateUrl: './login-component.component.html',
+    styleUrl: './login-component.component.css'
 })
 export class LoginComponentComponent {
   email: string = '';

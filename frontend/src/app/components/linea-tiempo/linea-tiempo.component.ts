@@ -8,11 +8,10 @@ export interface EventoTimeline {
 }
 
 @Component({
-  selector: 'app-linea-tiempo',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './linea-tiempo.component.html',
-  styleUrl: './linea-tiempo.component.css'
+    selector: 'app-linea-tiempo',
+    imports: [CommonModule],
+    templateUrl: './linea-tiempo.component.html',
+    styleUrl: './linea-tiempo.component.css'
 })
 export class LineaTiempoComponent {
   eventos: EventoTimeline[] = [

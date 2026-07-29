@@ -6,11 +6,10 @@ import { NavbarComponent } from '../../shared/navbar/navbar.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
 
 @Component({
-  selector: 'app-nosotros',
-  standalone: true,
-  imports: [CommonModule, VideoBannerComponent, LineaTiempoComponent, NavbarComponent, FooterComponent],
-  templateUrl: './nosotros.component.html',
-  styleUrl: './nosotros.component.css'
+    selector: 'app-nosotros',
+    imports: [CommonModule, VideoBannerComponent, LineaTiempoComponent, NavbarComponent, FooterComponent],
+    templateUrl: './nosotros.component.html',
+    styleUrl: './nosotros.component.css'
 })
 export class NosotrosComponent {
 

@@ -7,17 +7,16 @@ import { CarruselCategoryComponent } from '../descripcion-productos/descripcion/
 import { GridProductosInteresComponent } from '../grid-productos/grid-productos.component';
 
 @Component({
-  selector: 'app-descripcion-producto',
-  standalone: true,
-  imports: [
-    NavbarComponent,
-    FooterComponent,
-    DescripcionSeleccionadoComponent,
-    CarruselCategoryComponent,
-    GridProductosInteresComponent
-  ],
-  templateUrl: './descripcion-producto.component.html',
-  styleUrl: './descripcion-producto.component.css'
+    selector: 'app-descripcion-producto',
+    imports: [
+        NavbarComponent,
+        FooterComponent,
+        DescripcionSeleccionadoComponent,
+        CarruselCategoryComponent,
+        GridProductosInteresComponent
+    ],
+    templateUrl: './descripcion-producto.component.html',
+    styleUrl: './descripcion-producto.component.css'
 })
 export class DescripcionProductoComponent implements OnInit {
   productoId: number = 0;

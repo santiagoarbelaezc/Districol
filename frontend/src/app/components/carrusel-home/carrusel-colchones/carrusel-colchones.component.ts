@@ -3,11 +3,10 @@ import { CarruselHomeComponent, ProductoCarrusel } from '../carrusel-home.compon
 import { ProductsMockService } from '../../../services/products-mock.service';
 
 @Component({
-  selector: 'app-carrusel-colchones',
-  standalone: true,
-  imports: [CarruselHomeComponent],
-  templateUrl: './carrusel-colchones.component.html',
-  styleUrl: './carrusel-colchones.component.css'
+    selector: 'app-carrusel-colchones',
+    imports: [CarruselHomeComponent],
+    templateUrl: './carrusel-colchones.component.html',
+    styleUrl: './carrusel-colchones.component.css'
 })
 export class CarruselColchonesComponent {
   private productsMockService = inject(ProductsMockService);

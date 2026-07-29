@@ -7,11 +7,10 @@ import { SeoService } from './services/seo.service';
 import { RedesSocialesComponent } from './shared/redes-sociales/redes-sociales.component';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, RedesSocialesComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+    selector: 'app-root',
+    imports: [RouterOutlet, RedesSocialesComponent],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
   title = 'frontend';

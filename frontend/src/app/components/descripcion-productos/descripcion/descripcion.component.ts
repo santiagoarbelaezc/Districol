@@ -5,11 +5,10 @@ import { ProductoDetailService } from '../../../services/producto-detail.service
 import { Producto } from '../../../data/mock-products';
 
 @Component({
-  selector: 'app-carrusel-category',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './descripcion.component.html',
-  styleUrl: './descripcion.component.css'
+    selector: 'app-carrusel-category',
+    imports: [CommonModule],
+    templateUrl: './descripcion.component.html',
+    styleUrl: './descripcion.component.css'
 })
 export class CarruselCategoryComponent implements OnInit {
   @Input() categoriaId: number = 0;

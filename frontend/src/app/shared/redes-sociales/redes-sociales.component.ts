@@ -5,11 +5,10 @@ import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-redes-sociales',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './redes-sociales.component.html',
-  styleUrls: ['./redes-sociales.component.css']
+    selector: 'app-redes-sociales',
+    imports: [CommonModule],
+    templateUrl: './redes-sociales.component.html',
+    styleUrls: ['./redes-sociales.component.css']
 })
 export class RedesSocialesComponent implements OnInit, OnDestroy {
   hoveredButton: string | null = null;

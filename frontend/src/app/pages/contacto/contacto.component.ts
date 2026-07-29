@@ -5,11 +5,10 @@ import { FooterComponent } from '../../shared/footer/footer.component';
 import { ContactoSectionComponent } from '../../components/contacto/contacto.component';
 
 @Component({
-  selector: 'app-contacto',
-  standalone: true,
-  imports: [CommonModule, NavbarComponent, FooterComponent, ContactoSectionComponent],
-  templateUrl: './contacto.component.html',
-  styleUrl: './contacto.component.css'
+    selector: 'app-contacto',
+    imports: [CommonModule, NavbarComponent, FooterComponent, ContactoSectionComponent],
+    templateUrl: './contacto.component.html',
+    styleUrl: './contacto.component.css'
 })
 export class ContactoComponent {
 

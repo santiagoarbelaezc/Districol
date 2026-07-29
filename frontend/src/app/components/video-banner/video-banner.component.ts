@@ -2,11 +2,10 @@ import { Component, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef, OnD
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-video-banner',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './video-banner.component.html',
-  styleUrl: './video-banner.component.css'
+    selector: 'app-video-banner',
+    imports: [CommonModule],
+    templateUrl: './video-banner.component.html',
+    styleUrl: './video-banner.component.css'
 })
 export class VideoBannerComponent implements AfterViewInit, OnDestroy {
   @Input() videoSrc: string = '';

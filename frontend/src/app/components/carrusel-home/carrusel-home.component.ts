@@ -10,11 +10,10 @@ export interface ProductoCarrusel {
 }
 
 @Component({
-  selector: 'app-carrusel-home',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './carrusel-home.component.html',
-  styleUrl: './carrusel-home.component.css'
+    selector: 'app-carrusel-home',
+    imports: [CommonModule],
+    templateUrl: './carrusel-home.component.html',
+    styleUrl: './carrusel-home.component.css'
 })
 export class CarruselHomeComponent implements AfterViewInit {
 

@@ -4,11 +4,10 @@ import { CategoriasMockService } from '../../services/categorias-mock.service';
 import { Categoria } from '../../data/mock-categories';
 
 @Component({
-  selector: 'app-menu-categorias',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './menu-categorias.component.html',
-  styleUrl: './menu-categorias.component.css'
+    selector: 'app-menu-categorias',
+    imports: [CommonModule],
+    templateUrl: './menu-categorias.component.html',
+    styleUrl: './menu-categorias.component.css'
 })
 export class MenuCategoriasComponent implements OnInit {
 

@@ -5,11 +5,10 @@ import { ProductoDetailService } from '../../../services/producto-detail.service
 import { Producto } from '../../../data/mock-products';
 
 @Component({
-  selector: 'app-descripcion-seleccionado',
-  standalone: true,
-  imports: [CommonModule, RouterLink],
-  templateUrl: './descripcion-select.component.html',
-  styleUrl: './descripcion-select.component.css'
+    selector: 'app-descripcion-seleccionado',
+    imports: [CommonModule, RouterLink],
+    templateUrl: './descripcion-select.component.html',
+    styleUrl: './descripcion-select.component.css'
 })
 export class DescripcionSeleccionadoComponent implements OnInit, OnChanges {
 

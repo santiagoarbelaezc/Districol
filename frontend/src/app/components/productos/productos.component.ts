@@ -7,11 +7,10 @@ import { CategoriasMockService } from '../../services/categorias-mock.service';
 import { Producto } from '../../data/mock-products';
 
 @Component({
-  selector: 'app-productos-list',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './productos.component.html',
-  styleUrl: './productos.component.css'
+    selector: 'app-productos-list',
+    imports: [CommonModule],
+    templateUrl: './productos.component.html',
+    styleUrl: './productos.component.css'
 })
 export class ProductosListComponent implements OnInit, OnDestroy {
 

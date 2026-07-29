@@ -2,11 +2,10 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-partners',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './partners.component.html',
-  styleUrl: './partners.component.css'
+    selector: 'app-partners',
+    imports: [CommonModule],
+    templateUrl: './partners.component.html',
+    styleUrl: './partners.component.css'
 })
 export class PartnersComponent {
   aliados = [

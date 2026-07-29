@@ -6,11 +6,10 @@ import { MenuCategoriasComponent } from '../../components/menu-categorias/menu-c
 import { ProductosListComponent } from '../../components/productos/productos.component';
 
 @Component({
-  selector: 'app-productos-page',
-  standalone: true,
-  imports: [CommonModule, NavbarComponent, FooterComponent, MenuCategoriasComponent, ProductosListComponent],
-  templateUrl: './productos.component.html',
-  styleUrl: './productos.component.css'
+    selector: 'app-productos-page',
+    imports: [CommonModule, NavbarComponent, FooterComponent, MenuCategoriasComponent, ProductosListComponent],
+    templateUrl: './productos.component.html',
+    styleUrl: './productos.component.css'
 })
 export class ProductosPageComponent {
 
