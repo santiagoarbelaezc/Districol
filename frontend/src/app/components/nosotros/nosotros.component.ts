@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VideoBannerComponent } from '../video-banner/video-banner.component';
+import { RouterLink } from '@angular/router';
 import { LineaTiempoComponent } from '../linea-tiempo/linea-tiempo.component';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
 
 @Component({
     selector: 'app-nosotros',
-    imports: [CommonModule, VideoBannerComponent, LineaTiempoComponent, NavbarComponent, FooterComponent],
+    standalone: true,
+    imports: [CommonModule, RouterLink, LineaTiempoComponent, NavbarComponent, FooterComponent],
     templateUrl: './nosotros.component.html',
     styleUrl: './nosotros.component.css'
 })

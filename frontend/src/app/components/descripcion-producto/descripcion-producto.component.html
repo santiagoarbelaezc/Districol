@@ -3,13 +3,9 @@
 <!-- Descripción del producto seleccionado -->
 <app-descripcion-seleccionado [productoId]="productoId"></app-descripcion-seleccionado>
 
-<!-- Carruseles de categoría -->
-<app-carrusel-category [categoriaId]="1" [titulo]="'Colchones'"
-    [subtitulo]="'Descubre nuestra variedad de colchones para todos los gustos.'">
-</app-carrusel-category>
-
-<app-carrusel-category [categoriaId]="2" [titulo]="'Almohadas'"
-    [subtitulo]="'Complementa tu descanso con nuestras almohadas premium.'">
+<!-- Un solo carrusel con el título "Más productos" e integración de gadgets y promociones -->
+<app-carrusel-category [categoriaId]="0" [titulo]="'Más productos'"
+    [subtitulo]="'Explora nuestra selección completa de descanso ortopédico y complementos.'">
 </app-carrusel-category>
 
 <!-- Grid de productos de interés -->

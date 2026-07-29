@@ -1,135 +1,321 @@
-﻿.nosotros-root {
-  background-color: #000000;
+/* ===== PÁGINA SOBRE NOSOTROS (HERO HOME STYLE MEJORADO Y LUMINOSO) ===== */
+
+.nosotros-root {
+  background-color: #001217;
   color: var(--color-blanco);
-  padding-top: 125px;
+  width: 100%;
+  overflow-x: hidden;
 }
 
-/* ===== HIGHLIGHTS SECTION ===== */
+/* ===== HERO SECTION MÁS ALTO Y CON OVERLAY TRANSLÚCIDO ===== */
+.nosotros-hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 720px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 185px 2.5vw 110px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.nosotros-hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.nosotros-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.98);
+  transition: transform 0.8s ease;
+}
+
+.nosotros-hero-section:hover .nosotros-hero-img {
+  transform: scale(1.02);
+}
+
+/* Overlay sutil y translúcido que permite ver la foto con nitidez */
+.nosotros-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(0, 18, 23, 0.42) 0%, rgba(0, 37, 48, 0.32) 50%, rgba(0, 18, 23, 0.65) 100%);
+  z-index: 2;
+}
+
+.nosotros-hero-content {
+  position: relative;
+  z-index: 10;
+  max-width: 1720px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-badge-tag {
+  display: inline-block;
+  padding: 8px 20px;
+  background: rgba(0, 37, 48, 0.65);
+  border: 1px solid rgba(184, 193, 179, 0.5);
+  color: #E2E8F0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  border-radius: 9999px;
+  margin-bottom: 22px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.nosotros-hero-titulo {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+  margin: 0 0 16px 0;
+  line-height: 1.1;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.nosotros-hero-subtitulo {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  color: #FFFFFF;
+  max-width: 900px;
+  margin: 0 0 28px 0;
+  line-height: 1.75;
+  text-shadow: 0 3px 16px rgba(0, 0, 0, 0.6);
+  font-weight: 600;
+}
+
+/* Chips destacados en el Hero */
+.hero-features-chips {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+
+.chip-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 20px;
+  background: rgba(0, 18, 23, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 9999px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
+}
+
+.chip-svg-icon {
+  color: #10B981;
+  flex-shrink: 0;
+}
+
+.nosotros-hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.btn-hero-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 36px;
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: #FFFFFF;
+  border-radius: 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.98rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 28px rgba(16, 185, 129, 0.4);
+}
+
+.btn-hero-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 36px rgba(16, 185, 129, 0.5);
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+.btn-hero-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 30px;
+  background: rgba(0, 18, 23, 0.45);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  color: #FFFFFF;
+  border-radius: 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.98rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+
+.btn-hero-icon {
+  color: #10B981;
+  flex-shrink: 0;
+  transition: color 0.3s ease;
+}
+
+.btn-hero-secondary:hover {
+  background: #FFFFFF;
+  color: #002530;
+  border-color: #FFFFFF;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.25);
+}
+
+.btn-hero-secondary:hover .btn-hero-icon {
+  color: #002530;
+}
+
+/* ===== HIGHLIGHTS SECTION (APROVECHANDO ANCHO 1720PX) ===== */
 .highlights-section {
-  background-color: #000000;
-  padding: 110px 40px;
+  background-color: #00171F;
+  padding: 90px 2.5vw;
   border-bottom: 1px solid rgba(164, 174, 158, 0.1);
+  box-sizing: border-box;
 }
 
 .highlights-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 40px;
-  max-width: 1200px;
+  gap: 32px;
+  max-width: 1720px;
+  width: 100%;
   margin: 0 auto;
 }
 
 .highlight-item {
   text-align: center;
-  padding: 40px 25px;
-  background: #151515;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.02);
+  padding: 38px 28px;
+  background: #00222B;
+  border-radius: 20px;
+  border: 1px solid rgba(164, 174, 157, 0.12);
   transition: all 0.4s ease;
 }
 
 .highlight-item:hover {
   transform: translateY(-8px);
-  border-color: #A4AE9E;
-  box-shadow: 0 20px 50px rgba(164, 174, 158, 0.2);
+  border-color: #B8C1B3;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  background: #002A36;
 }
 
 .highlight-icon {
-  width: 70px;
-  height: 70px;
-  margin: 0 auto 25px;
+  width: 68px;
+  height: 68px;
+  margin: 0 auto 22px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 59, 74, 0.1);
+  background: rgba(164, 174, 157, 0.12);
   border-radius: 50%;
   transition: all 0.3s ease;
 }
 
 .highlight-item:hover .highlight-icon {
-  background: rgba(0, 59, 74, 0.2);
+  background: rgba(164, 174, 157, 0.25);
   transform: scale(1.1);
 }
 
 .highlight-icon svg {
   width: 32px;
   height: 32px;
-  color: #A4AE9E;
+  color: #B8C1B3;
 }
 
 .highlight-titulo {
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
   color: var(--color-blanco);
-  margin: 0 0 8px 0;
+  margin: 0 0 6px 0;
   letter-spacing: 0.5px;
 }
 
 .highlight-descripcion {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.5);
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.65);
   margin: 0;
 }
 
-/* ===== MISIÓN Y VISIÓN ===== */
+/* ===== MISIÓN Y VISIÓN (APROVECHANDO ANCHO 1720PX) ===== */
 .mision-vision-section {
-  background-color: #A4AE9E;
-  padding: 120px 40px;
-  color: #003B4A;
+  background-color: #B8C1B3;
+  padding: 100px 2.5vw;
+  color: #002530;
+  box-sizing: border-box;
 }
 
 .mv-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  max-width: 1200px;
+  gap: 36px;
+  max-width: 1720px;
+  width: 100%;
   margin: 0 auto;
 }
 
 .mv-card {
   text-align: center;
-  padding: 50px 35px;
-  background: rgba(255, 255, 255, 0.9);
+  padding: 48px 36px;
+  background: #FFFFFF;
   border-radius: 24px;
-  border: 1px solid rgba(0, 59, 74, 0.1);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-}
-
-.mv-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: #003B4A;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.mv-card:hover::before {
-  opacity: 1;
+  border: 1px solid rgba(0, 37, 48, 0.1);
+  transition: all 0.4s ease;
+  box-shadow: 0 10px 30px rgba(0, 37, 48, 0.08);
 }
 
 .mv-card:hover {
-  transform: translateY(-12px);
-  background: #ffffff;
-  box-shadow: 0 30px 60px rgba(0, 59, 74, 0.15);
+  transform: translateY(-10px);
+  box-shadow: 0 25px 50px rgba(0, 37, 48, 0.18);
+  border-color: #003B4A;
 }
 
 .mv-icon {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 30px;
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 26px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: rgba(0, 59, 74, 0.08);
   border-radius: 50%;
-  border: 2px solid rgba(0, 59, 74, 0.1);
+  border: 2px solid rgba(0, 59, 74, 0.12);
 }
 
 .mv-icon svg {
@@ -139,55 +325,61 @@
 }
 
 .mv-titulo {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #003B4A;
-  margin: 0 0 20px 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #002530;
+  margin: 0 0 18px 0;
   letter-spacing: 2px;
   text-transform: uppercase;
 }
 
 .mv-descripcion {
-  font-size: 1rem;
-  line-height: 1.8;
-  color: #333;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: #334155;
   margin: 0;
 }
 
-/* ===== COMPROMISO SECTION ===== */
+/* ===== COMPROMISO SECTION (APROVECHANDO ANCHO 1540PX) ===== */
 .compromiso-section {
-  background-color: #000000;
-  padding: 120px 40px;
+  background-color: #001217;
+  padding: 100px 2.5vw;
+  box-sizing: border-box;
 }
 
 .compromiso-container {
-  max-width: 900px;
+  max-width: 1540px;
+  width: 100%;
   margin: 0 auto;
   text-align: center;
 }
 
 .compromiso-titulo {
-  font-size: 2.5rem;
-  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 900;
   color: var(--color-blanco);
-  margin: 0 0 20px 0;
-  letter-spacing: 4px;
+  margin: 0 0 16px 0;
+  letter-spacing: 3px;
   text-transform: uppercase;
 }
 
 .compromiso-linea {
   width: 120px;
   height: 4px;
-  background: #A4AE9E;
-  margin: 0 auto 50px;
+  background: #B8C1B3;
+  margin: 0 auto 40px;
   border-radius: 2px;
 }
 
 .compromiso-texto {
-  font-size: 1.1rem;
-  line-height: 2;
-  color: rgba(255, 255, 255, 0.7);
-  margin: 0 0 25px 0;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.95;
+  color: rgba(246, 244, 242, 0.82);
+  margin: 0 0 24px 0;
 }
 
 .compromiso-texto:last-child {
@@ -195,127 +387,36 @@
 }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .highlights-container {
     grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
+    gap: 24px;
   }
 
   .mv-container {
     grid-template-columns: 1fr;
-    gap: 30px;
-  }
-
-  .mision-vision-section {
-    padding: 80px 40px;
+    gap: 28px;
   }
 }
 
-@media (max-width: 768px) {
-  .highlights-section {
-    padding: 60px 25px;
+@media (max-width: 640px) {
+  .nosotros-hero-section {
+    padding: 140px 16px 60px;
+    min-height: 520px;
   }
 
-  .highlights-container {
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+  .nosotros-hero-actions {
+    flex-direction: column;
+    width: 100%;
   }
 
-  .highlight-item {
-    padding: 30px 20px;
-  }
-
-  .highlight-icon {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 20px;
-  }
-
-  .highlight-icon svg {
-    width: 28px;
-    height: 28px;
-  }
-
-  .highlight-titulo {
-    font-size: 1rem;
-  }
-
-  .mision-vision-section {
-    padding: 60px 25px;
-  }
-
-  .mv-card {
-    padding: 40px 25px;
-  }
-
-  .mv-titulo {
-    font-size: 1.3rem;
-  }
-
-  .compromiso-section {
-    padding: 70px 25px;
-  }
-
-  .compromiso-titulo {
-    font-size: 1.8rem;
-  }
-
-  .compromiso-texto {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .highlights-section {
-    padding: 50px 20px;
+  .btn-hero-primary, .btn-hero-secondary {
+    width: 100%;
+    justify-content: center;
   }
 
   .highlights-container {
     grid-template-columns: 1fr;
     gap: 20px;
-  }
-
-  .highlight-item {
-    padding: 25px 20px;
-  }
-
-  .mision-vision-section {
-    padding: 50px 20px;
-  }
-
-  .mv-card {
-    padding: 35px 20px;
-  }
-
-  .mv-icon {
-    width: 70px;
-    height: 70px;
-  }
-
-  .mv-icon svg {
-    width: 30px;
-    height: 30px;
-  }
-
-  .mv-titulo {
-    font-size: 1.2rem;
-  }
-
-  .mv-descripcion {
-    font-size: 0.9rem;
-  }
-
-  .compromiso-section {
-    padding: 50px 20px;
-  }
-
-  .compromiso-titulo {
-    font-size: 1.5rem;
-    letter-spacing: 2px;
-  }
-
-  .compromiso-texto {
-    font-size: 0.95rem;
-    line-height: 1.8;
   }
 }

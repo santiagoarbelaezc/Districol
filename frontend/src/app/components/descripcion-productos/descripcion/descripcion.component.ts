@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ProductoDetailService } from '../../../services/producto-detail.service';
-import { Producto } from '../../../data/mock-products';
+import { Producto, MOCK_PRODUCTOS } from '../../../data/mock-products';
 import { getProductSlug } from '../../../utils/seo-slug.util';
 
 @Component({
@@ -14,7 +14,7 @@ import { getProductSlug } from '../../../utils/seo-slug.util';
 })
 export class CarruselCategoryComponent implements OnInit {
   @Input() categoriaId: number = 0;
-  @Input() titulo: string = '';
+  @Input() titulo: string = 'Más productos';
   @Input() subtitulo: string = '';
 
   productos: Producto[] = [];
@@ -25,15 +25,18 @@ export class CarruselCategoryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.categoriaId) {
+    if (this.categoriaId && this.categoriaId > 0) {
       this.productoService.getProductosPorCategoria(this.categoriaId).subscribe({
         next: (productos) => {
-          this.productos = productos;
+          this.productos = productos && productos.length > 0 ? productos : MOCK_PRODUCTOS.filter(p => p.categoriaId === this.categoriaId);
         },
         error: () => {
-          this.productos = [];
+          this.productos = MOCK_PRODUCTOS.filter(p => p.categoriaId === this.categoriaId);
         }
       });
+    } else {
+      // Cargar catálogo completo para "Más productos" con sus badges y gadgets promocionales
+      this.productos = MOCK_PRODUCTOS;
     }
   }
 
