@@ -31,36 +31,36 @@
           </div>
         </div>
 
-        <!-- Capa de degradado elegante -->
+        <!-- Capa de degradado en tonos Teal Oscuro Districol -->
         <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10 lg:bg-gradient-to-r lg:from-black/85 lg:via-black/45 lg:to-transparent hero-overlay"></div>
 
         <!-- Contenido textual superpuesto -->
         <div class="absolute inset-0 flex items-start hero-content-layer">
           <div class="page-container w-full text-white pt-28 pb-8 lg:pt-40 px-6 lg:px-16 hero-page-container">
             <div class="max-w-3xl hero-max-w">
-              <!-- Promo Tag -->
-              <p class="mb-3 text-[0.8rem] font-bold uppercase tracking-[0.4em] text-[#EAC7D2] hero-promo-tag">
+              <!-- Promo Tag en Verde Salvia #A4AE9D -->
+              <p class="mb-3 text-[0.8rem] font-bold uppercase tracking-[0.4em] text-[#A4AE9D] hero-promo-tag">
                 {{ item.promoTag }}
               </p>
               
-              <!-- Title -->
-              <h2 class="mb-2 text-[clamp(2.5rem,6vw,5.5rem)] font-extrabold leading-[1.0] tracking-[-0.03em] font-editorial uppercase hero-title">
+              <!-- Title en Montserrat (Fuente oficial Districol) -->
+              <h2 class="mb-2 text-[clamp(2.5rem,6vw,5.5rem)] font-extrabold leading-[1.0] tracking-[-0.03em] font-montserrat uppercase hero-title">
                 {{ item.title }}
               </h2>
               
-              <!-- Subtitle -->
+              <!-- Subtitle en Playfair Display / Comfortaa -->
               <p class="mb-4 text-xl lg:text-3xl font-medium font-serif-elegant italic text-white/95 leading-relaxed hero-subtitle">
                 {{ item.subtitle }}
               </p>
               
-              <!-- Description -->
-              <p class="mb-6 max-w-xl text-sm lg:text-base leading-relaxed text-white/80 font-editorial hero-description">
+              <!-- Description en Comfortaa -->
+              <p class="mb-6 max-w-xl text-sm lg:text-base leading-relaxed text-white/80 font-comfortaa hero-description">
                 {{ item.description }}
               </p>
               
-              <!-- Promo Text Badge -->
-              <div class="mb-8 inline-flex items-center gap-3 rounded-full bg-black/45 backdrop-blur-lg border border-white/10 p-1.5 pr-5 text-[11px] font-medium tracking-wide text-white font-editorial shadow-2xl hero-badge">
-                <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#EAC7D2] text-[#111111] shadow-soft flex-shrink-0 hero-badge-icon">
+              <!-- Promo Text Badge en Salvia & Teal -->
+              <div class="mb-8 inline-flex items-center gap-3 rounded-full bg-black/45 backdrop-blur-lg border border-white/10 p-1.5 pr-5 text-[11px] font-medium tracking-wide text-white font-montserrat shadow-2xl hero-badge">
+                <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#A4AE9D] text-[#003B4A] shadow-soft flex-shrink-0 hero-badge-icon">
                   <!-- Shipping Icon (Truck) -->
                   <svg *ngIf="item.promoIcon === 'shipping'" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -76,18 +76,18 @@
                   </svg>
                 </span>
                 <span class="flex items-center gap-2">
-                  <span class="font-bold text-[#EAC7D2] uppercase tracking-[0.15em] text-[9px] bg-white/10 px-2 py-0.5 rounded-full border border-white/5 hero-badge-pill" *ngIf="item.promoIcon === 'shipping'">Envío</span>
-                  <span class="font-bold text-[#EAC7D2] uppercase tracking-[0.15em] text-[9px] bg-white/10 px-2 py-0.5 rounded-full border border-white/5 hero-badge-pill" *ngIf="item.promoIcon === 'discount'">Descuento</span>
-                  <span class="font-bold text-[#EAC7D2] uppercase tracking-[0.15em] text-[9px] bg-white/10 px-2 py-0.5 rounded-full border border-white/5 hero-badge-pill" *ngIf="item.promoIcon === 'gift'">Detalle</span>
+                  <span class="font-bold text-[#A4AE9D] uppercase tracking-[0.15em] text-[9px] bg-white/10 px-2 py-0.5 rounded-full border border-white/5 hero-badge-pill" *ngIf="item.promoIcon === 'shipping'">Envío</span>
+                  <span class="font-bold text-[#A4AE9D] uppercase tracking-[0.15em] text-[9px] bg-white/10 px-2 py-0.5 rounded-full border border-white/5 hero-badge-pill" *ngIf="item.promoIcon === 'discount'">Descuento</span>
+                  <span class="font-bold text-[#A4AE9D] uppercase tracking-[0.15em] text-[9px] bg-white/10 px-2 py-0.5 rounded-full border border-white/5 hero-badge-pill" *ngIf="item.promoIcon === 'gift'">Detalle</span>
                   <span class="text-white/95 font-medium leading-none hero-badge-text">{{ item.promoText }}</span>
                 </span>
               </div>
               
-              <!-- CTA Button -->
+              <!-- CTA Button en estilo Districol -->
               <div>
                 <a
                   [routerLink]="item.link"
-                  class="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-[0.85rem] font-bold uppercase tracking-[0.2em] text-[#111111] transition duration-300 hover:bg-[#EAC7D2] hover:shadow-lg hover:-translate-y-0.5 font-editorial hero-cta-btn"
+                  class="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-[0.85rem] font-bold uppercase tracking-[0.2em] text-[#003B4A] transition duration-300 hover:bg-[#A4AE9D] hover:text-[#002530] hover:shadow-lg hover:-translate-y-0.5 font-montserrat hero-cta-btn"
                 >
                   {{ item.ctaText }}
                 </a>

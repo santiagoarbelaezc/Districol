@@ -31,7 +31,7 @@
   height: calc(85vh - 118px);
   min-height: 36rem;
   max-height: 60rem;
-  background-color: #050505;
+  background-color: #002530; /* Teal muy oscuro oficial de Districol */
 }
 
 @media (max-width: 768px) {
@@ -83,7 +83,7 @@
   height: 100%;
   overflow: hidden;
   position: relative;
-  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 1px solid rgba(164, 174, 157, 0.15);
 }
 
 @media (min-width: 768px) {
@@ -108,24 +108,24 @@
   transform: scale(1.03);
 }
 
-/* Gradient Overlay */
+/* Gradient Overlay en Tonos Teal Districol (#002530 / #003B4A) */
 .hero-overlay {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.45) 50%, rgba(0, 0, 0, 0.15) 100%);
+  background: linear-gradient(to top, rgba(0, 37, 48, 0.92) 0%, rgba(0, 59, 74, 0.5) 50%, rgba(0, 37, 48, 0.2) 100%);
   pointer-events: none;
 }
 
 @media (min-width: 1024px) {
   .hero-overlay {
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.1) 80%, transparent 100%);
+    background: linear-gradient(to right, rgba(0, 37, 48, 0.94) 0%, rgba(0, 59, 74, 0.6) 45%, rgba(0, 37, 48, 0.15) 80%, transparent 100%);
   }
 }
 
-/* Text Layer Superposition con Padding Adecuado */
+/* Text Layer Superposition */
 .hero-content-layer {
   position: absolute;
   top: 0;
@@ -146,7 +146,7 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  color: #ffffff;
+  color: #F6F4F2;
   padding: 3rem 1.5rem 2rem 1.5rem;
 }
 
@@ -162,66 +162,68 @@
   max-width: 48rem;
 }
 
-/* Promo Tag */
+/* Promo Tag en Verde Salvia #A4AE9D */
 .hero-promo-tag {
   font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.4em;
-  color: #EAC7D2;
+  color: #A4AE9D;
   margin-bottom: 0.75rem;
+  font-family: 'Montserrat', sans-serif;
 }
 
-/* Title */
+/* Title en Montserrat (Fuente oficial de títulos de Districol) */
 .hero-title {
   font-size: clamp(2.3rem, 5.5vw, 5rem);
   font-weight: 800;
   line-height: 1.02;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
-  color: #FFFFFF;
+  color: #F6F4F2;
   margin-bottom: 0.5rem;
-  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
-  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+  font-family: 'Montserrat', sans-serif;
+  text-shadow: 0 4px 30px rgba(0, 37, 48, 0.8);
 }
 
-/* Subtitle */
+/* Subtitle en Playfair Display / Comfortaa */
 .hero-subtitle {
   font-size: clamp(1.15rem, 2vw, 1.75rem);
   font-weight: 500;
   font-style: italic;
-  color: rgba(255, 255, 255, 0.95);
+  color: #B8C1B3;
   line-height: 1.4;
   margin-bottom: 1rem;
   font-family: 'Playfair Display', Georgia, serif;
 }
 
-/* Description */
+/* Description en Comfortaa (Fuente de texto base de Districol) */
 .hero-description {
   font-size: clamp(0.875rem, 1.05vw, 0.98rem);
   line-height: 1.65;
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(246, 244, 242, 0.85);
   max-width: 36rem;
   margin-bottom: 1.5rem;
-  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  font-family: 'Comfortaa', 'Montserrat', sans-serif;
 }
 
-/* Badge */
+/* Badge en Salvia y Teal Oscuro */
 .hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
   border-radius: 9999px;
-  background-color: rgba(0, 0, 0, 0.55);
+  background-color: rgba(0, 37, 48, 0.65);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(164, 174, 157, 0.25);
   padding: 0.375rem 1.25rem 0.375rem 0.375rem;
   font-size: 11px;
   font-weight: 500;
-  color: #ffffff;
+  color: #F6F4F2;
   margin-bottom: 2rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 20px 40px rgba(0, 37, 48, 0.5);
+  font-family: 'Montserrat', sans-serif;
 }
 
 .hero-badge-icon {
@@ -231,53 +233,53 @@
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  background-color: #EAC7D2;
-  color: #111111;
+  background-color: #A4AE9D;
+  color: #003B4A;
   flex-shrink: 0;
 }
 
 .hero-badge-pill {
   font-weight: 700;
-  color: #EAC7D2;
+  color: #A4AE9D;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   font-size: 9px;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(164, 174, 157, 0.15);
   padding: 0.15rem 0.6rem;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(164, 174, 157, 0.2);
 }
 
 .hero-badge-text {
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(246, 244, 242, 0.95);
   font-weight: 500;
   line-height: 1;
 }
 
-/* CTA Button */
+/* CTA Button en colores de marca Districol */
 .hero-cta-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  background-color: #ffffff;
+  background-color: #F6F4F2;
   padding: 0.9rem 2.2rem;
   font-size: 0.85rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: #111111;
+  color: #003B4A;
   text-decoration: none;
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  box-shadow: 0 10px 30px rgba(0, 59, 74, 0.4);
+  font-family: 'Montserrat', sans-serif;
 }
 
 .hero-cta-btn:hover {
-  background-color: #EAC7D2;
-  color: #111111;
+  background-color: #A4AE9D;
+  color: #002530;
   transform: translateY(-2px);
-  box-shadow: 0 15px 40px rgba(234, 199, 210, 0.4);
+  box-shadow: 0 15px 40px rgba(164, 174, 157, 0.45);
 }
 
 /* Navigation Dots */
@@ -298,16 +300,16 @@
   border-radius: 9999px;
   border: 0;
   padding: 0;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(246, 244, 242, 0.35);
   cursor: pointer;
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .carousel-dot.active {
   width: 2.5rem;
-  background-color: #ffffff;
+  background-color: #A4AE9D;
 }
 
 .carousel-dot:hover {
-  background-color: rgba(255, 255, 255, 0.75);
+  background-color: rgba(164, 174, 157, 0.8);
 }
