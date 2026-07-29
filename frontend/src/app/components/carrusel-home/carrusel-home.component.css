@@ -61,7 +61,7 @@
   display: none;
 }
 
-/* ===== TARJETA DE PRODUCTO BLANCA (ESTILO TIENDA PREMIUM) ===== */
+/* ===== TARJETA DE PRODUCTO BLANCA COMPLETAMENTE SELECCIONABLE ===== */
 .carrusel-section.theme-light .producto-card {
   background-color: #FFFFFF;
   border: 1px solid #E5E7EB;
@@ -83,10 +83,18 @@
   justify-content: space-between;
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
 }
 
 .producto-card:hover {
   transform: translateY(-6px);
+}
+
+.producto-card:focus-visible {
+  outline: 2px solid #003B4A;
+  outline-offset: 3px;
 }
 
 .carrusel-section.theme-light .producto-card:hover {
@@ -249,7 +257,7 @@
   color: #374151;
 }
 
-.carrusel-section.theme-light .btn-ver-detalles:hover {
+.carrusel-section.theme-light .producto-card:hover .btn-ver-detalles {
   border-color: #003B4A;
   background-color: #003B4A;
   color: #FFFFFF;
@@ -261,7 +269,7 @@
   color: #F6F4F2;
 }
 
-.carrusel-section.theme-dark .btn-ver-detalles:hover {
+.carrusel-section.theme-dark .producto-card:hover .btn-ver-detalles {
   border-color: #A4AE9D;
   background-color: #A4AE9D;
   color: #002530;
@@ -280,6 +288,7 @@
   gap: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
+  pointer-events: none; /* Toda la tarjeta procesa el clic */
 }
 
 .arrow-icon {
@@ -288,7 +297,7 @@
   transition: transform 0.3s ease;
 }
 
-.btn-ver-detalles:hover .arrow-icon {
+.producto-card:hover .arrow-icon {
   transform: translateX(4px);
 }
 

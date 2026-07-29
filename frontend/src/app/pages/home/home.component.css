@@ -74,7 +74,7 @@
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
 }
 
-/* Efecto hover más sutil */
+/* Efecto hover sutil */
 .introduccion-card:hover {
   transform: translateY(-4px);
   border-color: rgba(164, 174, 157, 0.45);
@@ -194,7 +194,7 @@
 /* ===== SHOWCASE PANORÁMICO DE ALMOHADAS & ERGONOMÍA ===== */
 .showcase-banner-districol {
   background: linear-gradient(135deg, #051a22 0%, #002530 100%);
-  padding: 100px 4vw;
+  padding: 65px 4vw;
   border-top: 1px solid rgba(164, 174, 157, 0.15);
   border-bottom: 1px solid rgba(164, 174, 157, 0.15);
   position: relative;
@@ -209,7 +209,7 @@
 .showcase-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  gap: 50px;
   align-items: center;
 }
 
@@ -223,7 +223,7 @@
 
 .showcase-main-img {
   width: 100%;
-  height: 480px;
+  height: 440px;
   object-fit: cover;
   object-position: center;
   transition: transform 0.8s ease;
@@ -274,41 +274,45 @@
   text-transform: uppercase;
   letter-spacing: 0.35em;
   color: #A4AE9D;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   font-family: 'Montserrat', sans-serif;
 }
 
 .showcase-title {
-  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-size: clamp(1.8rem, 3.2vw, 2.7rem);
   font-weight: 800;
   color: #F6F4F2;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   line-height: 1.15;
   font-family: 'Montserrat', sans-serif;
   text-transform: uppercase;
 }
 
+/* Subtítulo en Montserrat (Sin cursiva, tipografía limpia y estructurada) */
 .showcase-subtitle {
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   color: #B8C1B3;
-  font-style: italic;
-  font-family: 'Playfair Display', serif;
-  margin-bottom: 20px;
+  font-style: normal;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 18px;
 }
 
 .showcase-desc {
-  font-size: 0.98rem;
+  font-size: 0.92rem;
   line-height: 1.8;
   color: rgba(246, 244, 242, 0.85);
-  margin-bottom: 30px;
+  margin-bottom: 24px;
   font-family: 'Comfortaa', sans-serif;
 }
 
 .showcase-features {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  margin-bottom: 36px;
+  gap: 12px;
+  margin-bottom: 30px;
 }
 
 .feature-item {
@@ -316,14 +320,14 @@
   align-items: center;
   gap: 12px;
   color: rgba(246, 244, 242, 0.92);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 500;
   font-family: 'Comfortaa', sans-serif;
 }
 
 .feature-icon {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   color: #A4AE9D;
   flex-shrink: 0;
 }
@@ -332,11 +336,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 16px 36px;
+  padding: 14px 32px;
   background: #F6F4F2;
   color: #003B4A;
   font-weight: 800;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   text-transform: uppercase;
   letter-spacing: 0.2em;
   border-radius: 9999px;
@@ -396,7 +400,7 @@
   }
 
   .showcase-banner-districol {
-    padding: 60px 20px;
+    padding: 50px 20px;
   }
 
   .showcase-main-img {

@@ -12,8 +12,16 @@
     </button>
 
     <div class="carrusel-container" [id]="'carousel-' + carouselId">
-      <div class="producto-card" *ngFor="let producto of productos">
-        
+      <!-- Tarjeta completa seleccionable/clicleable -->
+      <div
+        class="producto-card"
+        *ngFor="let producto of productos"
+        (click)="verMas(producto)"
+        (keydown.enter)="verMas(producto)"
+        tabindex="0"
+        role="button"
+        [attr.aria-label]="'Ver detalles de ' + producto.nombre"
+      >
         <!-- Imagen con Gadgets / Badges en las esquinas -->
         <div class="card-imagen-wrapper">
           <img [src]="producto.imagen" [alt]="producto.nombre" class="card-img" />
@@ -44,8 +52,8 @@
             <span class="precio-unit">/ unidad</span>
           </div>
 
-          <!-- Botón Ver Detalles con flecha -->
-          <button class="btn-ver-detalles" (click)="verMas(producto)">
+          <!-- Botón Ver Detalles visual -->
+          <button type="button" class="btn-ver-detalles">
             <span>Ver Detalles</span>
             <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
