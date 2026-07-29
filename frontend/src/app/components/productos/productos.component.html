@@ -29,7 +29,7 @@
             <div class="loading-dot"></div>
         </div>
         <p class="loading-text">
-            {{ modoBusqueda ? 'Buscando productos...' : 'Cargando productos...' }}
+            {{ modoBusqueda ? 'Buscando productos...' : 'Cargando catálogo Districol...' }}
         </p>
     </div>
 
@@ -50,8 +50,8 @@
             <p class="suggestions-title">Sugerencias:</p>
             <ul class="suggestions-list">
                 <li>Verifica la ortografía de tu búsqueda</li>
-                <li>Utiliza términos más generales</li>
-                <li>Intenta con sinónimos o palabras relacionadas</li>
+                <li>Utiliza términos más generales como "colchón" o "almohada"</li>
+                <li>Explora nuestro menú de categorías</li>
             </ul>
             <button class="explore-all-btn" (click)="limpiarBusqueda()">
                 Explorar todos los productos
@@ -68,68 +68,78 @@
                 <path d="M16 10a4 4 0 0 1-8 0"></path>
             </svg>
         </div>
-        <p class="empty-text">No hay productos disponibles</p>
-        <p class="empty-subtext">Intenta más tarde</p>
+        <p class="empty-text">No hay productos disponibles en esta categoría</p>
+        <p class="empty-subtext">Próximamente agregaremos más opciones</p>
     </div>
 
-    <!-- Grid de productos -->
+    <!-- Grid de productos (4 tarjetas por nivel en desktop) -->
     <div class="products-grid-container" [class.productos-cambiando]="cargando" *ngIf="productos.length && !cargando">
 
         <div class="products-grid">
-            <div class="product-card-wrapper" *ngFor="let producto of productos; let i = index">
+            <div 
+                class="producto-card"
+                *ngFor="let producto of productos"
+                (click)="verDetalles(producto)"
+                (keydown.enter)="verDetalles(producto)"
+                tabindex="0"
+                role="button"
+                [attr.aria-label]="'Ver detalles de ' + producto.nombre"
+            >
+                <!-- Imagen con Gadgets / Badges en las esquinas (Estilo Carrusel Colchones) -->
+                <div class="card-imagen-wrapper">
+                    <img 
+                        *ngIf="getProductoImagen(producto)" 
+                        [src]="getProductoImagen(producto)" 
+                        [alt]="producto.nombre" 
+                        class="card-img" 
+                        (error)="handleImageError($event)"
+                    />
+                    
+                    <!-- Badge Superior Izquierda (Categoría / Línea en fondo Negro) -->
+                    <span class="badge-tag-top">
+                        {{ producto.tag || producto.subcategoria || producto.categoria || 'PREMIUM' }}
+                    </span>
 
-                <!-- Tarjeta de producto -->
-                <div class="product-card-container" (click)="verDetalles(producto)" tabindex="0" role="button">
-
-                    <!-- Contenedor superior: Imagen -->
-                    <div class="product-image-section">
-                        <div class="product-image-wrapper">
-                            <div class="product-image-container">
-                                <img *ngIf="getProductoImagen(producto)" [src]="getProductoImagen(producto)"
-                                    [alt]="producto.nombre" class="product-image" (error)="handleImageError($event)">
-                                <div class="image-overlay"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Contenedor medio: Información -->
-                    <div class="product-info-section">
-
-                        <!-- Contenedor de texto -->
-                        <div class="product-text-container">
-                            <div class="product-title-wrapper">
-                                <h3 class="product-title">{{producto.nombre}}</h3>
-                                <div class="product-subtitle" *ngIf="producto.categoria || producto.subcategoria">
-                                    {{ producto.categoria || producto.subcategoria || 'Productos' }}
-                                </div>
-                            </div>
-
-                            <div class="product-description-container">
-                                <p class="product-description">
-                                    {{producto.descripcion || 'Descripción no disponible'}}
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- Contenedor de detalles - Solo precio -->
-                        <div class="product-details-container">
-                            <div class="product-price-section">
-                                <div class="price-display">
-                                    <span class="price-label">Precio:</span>
-                                    <span class="price-value">{{formatearPrecio(producto.precio)}}</span>
-                                </div>
-                                <div class="stock-indicator" [class.available]="producto.cantidad > 0"
-                                    [class.unavailable]="producto.cantidad === 0">
-                                    {{ producto.cantidad > 0 ? 'Disponible' : 'Agotado' }}
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
+                    <!-- Gadget Promocional Inferior (Promo del día / Descuento / Últimas unidades) -->
+                    <span 
+                        class="badge-promo-bottom"
+                        [ngClass]="'badge-' + (producto.badgeType || 'promo')"
+                        *ngIf="producto.badgePromo"
+                    >
+                        {{ producto.badgePromo }}
+                    </span>
                 </div>
 
+                <!-- Contenido de la tarjeta en fondo blanco -->
+                <div class="card-content">
+                    <h3 class="card-nombre">{{ producto.nombre }}</h3>
+                    <p class="card-descripcion">{{ producto.descripcion || 'Confort ortopédico garantizado' }}</p>
+                    
+                    <!-- Precio y Estado de Disponibilidad -->
+                    <div class="card-precio-row">
+                        <div class="precio-block">
+                            <span class="precio-amount">{{ formatearPrecio(producto.precio) }}</span>
+                            <span class="precio-unit">/ unidad</span>
+                        </div>
+                        <span 
+                            class="stock-badge" 
+                            [class.available]="producto.cantidad > 0"
+                            [class.unavailable]="producto.cantidad === 0"
+                        >
+                            {{ producto.cantidad > 0 ? 'Disponible' : 'Agotado' }}
+                        </span>
+                    </div>
+
+                    <!-- Botón Ver Detalles visual -->
+                    <button type="button" class="btn-ver-detalles">
+                        <span>Ver Detalles</span>
+                        <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
+
     </div>
 </section>
