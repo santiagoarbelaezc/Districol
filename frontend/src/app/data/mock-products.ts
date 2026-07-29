@@ -5,61 +5,101 @@ export const PRODUCTOS_COLCHONES: ProductoCarrusel[] = [
     id: 6,
     imagen: 'assets/img/colchon1.png',
     nombre: 'Colchón Ágata Premium',
-    descripcion: 'Colección exclusiva con espuma viscoelástica de última generación. Adaptación perfecta a la anatomía corporal.'
+    descripcion: 'Colección exclusiva con espuma viscoelástica de última generación. Adaptación anatómica superior.',
+    tag: 'VISCOELÁSTICO',
+    badgePromo: 'DESCUENTO EXCLUSIVO',
+    badgeType: 'discount',
+    precio: 3500000
   },
   {
     id: 17,
     imagen: 'assets/img/espumas-med.jpg',
     nombre: 'Colchón Espumas Medellín Café',
-    descripcion: 'Elegancia y firmeza en color café. Un colchón diseñado para durar y brindar el mejor soporte.'
+    descripcion: 'Elegancia y firmeza en color café. Un colchón diseñado para durar y brindar el mejor soporte.',
+    tag: 'ORTOPÉDICO',
+    badgePromo: 'ÚLTIMAS UNIDADES',
+    badgeType: 'warning',
+    precio: 1550000
   },
   {
     id: 2,
     imagen: 'assets/img/alcoba2.jpg',
     nombre: 'Colchón Sleep Well',
-    descripcion: 'Espuma troquelada de alta densidad que se adapta a tu forma. Espuma látex con fibras de bambú para un descanso premium.'
+    descripcion: 'Espuma troquelada de alta densidad con fibras de bambú para un descanso fresco y anatómico.',
+    tag: 'BAMBÚ LÁTEX',
+    badgePromo: 'PROMO DEL DÍA',
+    badgeType: 'promo',
+    precio: 2150000
   },
   {
     id: 19,
     imagen: 'assets/img/colchon-espumas-santafe.jpg',
     nombre: 'Colchón Santa Fe Rosa',
-    descripcion: 'Inspiración y suavidad en cada capa. El equilibrio perfecto entre estilo y descanso.'
+    descripcion: 'Inspiración y suavidad en cada capa. El equilibrio perfecto entre estilo contemporáneo y descanso.',
+    tag: 'SUAVIDAD',
+    badgePromo: 'DESCUENTO EXCLUSIVO',
+    badgeType: 'discount',
+    precio: 1680000
   },
   {
     id: 3,
     imagen: 'assets/img/alcoba3.jpg',
     nombre: 'Colchón Tech Confort',
-    descripcion: 'Tecnología avanzada con espuma dura de alta densidad y sistema pocket con foam case. Relleno de algodón natural para máximo confort.'
+    descripcion: 'Tecnología avanzada con espuma dura de alta densidad y sistema pocket con foam case reforzado.',
+    tag: 'POCKET 5 ZONAS',
+    badgePromo: 'PROMO DEL DÍA',
+    badgeType: 'promo',
+    precio: 2450000
   },
   {
     id: 18,
     imagen: 'assets/img/espumas-med2.jpg',
     nombre: 'Colchón Espumas Medellín Gris',
-    descripcion: 'Diseño sobrio y moderno en color gris con tecnología de punta para noches de confort absoluto.'
+    descripcion: 'Diseño sobrio y moderno en color gris con tecnología de punta para noches de confort absoluto.',
+    tag: 'SOBRIO & FIRME',
+    badgePromo: 'DESCUENTO EXCLUSIVO',
+    badgeType: 'discount',
+    precio: 1550000
   },
   {
     id: 4,
     imagen: 'assets/img/alcoba4.jpg',
     nombre: 'Colchón Pocket Bliss',
-    descripcion: 'Sistema pocket de 5 zonas con soporte individual. Espuma suave combinada con capas de alta densidad para un equilibrio perfecto.'
+    descripcion: 'Sistema pocket de 5 zonas con soporte individual. Capas de alta densidad para equilibrio postural.',
+    tag: 'INDIVIDUAL',
+    badgePromo: 'ÚLTIMAS UNIDADES',
+    badgeType: 'warning',
+    precio: 1750000
   },
   {
     id: 16,
     imagen: 'assets/img/alcoba7.jpg',
     nombre: 'Colchón Espumas Medellín',
-    descripcion: 'Tradición y soporte de la mano de Espumas Medellín. Calidad garantizada para un descanso profundo.'
+    descripcion: 'Tradición y soporte ortopédico de la mano de Espumas Medellín. Calidad probada y garantizada.',
+    tag: 'TRADICIÓN',
+    badgePromo: 'DESCUENTO EXCLUSIVO',
+    badgeType: 'discount',
+    precio: 1450000
   },
   {
     id: 5,
     imagen: 'assets/img/alcoba5.jpg',
     nombre: 'Colchón Royal Dream',
-    descripcion: 'Diseño exclusivo con múltiples capas de espuma. Tejido premium transpirable and acolchado de 7cm para noches de ensueño.'
+    descripcion: 'Diseño exclusivo con múltiples capas de espuma. Tejido premium transpirable con acolchado de 7cm.',
+    tag: 'LUJO ROYAL',
+    badgePromo: 'DESCUENTO EXCLUSIVO',
+    badgeType: 'discount',
+    precio: 3200000
   },
   {
     id: 1,
     imagen: 'assets/img/colchon2.png',
     nombre: 'Colchón Essence',
-    descripcion: 'Capas de confort superior con núcleo de alta resistencia. Sistema de ventilación integrado para noches frescas.'
+    descripcion: 'Capas de confort superior con núcleo de alta resistencia y sistema de ventilación 3D integrado.',
+    tag: 'VENTILACIÓN 3D',
+    badgePromo: 'PROMO DEL DÍA',
+    badgeType: 'promo',
+    precio: 1890000
   }
 ];
 
@@ -68,31 +108,31 @@ export const PRODUCTOS_AMBIENTES: ProductoCarrusel[] = [
     id: 15,
     imagen: 'assets/img/distri1.jpg',
     nombre: 'Ambiente Sereno',
-    descripcion: 'Diseño de interiores inspirado en la calma. Colores neutros y texturas suaves para un espacio de descanso ideal.'
+    descripcion: 'Diseño de interiores inspirado en la calma. Colores neutros y texturas suaves para un espacio ideal.',
+    tag: 'DESIGN',
+    badgePromo: 'EXCLUSIVO',
+    badgeType: 'promo',
+    precio: 4500000
   },
   {
-    id: 15, // Reusing ID for simplicity or if they go to a generic room category
+    id: 15,
     imagen: 'assets/img/distri3.jpg',
     nombre: 'Suite Elegance',
-    descripcion: 'Ambientación premium para habitaciones principales. Combinación perfecta de estilo contemporáneo y confort clásico.'
+    descripcion: 'Ambientación premium para habitaciones principales. Estilo contemporáneo y confort clásico.',
+    tag: 'SUITE',
+    badgePromo: 'EDICIÓN LIMITADA',
+    badgeType: 'warning',
+    precio: 5200000
   },
   {
     id: 15,
     imagen: 'assets/img/distri4.jpg',
     nombre: 'Espacio Zen',
-    descripcion: 'Minimalismo y armonía en cada rincón. Creado para quienes buscan la máxima relajación en su dormitorio.'
-  },
-  {
-    id: 15,
-    imagen: 'assets/img/distri5.jpg',
-    nombre: 'Habitación Luxury',
-    descripcion: 'El máximo exponente del lujo en descanso. Acabados de alta gama y diseño exclusivo para clientes exigentes.'
-  },
-  {
-    id: 15,
-    imagen: 'assets/img/agata.jpg',
-    nombre: 'Colección Ágata',
-    descripcion: 'Inspirada en la piedra preciosa, esta línea combina elegancia atemporal con la más alta tecnología en descanso.'
+    descripcion: 'Minimalismo y armonía en cada rincón. Creado para quienes buscan la máxima relajación.',
+    tag: 'MINIMAL',
+    badgePromo: 'DESCUENTO EXCLUSIVO',
+    badgeType: 'discount',
+    precio: 4800000
   }
 ];
 
@@ -101,43 +141,31 @@ export const PRODUCTOS_COMPLEMENTOS: ProductoCarrusel[] = [
     id: 7,
     imagen: 'assets/img/almohadas.jpg',
     nombre: 'Almohadas Premium',
-    descripcion: 'Relleno de fibra siliconada con funda de algodón egipcio. Altura ajustable para cada tipo de durmiente.'
+    descripcion: 'Relleno de fibra siliconada con funda de algodón egipcio. Altura ajustable.',
+    tag: 'FIBRA SILICONADA',
+    badgePromo: 'PROMO DEL DÍA',
+    badgeType: 'promo',
+    precio: 89000
   },
   {
     id: 10,
     imagen: 'assets/img/sabanas.jpg',
     nombre: 'Sábanas Luxury',
-    descripcion: 'Algodón de 400 hilos con acabado satinado. Suavidad incomparable y durabilidad garantizada lavado tras lavado.'
+    descripcion: 'Algodón de 400 hilos con acabado satinado. Suavidad incomparable.',
+    tag: '400 HILOS',
+    badgePromo: 'DESCUENTO EXCLUSIVO',
+    badgeType: 'discount',
+    precio: 250000
   },
   {
     id: 13,
     imagen: 'assets/img/colchon-prueba1.jpg',
     nombre: 'Protector Imperial',
-    descripcion: 'Protección total contra ácaros y humedad. Tejido hipoalergénico con barrera impermeable invisible.'
-  },
-  {
-    id: 14,
-    imagen: 'assets/img/colchon-prueba2.jpg',
-    nombre: 'Base Box Spring',
-    descripcion: 'Sistema de soporte con resortes internos. Extiende la vida útil del colchón y mejora la firmeza del conjunto.'
-  },
-  {
-    id: 106, // Placeholder if not found elsewhere
-    imagen: 'assets/img/colchon-districol.jpeg',
-    nombre: 'Set Completo Districol',
-    descripcion: 'Conjunto premium que incluye colchón, base y almohadas. Todo lo necesario para transformar tu descanso.'
-  },
-  {
-    id: 21,
-    imagen: 'assets/img/protector.jpg',
-    nombre: 'Protector Districol',
-    descripcion: 'Máxima protección para tu colchón contra líquidos y alérgenos. Prolonga la vida útil de tu inversión.'
-  },
-  {
-    id: 22,
-    imagen: 'assets/img/protector-blanco.jpg',
-    nombre: 'Protector Confort Blanco',
-    descripcion: 'Funda protectora transpirable y suave. Higiene y frescura garantizada en cada noche.'
+    descripcion: 'Protección total contra ácaros y humedad. Tejido hipoalergénico con barrera impermeable.',
+    tag: 'IMPERMEABLE',
+    badgePromo: 'BEST SELLER',
+    badgeType: 'promo',
+    precio: 120000
   }
 ];
 
@@ -146,19 +174,31 @@ export const PRODUCTOS_ALMOHADAS: ProductoCarrusel[] = [
     id: 7,
     imagen: 'assets/img/almohadas.jpg',
     nombre: 'Almohada Comfort Plus',
-    descripcion: 'Relleno de fibra siliconada de alta densidad. Soporte ergonómico que se adapta a la curvatura natural del cuello.'
+    descripcion: 'Relleno de fibra siliconada de alta densidad. Soporte ergonómico para el cuello.',
+    tag: 'ERGONÓMICA',
+    badgePromo: 'PROMO DEL DÍA',
+    badgeType: 'promo',
+    precio: 89000
   },
   {
     id: 8,
     imagen: 'assets/img/almohada2.jpg',
     nombre: 'Almohada Memory Foam',
-    descripcion: 'Espuma viscoelástica con efecto memoria. Distribución uniforme del peso para aliviar puntos de presión.'
+    descripcion: 'Espuma viscoelástica con efecto memoria. Distribución uniforme del peso.',
+    tag: 'MEMORY FOAM',
+    badgePromo: 'DESCUENTO EXCLUSIVO',
+    badgeType: 'discount',
+    precio: 145000
   },
   {
     id: 9,
     imagen: 'assets/img/almohada3.jpg',
     nombre: 'Almohada Gel Fresh',
-    descripcion: 'Tecnología gel infused para noches frescas. Funda removible de algodón hipoalergénico lavable a máquina.'
+    descripcion: 'Tecnología gel infused para noches frescas. Funda removible hipoalergénica.',
+    tag: 'GEL FRESH',
+    badgePromo: 'ÚLTIMAS UNIDADES',
+    badgeType: 'warning',
+    precio: 175000
   }
 ];
 
@@ -167,35 +207,34 @@ export const PRODUCTOS_SABANAS: ProductoCarrusel[] = [
     id: 10,
     imagen: 'assets/img/sabana-colchon.jpg',
     nombre: 'Sábanas Premium 400 Hilos',
-    descripcion: 'Algodón egipcio de 400 hilos con acabado satinado. Suavidad excepcional que mejora con cada lavado.'
+    descripcion: 'Algodón egipcio de 400 hilos con acabado satinado. Suavidad excepcional.',
+    tag: 'ALGODÓN EGIPCIO',
+    badgePromo: 'DESCUENTO EXCLUSIVO',
+    badgeType: 'discount',
+    precio: 250000
   },
   {
     id: 11,
     imagen: 'assets/img/sabana.jpg',
     nombre: 'Sábanas Luxury Collection',
-    descripcion: 'Tejido de microfibra premium con acabado perlado. Resistentes a las arrugas y de secado rápido.'
+    descripcion: 'Tejido de microfibra premium con acabado perlado. Resistentes a las arrugas.',
+    tag: 'LUXURY',
+    badgePromo: 'PROMO DEL DÍA',
+    badgeType: 'promo',
+    precio: 320000
   },
   {
     id: 12,
     imagen: 'assets/img/sabana2.jpg',
     nombre: 'Sábanas Organic Cotton',
-    descripcion: 'Algodón 100% orgánico certificado. Tejido transpirable ideal para pieles sensibles y alérgicos.'
-  },
-  {
-    id: 12,
-    imagen: 'assets/img/sabana3.jpg',
-    nombre: 'Sábanas Silky Touch',
-    descripcion: 'Mezcla de algodón y seda natural. Sensación de lujo incomparable para un descanso de ensueño.'
-  },
-  {
-    id: 20,
-    imagen: 'assets/img/sabana-colchon.jpg',
-    nombre: 'Sábana Blanca Premium',
-    descripcion: 'Blancura impecable y suavidad al tacto. Algodón de alta calidad para una experiencia de hotel en casa.'
+    descripcion: 'Algodón 100% orgánico certificado. Tejido transpirable para pieles sensibles.',
+    tag: '100% ORGÁNICO',
+    badgePromo: 'EDICIÓN ESPECIAL',
+    badgeType: 'warning',
+    precio: 280000
   }
 ];
 
-// Todos los productos combinados
 export const TODOS_LOS_PRODUCTOS: ProductoCarrusel[] = [
   ...PRODUCTOS_COLCHONES,
   ...PRODUCTOS_AMBIENTES,
@@ -203,8 +242,6 @@ export const TODOS_LOS_PRODUCTOS: ProductoCarrusel[] = [
   ...PRODUCTOS_ALMOHADAS,
   ...PRODUCTOS_SABANAS
 ];
-
-// ========== Interfaces y datos para la página de Productos ==========
 
 export interface Producto {
   id: number;
@@ -250,85 +287,5 @@ export const MOCK_PRODUCTOS: Producto[] = [
     id: 6, nombre: 'Colchón Ágata Premium', categoriaId: 1, subcategoriaId: 101,
     descripcion: 'Colección exclusiva con espuma viscoelástica de última generación.',
     precio: 3500000, cantidad: 4, imagen: 'assets/img/colchon1.png', categoria: 'Colchones', subcategoria: 'Colchones Premium'
-  },
-  {
-    id: 7, nombre: 'Almohada Comfort Plus', categoriaId: 2, subcategoriaId: 201,
-    descripcion: 'Relleno de fibra siliconada de alta densidad. Soporte ergonómico para el cuello.',
-    precio: 89000, cantidad: 30, imagen: 'assets/img/almohadas.jpg', categoria: 'Almohadas', subcategoria: 'Almohadas Fibra'
-  },
-  {
-    id: 8, nombre: 'Almohada Memory Foam', categoriaId: 2, subcategoriaId: 202,
-    descripcion: 'Espuma viscoelástica con efecto memoria. Distribución uniforme del peso.',
-    precio: 145000, cantidad: 20, imagen: 'assets/img/almohada2.jpg', categoria: 'Almohadas', subcategoria: 'Almohadas Memory Foam'
-  },
-  {
-    id: 9, nombre: 'Almohada Gel Fresh', categoriaId: 2, subcategoriaId: 203,
-    descripcion: 'Tecnología gel infused para noches frescas. Funda removible hipoalergénica.',
-    precio: 175000, cantidad: 0, imagen: 'assets/img/almohada3.jpg', categoria: 'Almohadas', subcategoria: 'Almohadas Gel Fresh'
-  },
-  {
-    id: 10, nombre: 'Sábanas Premium 400 Hilos', categoriaId: 3, subcategoriaId: 301,
-    descripcion: 'Algodón egipcio de 400 hilos con acabado satinado. Suavidad excepcional.',
-    precio: 250000, cantidad: 18, imagen: 'assets/img/sabanas.jpg', categoria: 'Sábanas', subcategoria: 'Sábanas 400 Hilos'
-  },
-  {
-    id: 11, nombre: 'Sábanas Luxury Collection', categoriaId: 3, subcategoriaId: 302,
-    descripcion: 'Tejido de microfibra premium con acabado perlado. Resistentes a las arrugas.',
-    precio: 320000, cantidad: 10, imagen: 'assets/img/sabana.jpg', categoria: 'Sábanas', subcategoria: 'Sábanas Luxury'
-  },
-  {
-    id: 12, nombre: 'Sábanas Organic Cotton', categoriaId: 3, subcategoriaId: 303,
-    descripcion: 'Algodón 100% orgánico certificado. Ideal para pieles sensibles.',
-    precio: 280000, cantidad: 7, imagen: 'assets/img/sabana2.jpg', categoria: 'Sábanas', subcategoria: 'Sábanas Orgánicas'
-  },
-  {
-    id: 13, nombre: 'Protector Imperial', categoriaId: 4, subcategoriaId: 401,
-    descripcion: 'Protección total contra ácaros y humedad. Tejido hipoalergénico.',
-    precio: 120000, cantidad: 25, imagen: 'assets/img/colchon-prueba1.jpg', categoria: 'Complementos', subcategoria: 'Protectores'
-  },
-  {
-    id: 14, nombre: 'Base Box Spring', categoriaId: 4, subcategoriaId: 402,
-    descripcion: 'Sistema de soporte con resortes internos. Extiende la vida útil del colchón.',
-    precio: 890000, cantidad: 6, imagen: 'assets/img/colchon-prueba2.jpg', categoria: 'Complementos', subcategoria: 'Bases Box Spring'
-  },
-  {
-    id: 15, nombre: 'Ambiente Sereno', categoriaId: 5, subcategoriaId: 501,
-    descripcion: 'Diseño de interiores inspirado en la calma. Colores neutros y texturas suaves.',
-    precio: 4500000, cantidad: 2, imagen: 'assets/img/distri1.jpg', categoria: 'Ambientes', subcategoria: 'Ambientaciones Premium'
-  },
-  {
-    id: 16, nombre: 'Colchón Espumas Medellín', categoriaId: 1, subcategoriaId: 101,
-    descripcion: 'Colchón de alta calidad fabricado por Espumas Medellín. Firmeza y durabilidad.',
-    precio: 1450000, cantidad: 10, imagen: 'assets/img/alcoba7.jpg', categoria: 'Colchones', subcategoria: 'Colchones Premium'
-  },
-  {
-    id: 17, nombre: 'Colchón Espumas Medellín Café', categoriaId: 1, subcategoriaId: 101,
-    descripcion: 'Versión elegante en color café. Soporte ortopédico superior.',
-    precio: 1550000, cantidad: 5, imagen: 'assets/img/espumas-med.jpg', categoria: 'Colchones', subcategoria: 'Colchones Premium'
-  },
-  {
-    id: 18, nombre: 'Colchón Espumas Medellín Gris', categoriaId: 1, subcategoriaId: 101,
-    descripcion: 'Acabado moderno en gris con tecnología de confort avanzado.',
-    precio: 1550000, cantidad: 7, imagen: 'assets/img/espumas-med2.jpg', categoria: 'Colchones', subcategoria: 'Colchones Premium'
-  },
-  {
-    id: 19, nombre: 'Colchón Santa Fe Rosa', categoriaId: 1, subcategoriaId: 103,
-    descripcion: 'Línea Santa Fe con acolchado especial de alta suavidad.',
-    precio: 1680000, cantidad: 4, imagen: 'assets/img/colchon-espumas-santafe.jpg', categoria: 'Colchones', subcategoria: 'Colchones Memory Foam'
-  },
-  {
-    id: 20, nombre: 'Sábana Blanca Premium', categoriaId: 3, subcategoriaId: 301,
-    descripcion: 'Sábana de algodón puro en color blanco. Frescura y elegancia.',
-    precio: 180000, cantidad: 15, imagen: 'assets/img/sabana-colchon.jpg', categoria: 'Sábanas', subcategoria: 'Sábanas 400 Hilos'
-  },
-  {
-    id: 21, nombre: 'Protector Districol', categoriaId: 4, subcategoriaId: 401,
-    descripcion: 'Protector de alta densidad para mayor vida útil de tu colchón.',
-    precio: 95000, cantidad: 25, imagen: 'assets/img/protector.jpg', categoria: 'Complementos', subcategoria: 'Protectores'
-  },
-  {
-    id: 22, nombre: 'Protector Blanco Confort', categoriaId: 4, subcategoriaId: 401,
-    descripcion: 'Protector acolchado blanco. Suavidad y protección hipoalergénica.',
-    precio: 110000, cantidad: 20, imagen: 'assets/img/protector-blanco.jpg', categoria: 'Complementos', subcategoria: 'Protectores'
   }
 ];

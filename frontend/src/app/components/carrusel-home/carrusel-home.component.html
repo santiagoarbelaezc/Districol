@@ -4,7 +4,7 @@
   </div>
 
   <div class="carrusel-wrapper">
-    <!-- Botón Anterior -->
+    <!-- Botón Anterior Minimalista Circular -->
     <button class="control-btn control-prev" (click)="scrollCarousel('prev')" aria-label="Anterior">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
         <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
@@ -13,23 +13,49 @@
 
     <div class="carrusel-container" [id]="'carousel-' + carouselId">
       <div class="producto-card" *ngFor="let producto of productos">
-        <div class="card-imagen">
-          <img [src]="producto.imagen" [alt]="producto.nombre">
+        
+        <!-- Imagen con Gadgets / Badges en las esquinas -->
+        <div class="card-imagen-wrapper">
+          <img [src]="producto.imagen" [alt]="producto.nombre" class="card-img" />
+          
+          <!-- Badge Superior Izquierda (Categoría / Línea en fondo Negro) -->
+          <span class="badge-tag-top" *ngIf="producto.tag">
+            {{ producto.tag }}
+          </span>
+
+          <!-- Gadget Promocional Inferior (Promo del día / Descuento / Últimas unidades) -->
+          <span
+            class="badge-promo-bottom"
+            [ngClass]="'badge-' + (producto.badgeType || 'promo')"
+            *ngIf="producto.badgePromo"
+          >
+            {{ producto.badgePromo }}
+          </span>
         </div>
+
+        <!-- Contenido de la tarjeta en fondo blanco -->
         <div class="card-content">
           <h3 class="card-nombre">{{ producto.nombre }}</h3>
           <p class="card-descripcion">{{ producto.descripcion }}</p>
-          <button class="btn-ver-mas" (click)="verMas(producto)">
-            <span>Ver más</span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+          
+          <!-- Precio / Unidad -->
+          <div class="card-precio-row" *ngIf="producto.precio">
+            <span class="precio-amount">{{ formatPrecio(producto.precio) }}</span>
+            <span class="precio-unit">/ unidad</span>
+          </div>
+
+          <!-- Botón Ver Detalles con flecha -->
+          <button class="btn-ver-detalles" (click)="verMas(producto)">
+            <span>Ver Detalles</span>
+            <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
             </svg>
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Botón Siguiente -->
+    <!-- Botón Siguiente Minimalista Circular -->
     <button class="control-btn control-next" (click)="scrollCarousel('next')" aria-label="Siguiente">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
         <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
