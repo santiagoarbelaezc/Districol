@@ -23,20 +23,22 @@
   display: none;
 }
 
-/* Main Hero Container */
+/* Main Hero Container con espacio exacto para el Navbar + Info-bar */
 .hero-shell {
   position: relative;
   width: 100%;
-  height: 75vh;
-  min-height: 32rem;
+  margin-top: 118px; /* Espacio exacto para Navbar (82px) + Info-bar (36px) */
+  height: calc(85vh - 118px);
+  min-height: 36rem;
   max-height: 60rem;
   background-color: #050505;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .hero-shell {
-    height: 85vh;
-    min-height: 40rem;
+    margin-top: 70px; /* Navbar móvil sin Info-bar */
+    height: calc(78vh - 70px);
+    min-height: 32rem;
   }
 }
 
@@ -123,7 +125,7 @@
   }
 }
 
-/* Text Layer Superposition */
+/* Text Layer Superposition con Padding Adecuado */
 .hero-content-layer {
   position: absolute;
   top: 0;
@@ -145,12 +147,12 @@
   max-width: 1400px;
   margin: 0 auto;
   color: #ffffff;
-  padding: 6.5rem 1.5rem 2rem 1.5rem;
+  padding: 3rem 1.5rem 2rem 1.5rem;
 }
 
 @media (min-width: 1024px) {
   .hero-page-container {
-    padding-top: 9.5rem;
+    padding-top: 4.5rem;
     padding-left: 4rem;
     padding-right: 4rem;
   }
@@ -172,7 +174,7 @@
 
 /* Title */
 .hero-title {
-  font-size: clamp(2.3rem, 5.8vw, 5.2rem);
+  font-size: clamp(2.3rem, 5.5vw, 5rem);
   font-weight: 800;
   line-height: 1.02;
   letter-spacing: -0.03em;
@@ -185,7 +187,7 @@
 
 /* Subtitle */
 .hero-subtitle {
-  font-size: clamp(1.2rem, 2.2vw, 1.875rem);
+  font-size: clamp(1.15rem, 2vw, 1.75rem);
   font-weight: 500;
   font-style: italic;
   color: rgba(255, 255, 255, 0.95);
@@ -196,7 +198,7 @@
 
 /* Description */
 .hero-description {
-  font-size: clamp(0.875rem, 1.1vw, 1rem);
+  font-size: clamp(0.875rem, 1.05vw, 0.98rem);
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.82);
   max-width: 36rem;
@@ -259,7 +261,7 @@
   justify-content: center;
   border-radius: 9999px;
   background-color: #ffffff;
-  padding: 1rem 2.2rem;
+  padding: 0.9rem 2.2rem;
   font-size: 0.85rem;
   font-weight: 800;
   text-transform: uppercase;
