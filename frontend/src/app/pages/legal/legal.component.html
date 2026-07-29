@@ -1,0 +1,269 @@
+<app-navbar></app-navbar>
+
+<!-- Hero Banner Legal -->
+<section class="legal-hero">
+  <div class="legal-hero-content">
+    <span class="legal-badge">MARCO LEGAL & TRANSPARENCIA</span>
+    <h1 class="legal-hero-title">Información Legal</h1>
+    <p class="legal-hero-subtitle">{{ activeSection.subtitulo }}</p>
+  </div>
+</section>
+
+<!-- Contenedor Principal de la Página -->
+<div class="legal-wrapper">
+  <div class="legal-container">
+
+    <!-- COLUMNA IZQUIERDA: CONTENIDO DINÁMICO -->
+    <main class="legal-content">
+
+      <!-- SECCIÓN 1: POLÍTICA Y PRIVACIDAD -->
+      <article *ngIf="activeSectionId === 'privacidad'" class="legal-doc fade-in">
+        <header class="doc-header">
+          <h2>Política y Privacidad de Datos Personales</h2>
+          <span class="doc-date">Última actualización: Enero 2026</span>
+        </header>
+
+        <div class="doc-body">
+          <div class="legal-alert-box">
+            <p><strong>Cumplimiento Normativo:</strong> Districol adopta la presente Política de Tratamiento de Datos Personales en cumplimiento estricto de la Ley Estatutaria 1581 de 2012, el Decreto Reglamentario 1377 de 2013 y demás normas complementarias de la República de Colombia.</p>
+          </div>
+
+          <h3>1. Identificación del Responsable del Tratamiento</h3>
+          <p><strong>Razón Social:</strong> Districol S.A.S. (en adelante, "DISTRICOL")<br>
+          <strong>Domicilio:</strong> Armenia, Quindío, Colombia<br>
+          <strong>Correo Electrónico de Contacto:</strong> contacto&#64;districol.com<br>
+          <strong>Canal de Atención de Datos:</strong> privacidad&#64;districol.com</p>
+
+          <h3>2. Alcance y Finalidad del Tratamiento</h3>
+          <p>DISTRICOL recolecta, almacena, usa y procesa datos personales (tales como nombre, identificación, dirección, teléfono y correo electrónico) únicamente para las siguientes finalidades explícitas:</p>
+          <ul>
+            <li>Procesamiento, facturación y despacho de compras de colchones, lencería y artículos de descanso.</li>
+            <li>Gestión de garantias ortopédicas y servicio postventa.</li>
+            <li>Envió de comunicaciones comerciales, promociones y boletines de novedades previa autorización previa y expresa.</li>
+            <li>Atención de peticiones, quejas, reclamos y sugerencias (PQRS).</li>
+            <li>Cumplimiento de obligaciones fiscales, contables y legales vigentes en Colombia.</li>
+          </ul>
+
+          <h3>3. Exención de Responsabilidad por Datos Proporcionados por Terceros</h3>
+          <p>DISTRICOL presume la veracidad de la información suministrada por el usuario. El titular que ingrese datos de terceros manifiesta contar con la representación legal o autorización previa de dichos titulares. DISTRICOL se exonera expresamente de cualquier responsabilidad derivada de la inexactitud, falsedad o suplantación de identidad por parte de los usuarios.</p>
+
+          <h3>4. Derechos del Titular (Derechos ARCO)</h3>
+          <p>De conformidad con el Artículo 8 de la Ley 1581 de 2012, el titular de los datos personales tiene derecho a:</p>
+          <ul>
+            <li>Conocer, actualizar y rectificar sus datos personales frente a DISTRICOL.</li>
+            <li>Solicitar prueba de la autorización otorgada para el tratamiento.</li>
+            <li>Ser informado sobre el uso que se le ha dado a sus datos.</li>
+            <li>Presentar quejas ante la Superintendencia de Industria y Comercio (SIC) por infracciones a la ley.</li>
+            <li>Revocar la autorización o solicitar la supresión del dato cuando no exista un deber legal o contractual de permanecer en la base de datos.</li>
+          </ul>
+
+          <h3>5. Seguridad de la Información</h3>
+          <p>DISTRICOL implementa medidas de seguridad técnicas, humanas y administrativas razonables para proteger los datos personales contra acceso no autorizado, alteración, pérdida o destrucción. Sin embargo, el usuario reconoce que las transmisiones en Internet no son 100% inexpugnables, exonerando a DISTRICOL de responsabilidad ante ataques informáticos imprevisibles fuera de su control técnico razonable.</p>
+        </div>
+      </article>
+
+      <!-- SECCIÓN 2: TÉRMINOS Y CONDICIONES -->
+      <article *ngIf="activeSectionId === 'terminos'" class="legal-doc fade-in">
+        <header class="doc-header">
+          <h2>Términos y Condiciones de Uso</h2>
+          <span class="doc-date">Última actualización: Enero 2026</span>
+        </header>
+
+        <div class="doc-body">
+          <div class="legal-alert-box warning">
+            <p><strong>Atención Legal:</strong> Al acceder, navegar o utilizar este sitio web, el usuario acepta de manera explícita e incondicional los presentes Términos y Condiciones. Si no está de acuerdo, le solicitamos abstenerse de utilizar el sitio.</p>
+          </div>
+
+          <h3>1. Objeto del Sitio Web</h3>
+          <p>El sitio web de DISTRICOL tiene por objeto brindar información sobre nuestro catálogo de colchones, bases cama, almohadas y productos de lencería premium, así como facilitar canales de contacto, consulta y gestión de pedidos.</p>
+
+          <h3>2. Exoneración y Limitación de Responsabilidad</h3>
+          <p>DISTRICOL y sus administradores, socios o empleados <strong>NO SERÁN RESPONSABLES</strong> bajo ninguna circunstancia por:</p>
+          <ul>
+            <li>Interrupciones, fallas mecánicas, errores técnicos o indisponibilidad temporal del sitio web.</li>
+            <li>Daños directos, indirectos, incidentales o consecuenciales derivados del uso o la imposibilidad de uso del portal.</li>
+            <li>Expectativas subjetivas sobre el grado de firmeza o confort de los colchones que no hayan sido validadas en nuestro Centro de Experiencia físico o mediante asesoría técnica formal.</li>
+            <li>Uso inadecuado de las unidades de descanso o incumplimiento de las instrucciones de mantenimiento incluidas en el certificado de garantía.</li>
+            <li>Enlaces a sitios web de terceros o contenidos publicados por ajenos a DISTRICOL.</li>
+          </ul>
+
+          <h3>3. Precios, Stock y Ofertas Comercializables</h3>
+          <p>Los precios, promociones y disponibilidad expresados en la plataforma corresponden a pesos colombianos (COP) y están sujetos a modificaciones sin previo aviso. DISTRICOL se reserva el derecho de cancelar pedidos originados por errores tipográficos o fallas sistémicas evidentes en la fijación del precio, realizando la devolución total del dinero pagado.</p>
+
+          <h3>4. Propiedad Intelectual</h3>
+          <p>Todo el contenido del sitio web (marcas, logotipos, imágenes, fotografías de productos, textos, diseños, código fuente y elementos gráficos) es propiedad exclusiva de DISTRICOL o cuenta con licenciamiento autorizado. Queda estrictamente prohibida la reproducción total o parcial sin autorización previa y por escrito.</p>
+
+          <h3>5. Ley Aplicable y Jurisdicción</h3>
+          <p>Estos Términos y Condiciones se rigen por las leyes de la República de Colombia. Cualquier controversia será sometida a la jurisdicción ordinaria de los jueces de Armenia, Quindío.</p>
+        </div>
+      </article>
+
+      <!-- SECCIÓN 3: POLÍTICA DE COOKIES -->
+      <article *ngIf="activeSectionId === 'cookies'" class="legal-doc fade-in">
+        <header class="doc-header">
+          <h2>Política de Cookies y Tecnologías de Rastreo</h2>
+          <span class="doc-date">Última actualización: Enero 2026</span>
+        </header>
+
+        <div class="doc-body">
+          <h3>1. ¿Qué son las Cookies?</h3>
+          <p>Las cookies son pequeños archivos de texto que los sitios web almacenan en su navegador o dispositivo al visitarlos. Sirven para recordar sus preferencias de navegación, optimizar el rendimiento del sitio y ofrecer contenido personalizado.</p>
+
+          <h3>2. Tipos de Cookies que Utiliza DISTRICOL</h3>
+          <table class="legal-table">
+            <thead>
+              <tr>
+                <th>Categoría</th>
+                <th>Finalidad</th>
+                <th>Duración</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Técnicas / Necesarias</strong></td>
+                <td>Permiten la navegación básica, seguridad y funcionamiento del carrito o catálogo.</td>
+                <td>Sesión</td>
+              </tr>
+              <tr>
+                <td><strong>Analíticas</strong></td>
+                <td>Generan datos estadísticos anónimos sobre visitas e interacción (Google Analytics).</td>
+                <td>Hasta 2 años</td>
+              </tr>
+              <tr>
+                <td><strong>Preferencia</strong></td>
+                <td>Recuerdan configuraciones de interfaz como idioma y tema.</td>
+                <td>1 año</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>3. Gestión y Desactivación de Cookies</h3>
+          <p>El usuario puede restringir, bloquear o borrar las cookies de DISTRICOL en cualquier momento desde la configuración de su navegador web (Chrome, Firefox, Safari, Edge). Tenga en cuenta que la desactivación de cookies estrictamente necesarias puede limitar la funcionalidad de la plataforma.</p>
+        </div>
+      </article>
+
+      <!-- SECCIÓN 4: AVISO LEGAL -->
+      <article *ngIf="activeSectionId === 'aviso-legal'" class="legal-doc fade-in">
+        <header class="doc-header">
+          <h2>Aviso Legal e Información Corporativa</h2>
+          <span class="doc-date">Última actualización: Enero 2026</span>
+        </header>
+
+        <div class="doc-body">
+          <h3>1. Datos de Identificación Corporativa</h3>
+          <p>En cumplimiento de las disposiciones legales colombianas para el comercio electrónico y portales web informativos, se presentan los datos corporativos de la marca:</p>
+
+          <div class="info-card-grid">
+            <div class="info-card">
+              <span class="card-label">Titular de la Marca</span>
+              <span class="card-value">Districol S.A.S.</span>
+            </div>
+            <div class="info-card">
+              <span class="card-label">Domicilio Principal</span>
+              <span class="card-value">Armenia, Quindío, Colombia</span>
+            </div>
+            <div class="info-card">
+              <span class="card-label">Actividad Económica</span>
+              <span class="card-value">Comercialización de colchones y lencería premium</span>
+            </div>
+            <div class="info-card">
+              <span class="card-label">Canal Oficial de Contacto</span>
+              <span class="card-value">contacto&#64;districol.com</span>
+            </div>
+          </div>
+
+          <h3>2. Exención de Responsabilidad por Opiniones y Comentarios</h3>
+          <p>DISTRICOL no se hace responsable por opiniones o valoraciones de productos publicadas por usuarios terceros en la plataforma. Nos reservamos el derecho de moderar o eliminar comentarios ofensivos, difamatorios o ajenos al propósito comercial.</p>
+
+          <h3>3. Garantía Legal Directa de Colchones</h3>
+          <p>Todas nuestras líneas de colchones cuentan con garantía legal directa otorgada bajo las condiciones estipuladas en la Ley 1480 de 2011 (Estatuto del Consumidor). El plazo específico de garantía (entre 1 y 10 años según la línea) se encuentra expresado en la etiqueta del producto y certificado adjunto.</p>
+        </div>
+      </article>
+
+      <!-- SECCIÓN 5: PQRS -->
+      <article *ngIf="activeSectionId === 'pqrs'" class="legal-doc fade-in">
+        <header class="doc-header">
+          <h2>Atención de PQRS (Peticiones, Quejas, Reclamos y Sugerencias)</h2>
+          <span class="doc-date">Marco Normativo: Ley 1480 de 2011 & Ley 1755 de 2015</span>
+        </header>
+
+        <div class="doc-body">
+          <p>En DISTRICOL valoramos tu experiencia de compra y descanso. Disponemos de un sistema ágil y transparente para la radicación y trámite de tu Petición, Queja, Reclamo o Sugerencia.</p>
+
+          <h3>1. Definiciones</h3>
+          <ul>
+            <li><strong>Petición:</strong> Solicitud de información o consulta sobre nuestros colchones, precios o servicios.</li>
+            <li><strong>Queja:</strong> Manifestación de disconformidad por la atención recibida por parte de nuestro personal.</li>
+            <li><strong>Reclamo:</strong> Solicitud de efectividad de garantía ortopédica o disconformidad con un producto entregado.</li>
+            <li><strong>Sugerencia:</strong> Propuesta o idea para mejorar nuestros servicios o experiencia de descanso.</li>
+          </ul>
+
+          <h3>2. Canales Habilitados para Radicación</h3>
+          <div class="pqrs-channels">
+            <div class="channel-box">
+              <div class="channel-icon">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+              </div>
+              <h4>Correo Electrónico</h4>
+              <p>contacto&#64;districol.com</p>
+              <span>Respuesta legal en max. 15 días hábiles</span>
+            </div>
+
+            <div class="channel-box">
+              <div class="channel-icon">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+              </div>
+              <h4>Atención Presencial</h4>
+              <p>Centro de Experiencia Armenia, Quindío</p>
+              <span>Lunes a Sábado: 8:00 AM - 6:00 PM</span>
+            </div>
+          </div>
+
+          <h3>3. Requisitos para Radicar un Reclamo de Garantía</h3>
+          <p>Para agilizar el trámite de garantía ortopédica sobre colchones, te solicitamos adjuntar:</p>
+          <ol>
+            <li>Copia de la factura de compra o documento equivalente.</li>
+            <li>Fotografía o video explicativo del defecto alegado (ej. deformación o costura).</li>
+            <li>Breve descripción de la solicitud.</li>
+          </ol>
+
+          <h3>4. Tiempos de Respuesta Legal</h3>
+          <p>DISTRICOL dará respuesta formal a tu PQRS dentro de los <strong>quince (15) días hábiles</strong> siguientes a la recepción de la misma, con arreglo a lo dispuesto en la Ley 1755 de 2015.</p>
+        </div>
+      </article>
+
+    </main>
+
+    <!-- COLUMNA DERECHA: MENÚ LATERAL STICKY -->
+    <aside class="legal-sidebar">
+      <div class="sidebar-sticky-card">
+        <h3 class="sidebar-title">Índice Legal</h3>
+        <span class="sidebar-subtitle">Selecciona una sección</span>
+
+        <nav class="sidebar-nav">
+          <button 
+            *ngFor="let sec of sections" 
+            class="nav-item-btn" 
+            [class.active]="sec.id === activeSectionId"
+            (click)="setSection(sec.id)">
+            <span class="nav-item-text">{{ sec.titulo }}</span>
+            <span class="nav-arrow">›</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-footer-box">
+          <p>¿Dudas sobre nuestra información legal?</p>
+          <a routerLink="/contacto" class="btn-contacto-legal">Escríbenos</a>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<app-footer></app-footer>
