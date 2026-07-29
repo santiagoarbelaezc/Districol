@@ -94,12 +94,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
+  prevSlide(): void {
+    const prevIndex = (this.currentSlide - 1 + this.items.length) % this.items.length;
+    this.scrollToSlide(prevIndex);
+  }
+
+  nextSlide(): void {
+    const nextIndex = (this.currentSlide + 1) % this.items.length;
+    this.scrollToSlide(nextIndex);
+  }
+
   startAutoSlide(): void {
     this.stopAutoSlide();
     this.autoSlideInterval = setInterval(() => {
       const nextIndex = (this.currentSlide + 1) % this.items.length;
       this.scrollToSlide(nextIndex);
-    }, 6000);
+    }, 4000); // Reducido a 4 segundos para un cambio más fluido y dinámico
   }
 
   stopAutoSlide(): void {

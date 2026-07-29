@@ -31,29 +31,29 @@
           </div>
         </div>
 
-        <!-- Capa de degradado sutil (sombra suave y limpia) -->
+        <!-- Capa de degradado sutil -->
         <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10 lg:bg-gradient-to-r lg:from-black/85 lg:via-black/45 lg:to-transparent hero-overlay"></div>
 
         <!-- Contenido textual superpuesto -->
         <div class="absolute inset-0 flex items-start hero-content-layer">
           <div class="page-container w-full text-white pt-28 pb-8 lg:pt-40 px-6 lg:px-16 hero-page-container">
             <div class="max-w-3xl hero-max-w">
-              <!-- Promo Tag en Verde Salvia #A4AE9D -->
+              <!-- Promo Tag -->
               <p class="mb-3 text-[0.8rem] font-bold uppercase tracking-[0.4em] text-[#A4AE9D] hero-promo-tag">
                 {{ item.promoTag }}
               </p>
               
-              <!-- Title en Montserrat -->
+              <!-- Title -->
               <h2 class="mb-2 text-[clamp(2.5rem,6vw,5.5rem)] font-extrabold leading-[1.0] tracking-[-0.03em] font-montserrat uppercase hero-title">
                 {{ item.title }}
               </h2>
               
-              <!-- Subtitle en Montserrat (Misma tipografía que la etiqueta promocional) -->
+              <!-- Subtitle -->
               <p class="mb-4 text-lg lg:text-2xl font-bold uppercase tracking-[0.25em] text-[#B8C1B3] font-montserrat hero-subtitle">
                 {{ item.subtitle }}
               </p>
               
-              <!-- Description en Comfortaa -->
+              <!-- Description -->
               <p class="mb-6 max-w-xl text-sm lg:text-base leading-relaxed text-white/80 font-comfortaa hero-description">
                 {{ item.description }}
               </p>
@@ -98,6 +98,29 @@
       </div>
     </div>
   </div>
+
+  <!-- Botones de Navegación Lateral Minimalistas -->
+  <button
+    type="button"
+    (click)="prevSlide()"
+    class="hero-arrow-btn hero-arrow-left"
+    aria-label="Diapositiva anterior"
+  >
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+    </svg>
+  </button>
+
+  <button
+    type="button"
+    (click)="nextSlide()"
+    class="hero-arrow-btn hero-arrow-right"
+    aria-label="Diapositiva siguiente"
+  >
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+    </svg>
+  </button>
 
   <!-- Puntos de navegación -->
   <div class="absolute bottom-8 left-0 right-0 z-10 flex justify-center gap-3 hero-dots-wrap">
