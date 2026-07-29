@@ -99,15 +99,6 @@
                     <span class="badge-tag-top">
                         {{ producto.tag || producto.subcategoria || producto.categoria || 'PREMIUM' }}
                     </span>
-
-                    <!-- Gadget Promocional Inferior (Promo del día / Descuento / Últimas unidades) -->
-                    <span 
-                        class="badge-promo-bottom"
-                        [ngClass]="'badge-' + (producto.badgeType || 'promo')"
-                        *ngIf="producto.badgePromo"
-                    >
-                        {{ producto.badgePromo }}
-                    </span>
                 </div>
 
                 <!-- Contenido de la tarjeta en fondo blanco -->
