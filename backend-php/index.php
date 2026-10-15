@@ -62,12 +62,16 @@ switch ($resource) {
         require_once __DIR__ . '/routes/categorias.php';
         break;
 
-    case 'productos':
-        require_once __DIR__ . '/routes/productos.php';
+    case 'subcategorias':
+        require_once __DIR__ . '/routes/subcategorias.php';
         break;
 
-    case 'importar':
-        require_once __DIR__ . '/routes/importar.php';
+    case 'estadisticas':
+        require_once __DIR__ . '/routes/estadisticas.php';
+        break;
+
+    case 'productos':
+        require_once __DIR__ . '/routes/productos.php';
         break;
 
     default:
