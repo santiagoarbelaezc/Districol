@@ -484,22 +484,23 @@
   }
 }
 
-/* ===== BOTÓN FLOTANTE EN TIENDA (SESSION PILL) ===== */
+/* ===== BOTÓN FLOTANTE EN TIENDA (SESSION PILL) — ESQUINA INFERIOR IZQUIERDA ===== */
 .store-floating-session {
   position: fixed;
   bottom: 26px;
-  right: 26px;
+  left: 26px;
+  right: auto;
   z-index: 9999;
-  animation: float-slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: float-slide-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes float-slide-up {
+@keyframes float-slide-left {
   from {
-    transform: translateY(30px);
+    transform: translateX(-30px);
     opacity: 0;
   }
   to {
-    transform: translateY(0);
+    transform: translateX(0);
     opacity: 1;
   }
 }
@@ -566,7 +567,8 @@
 @media (max-width: 768px) {
   .store-floating-session {
     bottom: 20px;
-    right: 16px;
+    left: 16px;
+    right: auto;
   }
   .btn-store-session {
     padding: 8px 14px 8px 12px;
