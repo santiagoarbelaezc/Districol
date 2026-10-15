@@ -14,6 +14,9 @@ import { getProductSlug } from '../../utils/seo-slug.util';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent implements OnInit {
+  // Estado del Shell
+  sidebarCollapsed = false;
+
   // Estado de carga y métricas
   cargando = true;
   estadisticas: any = null;
@@ -26,8 +29,6 @@ export class DashboardComponent implements OnInit {
 
   // Sesión administrativa
   usuario: any = null;
-  mensaje = '';
-  tipoMensaje: 'success' | 'error' | '' = '';
 
   constructor(
     private districolService: DistricolService,
@@ -44,6 +45,10 @@ export class DashboardComponent implements OnInit {
 
     this.usuario = this.authService.getUser();
     this.cargarEstadisticas();
+  }
+
+  toggleSidebar(): void {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
   }
 
   cargarEstadisticas(): void {

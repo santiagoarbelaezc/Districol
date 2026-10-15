@@ -1,351 +1,363 @@
-<div class="dashboard-layout">
-  <!-- Header Superior -->
-  <header class="dashboard-header">
-    <div class="header-left">
-      <div class="header-brand">
-        <span class="badge-role">ADMIN PANEL</span>
-        <h1>Estadísticas de Productos</h1>
+<div class="dash-shell" [class.sidebar-collapsed]="sidebarCollapsed">
+  <!-- ══════════════════════════════════════════════════════════
+       SIDEBAR (#0a0a0a)
+       ══════════════════════════════════════════════════════════ -->
+  <aside class="dash-sidebar">
+    <!-- Botón Flotante para Colapsar el Sidebar -->
+    <button class="sidebar-toggle" (click)="toggleSidebar()" [attr.aria-label]="sidebarCollapsed ? 'Expandir menú' : 'Colapsar menú'">
+      <span class="material-symbols-rounded">
+        {{ sidebarCollapsed ? 'chevron_right' : 'chevron_left' }}
+      </span>
+    </button>
+
+    <!-- Logo / Marca -->
+    <div class="sidebar-brand">
+      <div class="brand-icon">
+        <span class="material-symbols-rounded">bed</span>
       </div>
-      <p class="header-subtitle">
-        Supervisión y métricas en tiempo real del catálogo central de Districol
-      </p>
+      <div class="brand-texts">
+        <span class="brand-name">DISTRICOL</span>
+        <span class="brand-badge">ANALYTICS</span>
+      </div>
     </div>
 
-    <div class="header-right">
-      <div class="user-chip" *ngIf="usuario">
-        <div class="user-avatar">
+    <!-- Navegación -->
+    <nav class="sidebar-nav">
+      <div class="nav-section-title">MENÚ PRINCIPAL</div>
+      
+      <a class="nav-item active" href="javascript:void(0)">
+        <span class="material-symbols-rounded nav-icon">bar_chart</span>
+        <span class="nav-label">Estadísticas</span>
+      </a>
+
+      <a class="nav-item" href="javascript:void(0)" (click)="goToHome()">
+        <span class="material-symbols-rounded nav-icon">storefront</span>
+        <span class="nav-label">Ver Tienda</span>
+      </a>
+    </nav>
+
+    <!-- Footer del Sidebar con Usuario y Logout -->
+    <div class="sidebar-footer">
+      <div class="sidebar-user" *ngIf="usuario">
+        <div class="user-avatar-dark">
           {{ (usuario.nombre || usuario.correo || 'A')[0].toUpperCase() }}
         </div>
-        <div class="user-info">
-          <span class="user-name">{{ usuario.nombre || 'Administrador' }}</span>
-          <span class="user-email">{{ usuario.correo }}</span>
+        <div class="user-details-dark">
+          <span class="user-name-dark">{{ usuario.nombre || 'Administrador' }}</span>
+          <span class="user-email-dark">{{ usuario.correo }}</span>
         </div>
       </div>
 
-      <div class="header-actions">
-        <button class="btn-header btn-tienda" (click)="goToHome()" title="Ir a la Tienda">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-          </svg>
-          <span>Ver Tienda</span>
-        </button>
+      <button class="btn-sidebar-logout" (click)="logout()" title="Cerrar Sesión">
+        <span class="material-symbols-rounded">logout</span>
+        <span class="nav-label">Cerrar Sesión</span>
+      </button>
+    </div>
+  </aside>
 
-        <button class="btn-header btn-refrescar" (click)="cargarEstadisticas()" [disabled]="cargando" title="Actualizar Datos">
-          <svg [class.spin]="cargando" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M23 4v6h-6"></path>
-            <path d="M1 20v-6h6"></path>
-            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
-          </svg>
-          <span>Refrescar</span>
-        </button>
+  <!-- ══════════════════════════════════════════════════════════
+       HEADER (Sticky, 74px, Blanco)
+       ══════════════════════════════════════════════════════════ -->
+  <header class="dash-header">
+    <div class="header-status-pill">
+      <span class="status-dot"></span>
+      <span class="status-text">Catálogo en Tiempo Real &bull; Solo Lectura</span>
+    </div>
 
-        <button class="btn-header btn-logout" (click)="logout()" title="Cerrar Sesión">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-            <polyline points="16 17 21 12 16 7"></polyline>
-            <line x1="21" y1="12" x2="9" y2="12"></line>
-          </svg>
-          <span>Cerrar Sesión</span>
-        </button>
+    <div class="header-actions">
+      <button class="header-icon-btn" (click)="cargarEstadisticas()" [disabled]="cargando" title="Actualizar Datos">
+        <span class="material-symbols-rounded" [class.spin]="cargando">refresh</span>
+      </button>
+
+      <button class="header-icon-btn" (click)="goToHome()" title="Ir a la Tienda Pública">
+        <span class="material-symbols-rounded">open_in_new</span>
+      </button>
+
+      <div class="header-user-chip" *ngIf="usuario">
+        <div class="chip-avatar">
+          {{ (usuario.nombre || usuario.correo || 'A')[0].toUpperCase() }}
+        </div>
+        <span class="chip-name">{{ usuario.nombre || 'Administrador' }}</span>
       </div>
     </div>
   </header>
 
-  <!-- Banner Informativo de Modo Solo Lectura -->
-  <div class="notice-bar">
-    <div class="notice-content">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="12" cy="12" r="10"></circle>
-        <line x1="12" y1="16" x2="12" y2="12"></line>
-        <line x1="12" y1="8" x2="12.01" y2="8"></line>
-      </svg>
-      <span>
-        <strong>Modo Solo Lectura:</strong> Este panel está configurado exclusivamente para visualización y análisis de estadísticas de inventario. El catálogo se sincroniza de forma automática con la API central.
-      </span>
+  <!-- ══════════════════════════════════════════════════════════
+       MAIN CONTENT (#f4f5f7)
+       ══════════════════════════════════════════════════════════ -->
+  <main class="dash-content">
+    <!-- Estado de carga -->
+    <div *ngIf="cargando" class="dash-loading">
+      <div class="loading-spinner-ring"></div>
+      <p>Cargando métricas del catálogo...</p>
     </div>
-    <span class="live-pill">
-      <span class="live-dot"></span>
-      API en línea
-    </span>
-  </div>
 
-  <!-- Estado de Carga -->
-  <div *ngIf="cargando" class="loading-container">
-    <div class="spinner"></div>
-    <p>Calculando estadísticas del catálogo...</p>
-  </div>
-
-  <main class="dashboard-main" *ngIf="!cargando && estadisticas">
-    <!-- Fila 1: 4 Tarjetas de Métricas Principales (KPIs) -->
-    <section class="kpi-grid">
-      <!-- KPI 1 -->
-      <div class="kpi-card">
-        <div class="kpi-icon-wrap icon-blue">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-          </svg>
-        </div>
-        <div class="kpi-data">
-          <span class="kpi-label">Total Productos</span>
-          <h2 class="kpi-value">{{ estadisticas.resumen.total_productos }}</h2>
-          <span class="kpi-hint">
-            <span class="positive-indicator">100%</span> en catálogo central
-          </span>
-        </div>
-      </div>
-
-      <!-- KPI 2 -->
-      <div class="kpi-card">
-        <div class="kpi-icon-wrap icon-green">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-            <line x1="12" y1="22.08" x2="12" y2="12"></line>
-          </svg>
-        </div>
-        <div class="kpi-data">
-          <span class="kpi-label">Stock Total</span>
-          <h2 class="kpi-value">{{ estadisticas.resumen.stock_total }} <small>unidades</small></h2>
-          <span class="kpi-hint">
-            <strong>{{ estadisticas.resumen.en_stock }}</strong> referencias con stock
-          </span>
-        </div>
-      </div>
-
-      <!-- KPI 3 -->
-      <div class="kpi-card">
-        <div class="kpi-icon-wrap icon-gold">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="12" y1="1" x2="12" y2="23"></line>
-            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-          </svg>
-        </div>
-        <div class="kpi-data">
-          <span class="kpi-label">Precio Promedio</span>
-          <h2 class="kpi-value">{{ formatearMoneda(estadisticas.resumen.precio_promedio) }}</h2>
-          <span class="kpi-hint">
-            Mín: {{ formatearMoneda(estadisticas.resumen.precio_minimo) }} | Máx: {{ formatearMoneda(estadisticas.resumen.precio_maximo) }}
-          </span>
-        </div>
-      </div>
-
-      <!-- KPI 4 -->
-      <div class="kpi-card">
-        <div class="kpi-icon-wrap icon-purple">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-            <polyline points="2 17 12 22 22 17"></polyline>
-            <polyline points="2 12 12 17 22 12"></polyline>
-          </svg>
-        </div>
-        <div class="kpi-data">
-          <span class="kpi-label">Categorías Activas</span>
-          <h2 class="kpi-value">{{ estadisticas.resumen.total_categorias }}</h2>
-          <span class="kpi-hint">Colchones, Almohadas, Sábanas...</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Fila 2: Análisis Detallado (Categorías y Rangos de Precio) -->
-    <section class="analysis-grid">
-      <!-- Distribución por Categorías -->
-      <div class="analytics-card">
-        <div class="card-header-clean">
-          <div>
-            <h3>Distribución de Productos por Categoría</h3>
-            <p>Proporción y volumen de inventario por línea de descanso</p>
+    <div *ngIf="!cargando && estadisticas" class="dash-inner">
+      <!-- 1. Fila de Stat Cards (4 columnas) -->
+      <section class="stat-cards-grid">
+        <!-- Stat Card 1 -->
+        <div class="stat-card">
+          <div class="stat-card-top">
+            <span class="stat-card-label">Total Productos</span>
+            <div class="stat-card-icon-box">
+              <span class="material-symbols-rounded">inventory_2</span>
+            </div>
+          </div>
+          <div class="stat-number">{{ estadisticas.resumen.total_productos }}</div>
+          <div class="stat-card-sub">
+            <span class="highlight-positive">100% activos</span> en catálogo central
           </div>
         </div>
 
-        <div class="category-bars-list">
-          <div *ngFor="let cat of estadisticas.categorias" class="category-stat-row">
-            <div class="cat-row-info">
-              <span class="cat-name">{{ cat.nombre }}</span>
-              <span class="cat-count">
-                <strong>{{ cat.cantidad }}</strong> productos ({{ cat.porcentaje }}%)
-              </span>
+        <!-- Stat Card 2 (con acento rojo #dc2626) -->
+        <div class="stat-card stat-accent-red">
+          <div class="stat-card-top">
+            <span class="stat-card-label">Stock Acumulado</span>
+            <div class="stat-card-icon-box">
+              <span class="material-symbols-rounded">warehouse</span>
             </div>
-            <div class="progress-bar-bg">
-              <div 
-                class="progress-bar-fill" 
-                [style.width.%]="cat.porcentaje"
-                [attr.data-cat]="cat.nombre"
-              ></div>
+          </div>
+          <div class="stat-number">{{ estadisticas.resumen.stock_total }}</div>
+          <div class="stat-card-sub">
+            <strong>{{ estadisticas.resumen.en_stock }}</strong> ref. con disponibilidad
+          </div>
+        </div>
+
+        <!-- Stat Card 3 -->
+        <div class="stat-card">
+          <div class="stat-card-top">
+            <span class="stat-card-label">Precio Promedio</span>
+            <div class="stat-card-icon-box">
+              <span class="material-symbols-rounded">payments</span>
             </div>
-            <div class="cat-row-footer">
-              <span>Stock: <strong>{{ cat.stock_total }} un.</strong></span>
-              <span>Promedio: <strong>{{ formatearMoneda(cat.precio_promedio) }}</strong></span>
+          </div>
+          <div class="stat-number">{{ formatearMoneda(estadisticas.resumen.precio_promedio) }}</div>
+          <div class="stat-card-sub">
+            Mín: {{ formatearMoneda(estadisticas.resumen.precio_minimo) }}
+          </div>
+        </div>
+
+        <!-- Stat Card 4 -->
+        <div class="stat-card">
+          <div class="stat-card-top">
+            <span class="stat-card-label">Líneas de Descanso</span>
+            <div class="stat-card-icon-box">
+              <span class="material-symbols-rounded">category</span>
+            </div>
+          </div>
+          <div class="stat-number">{{ estadisticas.resumen.total_categorias }}</div>
+          <div class="stat-card-sub">
+            Colchones, Almohadas, Sábanas...
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Bento Grid (Hero Oscuro + Quick Access 360px) -->
+      <section class="bento-grid">
+        <!-- Hero Bento Oscuro -->
+        <div class="bento-welcome">
+          <div class="bento-status-row">
+            <div class="bento-live-badge">
+              <span class="status-dot"></span>
+              <span>API CENTRAL CONECTADA</span>
+            </div>
+            <span class="bento-time">{{ estadisticas.actualizado_en }}</span>
+          </div>
+
+          <h1 class="bento-title">Panel de Control & Catálogo</h1>
+          <p class="bento-description">
+            Supervisa el inventario centralizado de Districol sincronizado directamente con la API pública.
+            El backend opera en modo analítico de solo lectura para garantizar la integridad del catálogo.
+          </p>
+
+          <div class="bento-highlights">
+            <div class="bento-highlight-pill">
+              <span class="material-symbols-rounded">verified</span>
+              <span>25 referencias en tiempo real</span>
+            </div>
+            <div class="bento-highlight-pill">
+              <span class="material-symbols-rounded">lock</span>
+              <span>Modificaciones bloqueadas</span>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Segmentación Comercial y Precios -->
-      <div class="analytics-card">
-        <div class="card-header-clean">
-          <div>
-            <h3>Segmentación de Precios e Indicadores</h3>
-            <p>Distribución de rango económico y estados comerciales</p>
+        <!-- Quick Access / Price Segments (360px) -->
+        <div class="bento-quick-access">
+          <div class="quick-header">
+            <h3>Rango de Precios</h3>
+            <span class="quick-subtitle">Segmentación comercial</span>
           </div>
-        </div>
 
-        <!-- Rangos de Precio -->
-        <div class="price-segments">
-          <div class="segment-box">
-            <span class="seg-title">Económico (&lt; $500k)</span>
-            <span class="seg-value">{{ estadisticas.rangos_precio?.economico || 0 }} prods</span>
-          </div>
-          <div class="segment-box">
-            <span class="seg-title">Rango Medio ($500k - $1.5M)</span>
-            <span class="seg-value">{{ estadisticas.rangos_precio?.medio || 0 }} prods</span>
-          </div>
-          <div class="segment-box">
-            <span class="seg-title">Gama Premium ($1.5M - $3M)</span>
-            <span class="seg-value">{{ estadisticas.rangos_precio?.premium || 0 }} prods</span>
-          </div>
-          <div class="segment-box">
-            <span class="seg-title">Gama Lujo (&gt; $3M)</span>
-            <span class="seg-value">{{ estadisticas.rangos_precio?.lujo || 0 }} prods</span>
-          </div>
-        </div>
-
-        <!-- Indicadores Comerciales Rápidos -->
-        <div class="commercial-indicators">
-          <div class="indicator-item">
-            <span class="ind-icon">⭐</span>
-            <div class="ind-text">
-              <span class="ind-count">{{ estadisticas.resumen.destacados }}</span>
-              <span class="ind-label">Productos Destacados</span>
+          <div class="quick-segments-list">
+            <div class="quick-seg-row">
+              <div class="seg-info">
+                <span class="seg-name">Económico (&lt; $500k)</span>
+                <span class="seg-count">{{ estadisticas.rangos_precio?.economico || 0 }} prods</span>
+              </div>
+              <div class="seg-bar-bg">
+                <div class="seg-bar-fill" [style.width.%]="(estadisticas.rangos_precio?.economico / estadisticas.resumen.total_productos) * 100"></div>
+              </div>
             </div>
-          </div>
-          <div class="indicator-item">
-            <span class="ind-icon">✨</span>
-            <div class="ind-text">
-              <span class="ind-count">{{ estadisticas.resumen.nuevos }}</span>
-              <span class="ind-label">Nuevos Lanzamientos</span>
+
+            <div class="quick-seg-row">
+              <div class="seg-info">
+                <span class="seg-name">Medio ($500k - $1.5M)</span>
+                <span class="seg-count">{{ estadisticas.rangos_precio?.medio || 0 }} prods</span>
+              </div>
+              <div class="seg-bar-bg">
+                <div class="seg-bar-fill" [style.width.%]="(estadisticas.rangos_precio?.medio / estadisticas.resumen.total_productos) * 100"></div>
+              </div>
             </div>
-          </div>
-          <div class="indicator-item">
-            <span class="ind-icon">📸</span>
-            <div class="ind-text">
-              <span class="ind-count">{{ estadisticas.resumen.con_imagenes }} / {{ estadisticas.resumen.total_productos }}</span>
-              <span class="ind-label">Con Fotos en Cloudinary</span>
+
+            <div class="quick-seg-row">
+              <div class="seg-info">
+                <span class="seg-name">Premium ($1.5M - $3M)</span>
+                <span class="seg-count">{{ estadisticas.rangos_precio?.premium || 0 }} prods</span>
+              </div>
+              <div class="seg-bar-bg">
+                <div class="seg-bar-fill" [style.width.%]="(estadisticas.rangos_precio?.premium / estadisticas.resumen.total_productos) * 100"></div>
+              </div>
+            </div>
+
+            <div class="quick-seg-row">
+              <div class="seg-info">
+                <span class="seg-name">Gama Lujo (&gt; $3M)</span>
+                <span class="seg-count">{{ estadisticas.rangos_precio?.lujo || 0 }} prods</span>
+              </div>
+              <div class="seg-bar-bg">
+                <div class="seg-bar-fill" [style.width.%]="(estadisticas.rangos_precio?.lujo / estadisticas.resumen.total_productos) * 100"></div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Fila 3: Supervisión del Inventario del Catálogo (Solo Lectura) -->
-    <section class="inventory-section">
-      <div class="inventory-header">
-        <div class="inv-titles">
-          <h3>Supervisión de Catálogo (Solo Lectura)</h3>
-          <p>Listado de referencias sincronizadas desde la API central</p>
-        </div>
-
-        <!-- Barra de Filtros -->
-        <div class="filter-controls">
-          <div class="search-input-wrap">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-            <input 
-              type="text" 
-              placeholder="Buscar por nombre o subcategoría..." 
-              [(ngModel)]="busqueda"
-              (ngModelChange)="aplicarFiltros()"
-            />
+      <!-- 3. Módulos y Tablas de Datos -->
+      <section class="data-modules-grid">
+        <!-- Módulo de Distribución por Categorías -->
+        <div class="data-card">
+          <div class="data-card-header">
+            <div>
+              <h3>Inventario por Categoría</h3>
+              <p>Desglose de productos y stock disponible por línea</p>
+            </div>
           </div>
 
-          <select 
-            class="filter-select"
-            [(ngModel)]="categoriaSeleccionada"
-            (ngModelChange)="aplicarFiltros()"
-          >
-            <option value="todas">Todas las categorías</option>
-            <option value="Colchones">Colchones</option>
-            <option value="Almohadas">Almohadas</option>
-            <option value="Sábanas">Sábanas</option>
-            <option value="Complementos">Complementos</option>
-            <option value="Ambientes">Ambientes</option>
-          </select>
-
-          <button *ngIf="busqueda || categoriaSeleccionada !== 'todas'" class="btn-clear-filters" (click)="limpiarFiltros()">
-            Limpiar filtros
-          </button>
+          <div class="cat-distribution-grid">
+            <div *ngFor="let cat of estadisticas.categorias" class="cat-dist-item">
+              <div class="cat-dist-header">
+                <span class="cat-dist-title">{{ cat.nombre }}</span>
+                <span class="cat-dist-badge">{{ cat.cantidad }} prods ({{ cat.porcentaje }}%)</span>
+              </div>
+              <div class="cat-dist-bar-bg">
+                <div class="cat-dist-bar-fill" [style.width.%]="cat.porcentaje"></div>
+              </div>
+              <div class="cat-dist-metrics">
+                <span>Stock: <strong>{{ cat.stock_total }} un.</strong></span>
+                <span>Promedio: <strong>{{ formatearMoneda(cat.precio_promedio) }}</strong></span>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <!-- Tabla de Productos -->
-      <div class="table-container">
-        <table class="inventory-table">
-          <thead>
-            <tr>
-              <th class="th-img">Vista</th>
-              <th>Producto</th>
-              <th>Categoría</th>
-              <th>Subcategoría</th>
-              <th>Stock</th>
-              <th>Precio</th>
-              <th>Acción</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let p of productosFiltrados">
-              <td class="td-img">
-                <img [src]="p.imagen || 'assets/img/placeholder.png'" [alt]="p.nombre" class="table-thumb" />
-              </td>
-              <td class="td-name">
-                <span class="product-title">{{ p.nombre }}</span>
-                <span *ngIf="p.isFeatured" class="badge-mini badge-featured">Destacado</span>
-                <span *ngIf="p.isNew" class="badge-mini badge-new">Nuevo</span>
-              </td>
-              <td>
-                <span class="cat-pill" [attr.data-cat]="p.categoria">{{ p.categoria }}</span>
-              </td>
-              <td>
-                <span class="subcat-text">{{ p.subcategoria || 'General' }}</span>
-              </td>
-              <td>
-                <span class="stock-pill in-stock">
-                  <span class="stock-dot"></span>
-                  {{ p.stock }} un.
-                </span>
-              </td>
-              <td class="td-price">
-                <strong>{{ p.precio > 0 ? formatearMoneda(p.precio) : 'A cotizar' }}</strong>
-              </td>
-              <td class="td-action">
-                <button class="btn-view-store" (click)="verProductoEnTienda(p)">
-                  <span>Ver en Tienda</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                  </svg>
-                </button>
-              </td>
-            </tr>
+        <!-- Módulo de Catálogo Supervisado (Tabla Read-Only) -->
+        <div class="data-card">
+          <div class="data-card-header">
+            <div>
+              <h3>Catálogo de Productos</h3>
+              <p>Visualización de referencias activas en la tienda pública</p>
+            </div>
 
-            <tr *ngIf="productosFiltrados.length === 0">
-              <td colspan="7" class="td-empty">
-                <div class="empty-box">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                  </svg>
-                  <p>No se encontraron productos que coincidan con los filtros aplicados.</p>
-                  <button class="btn-clear-filters" (click)="limpiarFiltros()">Restablecer filtros</button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+            <!-- Controles de Filtro -->
+            <div class="table-filters-row">
+              <div class="search-box-minimal">
+                <span class="material-symbols-rounded search-icon">search</span>
+                <input 
+                  type="text" 
+                  class="input-minimal" 
+                  placeholder="Buscar referencia o subcategoría..." 
+                  [(ngModel)]="busqueda"
+                  (ngModelChange)="aplicarFiltros()"
+                />
+              </div>
+
+              <select 
+                class="input-minimal select-cat"
+                [(ngModel)]="categoriaSeleccionada"
+                (ngModelChange)="aplicarFiltros()"
+              >
+                <option value="todas">Todas las categorías</option>
+                <option value="Colchones">Colchones</option>
+                <option value="Almohadas">Almohadas</option>
+                <option value="Sábanas">Sábanas</option>
+                <option value="Complementos">Complementos</option>
+                <option value="Ambientes">Ambientes</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Tabla de Datos -->
+          <div class="table-responsive">
+            <table class="dash-table">
+              <thead>
+                <tr>
+                  <th style="width: 54px;">Imagen</th>
+                  <th>Producto</th>
+                  <th>Categoría</th>
+                  <th>Subcategoría</th>
+                  <th>Stock</th>
+                  <th>Precio</th>
+                  <th style="text-align: right;">Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let p of productosFiltrados">
+                  <td class="td-thumb">
+                    <img [src]="p.imagen || 'assets/img/placeholder.png'" [alt]="p.nombre" class="product-thumb" />
+                  </td>
+                  <td class="td-info">
+                    <span class="product-title">{{ p.nombre }}</span>
+                    <span *ngIf="p.isFeatured" class="badge-tag-red">Destacado</span>
+                    <span *ngIf="p.isNew" class="badge-tag-dark">Nuevo</span>
+                  </td>
+                  <td>
+                    <span class="pill-category">{{ p.categoria }}</span>
+                  </td>
+                  <td>
+                    <span class="subcat-label">{{ p.subcategoria || 'General' }}</span>
+                  </td>
+                  <td>
+                    <span class="stock-indicator">
+                      <span class="dot-green"></span>
+                      {{ p.stock }} un.
+                    </span>
+                  </td>
+                  <td class="td-price">
+                    {{ p.precio > 0 ? formatearMoneda(p.precio) : 'A cotizar' }}
+                  </td>
+                  <td style="text-align: right;">
+                    <button class="btn-primary-black btn-table-action" (click)="verProductoEnTienda(p)">
+                      <span>Ver Tienda</span>
+                      <span class="material-symbols-rounded">arrow_outward</span>
+                    </button>
+                  </td>
+                </tr>
+
+                <tr *ngIf="productosFiltrados.length === 0">
+                  <td colspan="7" class="td-empty-state">
+                    <div class="empty-message-wrap">
+                      <span class="material-symbols-rounded empty-icon">search_off</span>
+                      <p>No se encontraron productos coincidentes.</p>
+                      <button class="btn-primary-black" (click)="limpiarFiltros()">Limpiar filtros</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
   </main>
 </div>
