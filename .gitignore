@@ -32,3 +32,17 @@ logs/
 # === TEST COVERAGE ===
 coverage/
 **/coverage/
+
+# === ARCHIVES & COMPRESSED FILES ===
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+*.tar.gz
+**/*.zip
+**/*.rar
+**/*.7z
+**/*.tar
+**/*.gz
+**/*.tar.gz

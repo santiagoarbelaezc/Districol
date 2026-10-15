@@ -1,0 +1,18 @@
+# Environment
+.env
+.env.*
+!.env.example
+
+# Compressed files & backups
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+*.tar.gz
+
+# Logs & temp
+*.log
+logs/
+.DS_Store
+Thumbs.db
