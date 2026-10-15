@@ -975,6 +975,134 @@
   color: #a1a1aa;
 }
 
+/* ═══════════════════════════════════════════════════════════
+   PAGINACIÓN DEL INVENTARIO
+   ═══════════════════════════════════════════════════════════ */
+.dash-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  border-top: 1.5px solid #e4e4e7;
+  background: #ffffff;
+  border-radius: 0 0 16px 16px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.pagination-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 0.84rem;
+  color: #71717a;
+}
+
+.pagination-count strong {
+  color: #09090b;
+  font-weight: 700;
+}
+
+.pagination-per-page {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.per-page-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #71717a;
+}
+
+.select-per-page {
+  background: #f4f5f7;
+  border: 1px solid #e4e4e7;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: 'Inter Tight', sans-serif;
+  color: #09090b;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.select-per-page:focus {
+  border-color: #09090b;
+  background: #ffffff;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.page-numbers {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.page-nav-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1.5px solid #e4e4e7;
+  color: #09090b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.page-nav-btn:hover:not(:disabled) {
+  background: #f4f5f7;
+  border-color: #09090b;
+  transform: translateY(-1px);
+}
+
+.page-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  border-color: #e4e4e7;
+}
+
+.page-num-btn {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #f4f5f7;
+  border: 1.5px solid #e4e4e7;
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #09090b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.page-num-btn:hover:not(.active) {
+  background: #ffffff;
+  border-color: #09090b;
+  transform: translateY(-1px);
+}
+
+.page-num-btn.active {
+  background: #09090b;
+  border-color: #09090b;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(9, 9, 11, 0.2);
+}
+
 /* Loading */
 .dash-loading {
   display: flex;

@@ -312,7 +312,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let p of productosFiltrados">
+                <tr *ngFor="let p of productosPaginados">
                   <td class="td-thumb">
                     <img [src]="p.imagen || 'assets/img/placeholder.png'" [alt]="p.nombre" class="product-thumb" />
                   </td>
@@ -355,6 +355,65 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+
+          <!-- Barra de Paginación del Inventario -->
+          <div class="dash-pagination" *ngIf="productosFiltrados.length > 0">
+            <div class="pagination-info">
+              <span class="pagination-count">
+                Mostrando <strong>{{ indiceInicio }}</strong>–<strong>{{ indiceFin }}</strong> de <strong>{{ productosFiltrados.length }}</strong> referencias
+              </span>
+
+              <div class="pagination-per-page">
+                <span class="per-page-label">Mostrar:</span>
+                <select 
+                  class="select-per-page" 
+                  [ngModel]="itemsPorPagina" 
+                  (ngModelChange)="cambiarItemsPorPagina($event)"
+                >
+                  <option [value]="6">6 / pág</option>
+                  <option [value]="8">8 / pág</option>
+                  <option [value]="12">12 / pág</option>
+                  <option [value]="25">25 / pág</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="pagination-controls" *ngIf="totalPaginas > 1">
+              <button 
+                type="button"
+                class="page-nav-btn" 
+                [disabled]="paginaActual === 1" 
+                (click)="paginaAnterior()" 
+                title="Página anterior"
+                aria-label="Página anterior"
+              >
+                <span class="material-symbols-rounded">chevron_left</span>
+              </button>
+
+              <div class="page-numbers">
+                <button 
+                  type="button"
+                  *ngFor="let pag of paginasArray" 
+                  class="page-num-btn" 
+                  [class.active]="pag === paginaActual"
+                  (click)="cambiarPagina(pag)"
+                >
+                  {{ pag }}
+                </button>
+              </div>
+
+              <button 
+                type="button"
+                class="page-nav-btn" 
+                [disabled]="paginaActual === totalPaginas" 
+                (click)="paginaSiguiente()" 
+                title="Página siguiente"
+                aria-label="Página siguiente"
+              >
+                <span class="material-symbols-rounded">chevron_right</span>
+              </button>
+            </div>
           </div>
         </div>
       </section>

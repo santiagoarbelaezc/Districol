@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-navbar',
@@ -39,9 +40,25 @@ export class NavbarComponent implements OnInit {
 
   @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    public authService: AuthService
+  ) { }
 
   ngOnInit(): void { }
+
+  get isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
+
+  get currentUser(): any {
+    return this.authService.getUser();
+  }
+
+  goToDashboard(): void {
+    this.navigateAndClose();
+    this.router.navigate(['/dashboard']);
+  }
 
   /**
    * Normaliza texto eliminando acentos para búsqueda inclusiva

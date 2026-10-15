@@ -23,6 +23,12 @@ export class DashboardComponent implements OnInit {
   productos: any[] = [];
   productosFiltrados: any[] = [];
 
+  // Paginación de inventario
+  paginaActual = 1;
+  itemsPorPagina = 8;
+  totalPaginas = 1;
+  productosPaginados: any[] = [];
+
   // Filtros de supervisión
   busqueda = '';
   categoriaSeleccionada = 'todas';
@@ -83,6 +89,63 @@ export class DashboardComponent implements OnInit {
     }
 
     this.productosFiltrados = result;
+    this.paginaActual = 1;
+    this.actualizarPaginacion();
+  }
+
+  actualizarPaginacion(): void {
+    this.totalPaginas = Math.ceil(this.productosFiltrados.length / this.itemsPorPagina) || 1;
+    if (this.paginaActual > this.totalPaginas) {
+      this.paginaActual = this.totalPaginas;
+    }
+    if (this.paginaActual < 1) {
+      this.paginaActual = 1;
+    }
+    const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
+    const fin = inicio + this.itemsPorPagina;
+    this.productosPaginados = this.productosFiltrados.slice(inicio, fin);
+  }
+
+  cambiarPagina(pag: number): void {
+    if (pag >= 1 && pag <= this.totalPaginas && pag !== this.paginaActual) {
+      this.paginaActual = pag;
+      this.actualizarPaginacion();
+    }
+  }
+
+  paginaAnterior(): void {
+    if (this.paginaActual > 1) {
+      this.cambiarPagina(this.paginaActual - 1);
+    }
+  }
+
+  paginaSiguiente(): void {
+    if (this.paginaActual < this.totalPaginas) {
+      this.cambiarPagina(this.paginaActual + 1);
+    }
+  }
+
+  cambiarItemsPorPagina(cantidad: any): void {
+    this.itemsPorPagina = Number(cantidad);
+    this.paginaActual = 1;
+    this.actualizarPaginacion();
+  }
+
+  get indiceInicio(): number {
+    if (this.productosFiltrados.length === 0) return 0;
+    return (this.paginaActual - 1) * this.itemsPorPagina + 1;
+  }
+
+  get indiceFin(): number {
+    return Math.min(this.paginaActual * this.itemsPorPagina, this.productosFiltrados.length);
+  }
+
+  get paginasArray(): number[] {
+    const pags: number[] = [];
+    for (let i = 1; i <= this.totalPaginas; i++) {
+      pags.push(i);
+    }
+    return pags;
   }
 
   limpiarFiltros(): void {
