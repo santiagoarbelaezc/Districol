@@ -25,9 +25,15 @@
     <nav class="sidebar-nav">
       <div class="nav-section-title">MENÚ PRINCIPAL</div>
       
-      <a class="nav-item active" href="javascript:void(0)">
+      <a class="nav-item" [class.active]="seccionActiva === 'estadisticas'" href="javascript:void(0)" (click)="cambiarSeccion('estadisticas')">
         <span class="material-symbols-rounded nav-icon">bar_chart</span>
         <span class="nav-label">Estadísticas</span>
+      </a>
+
+      <a class="nav-item" [class.active]="seccionActiva === 'productos'" href="javascript:void(0)" (click)="cambiarSeccion('productos')">
+        <span class="material-symbols-rounded nav-icon">inventory_2</span>
+        <span class="nav-label">Productos</span>
+        <span class="nav-pill-count" *ngIf="productos.length">{{ productos.length }}</span>
       </a>
 
       <a class="nav-item" href="javascript:void(0)" (click)="goToHome()">
@@ -61,7 +67,8 @@
   <header class="dash-header">
     <div class="header-status-pill">
       <span class="status-dot"></span>
-      <span class="status-text">Catálogo en Tiempo Real &bull; Solo Lectura</span>
+      <span class="status-text" *ngIf="seccionActiva === 'estadisticas'">Catálogo en Tiempo Real &bull; Métricas & Estadísticas</span>
+      <span class="status-text" *ngIf="seccionActiva === 'productos'">Catálogo Central &bull; Supervisión de Productos (Solo Lectura)</span>
     </div>
 
     <div class="header-actions">
@@ -93,8 +100,12 @@
     </div>
 
     <div *ngIf="!cargando && estadisticas" class="dash-inner">
-      <!-- 1. Fila de Stat Cards (4 columnas) -->
-      <section class="stat-cards-grid">
+      <!-- ══════════════════════════════════════════════════════════
+           SECCIÓN: ESTADÍSTICAS & MÉTRICAS
+           ══════════════════════════════════════════════════════════ -->
+      <ng-container *ngIf="seccionActiva === 'estadisticas'">
+        <!-- 1. Fila de Stat Cards (4 columnas) -->
+        <section class="stat-cards-grid">
         <!-- Stat Card 1 -->
         <div class="stat-card">
           <div class="stat-card-top">
@@ -337,10 +348,16 @@
                     {{ p.precio > 0 ? formatearMoneda(p.precio) : 'A cotizar' }}
                   </td>
                   <td style="text-align: right;">
-                    <button class="btn-primary-black btn-table-action" (click)="verProductoEnTienda(p)">
-                      <span>Ver Tienda</span>
-                      <span class="material-symbols-rounded">arrow_outward</span>
-                    </button>
+                    <div class="table-actions-cell">
+                      <button class="btn-action-ghost" (click)="abrirDetalleProducto(p)" title="Ver Ficha Técnica">
+                        <span class="material-symbols-rounded">visibility</span>
+                        <span>Detalles</span>
+                      </button>
+                      <button class="btn-primary-black btn-table-action" (click)="verProductoEnTienda(p)" title="Ver en tienda pública">
+                        <span>Tienda</span>
+                        <span class="material-symbols-rounded">arrow_outward</span>
+                      </button>
+                    </div>
                   </td>
                 </tr>
 
@@ -417,6 +434,427 @@
           </div>
         </div>
       </section>
+      </ng-container>
+
+      <!-- ══════════════════════════════════════════════════════════
+           SECCIÓN: PRODUCTOS (SUPERVISIÓN COMPLETA Y DETALLES)
+           ══════════════════════════════════════════════════════════ -->
+      <section *ngIf="seccionActiva === 'productos'" class="products-section">
+        <!-- Banner Superior de Sección -->
+        <div class="section-hero-card">
+          <div class="hero-card-left">
+            <div class="hero-badge-row">
+              <span class="badge-readonly-shield">
+                <span class="material-symbols-rounded">lock</span>
+                SOLO LECTURA
+              </span>
+              <span class="badge-count-pill">{{ productos.length }} REFERENCIAS TOTALES</span>
+            </div>
+            <h1 class="hero-section-title">Directorio de Productos</h1>
+            <p class="hero-section-desc">
+              Consulta y visualiza todos los productos de Districol sincronizados con la API central.
+              Este módulo es de supervisión y consulta de especificaciones sin permisos de modificación ni eliminación.
+            </p>
+          </div>
+
+          <div class="hero-card-stats">
+            <div class="mini-stat-card">
+              <span class="mini-stat-num">{{ estadisticas.resumen.en_stock }}</span>
+              <span class="mini-stat-lbl">En Stock</span>
+            </div>
+            <div class="mini-stat-card">
+              <span class="mini-stat-num">{{ estadisticas.resumen.agotados }}</span>
+              <span class="mini-stat-lbl">Agotados</span>
+            </div>
+            <div class="mini-stat-card">
+              <span class="mini-stat-num">{{ estadisticas.resumen.total_categorias }}</span>
+              <span class="mini-stat-lbl">Líneas</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Barra de Herramientas y Filtros Avanzados -->
+        <div class="products-toolbar-card">
+          <div class="toolbar-left">
+            <!-- Buscador -->
+            <div class="search-box-modern">
+              <span class="material-symbols-rounded search-icon">search</span>
+              <input 
+                type="text" 
+                class="input-modern" 
+                placeholder="Buscar por nombre, subcategoría o descripción..." 
+                [(ngModel)]="busqueda"
+                (ngModelChange)="aplicarFiltros()"
+              />
+              <button *ngIf="busqueda" class="btn-clear-search" (click)="busqueda = ''; aplicarFiltros()" title="Borrar búsqueda">
+                <span class="material-symbols-rounded">close</span>
+              </button>
+            </div>
+
+            <!-- Filtro de Categoría -->
+            <div class="select-wrapper">
+              <span class="material-symbols-rounded select-icon">category</span>
+              <select 
+                class="select-modern"
+                [(ngModel)]="categoriaSeleccionada"
+                (ngModelChange)="aplicarFiltros()"
+              >
+                <option value="todas">Todas las categorías</option>
+                <option value="Colchones">Colchones</option>
+                <option value="Almohadas">Almohadas</option>
+                <option value="Sábanas">Sábanas</option>
+                <option value="Complementos">Complementos</option>
+                <option value="Ambientes">Ambientes</option>
+              </select>
+            </div>
+
+            <!-- Filtro de Disponibilidad -->
+            <div class="select-wrapper">
+              <span class="material-symbols-rounded select-icon">warehouse</span>
+              <select 
+                class="select-modern"
+                [(ngModel)]="filtroStock"
+                (ngModelChange)="aplicarFiltros()"
+              >
+                <option value="todos">Todo el stock</option>
+                <option value="en_stock">En stock (&gt;0)</option>
+                <option value="agotados">Agotados (0)</option>
+              </select>
+            </div>
+
+            <!-- Ordenar Por -->
+            <div class="select-wrapper">
+              <span class="material-symbols-rounded select-icon">sort</span>
+              <select 
+                class="select-modern"
+                [(ngModel)]="ordenarPor"
+                (ngModelChange)="aplicarFiltros()"
+              >
+                <option value="nombre_asc">Nombre (A - Z)</option>
+                <option value="nombre_desc">Nombre (Z - A)</option>
+                <option value="precio_desc">Mayor precio</option>
+                <option value="precio_asc">Menor precio</option>
+                <option value="stock_desc">Mayor disponibilidad</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="toolbar-right">
+            <!-- Switch Modo Tabla vs Tarjetas -->
+            <div class="view-mode-group">
+              <button 
+                type="button"
+                class="btn-view-toggle" 
+                [class.active]="vistaProductos === 'tabla'"
+                (click)="cambiarVista('tabla')"
+                title="Vista de Tabla"
+              >
+                <span class="material-symbols-rounded">view_list</span>
+                <span>Tabla</span>
+              </button>
+              <button 
+                type="button"
+                class="btn-view-toggle" 
+                [class.active]="vistaProductos === 'tarjetas'"
+                (click)="cambiarVista('tarjetas')"
+                title="Vista de Tarjetas / Galería"
+              >
+                <span class="material-symbols-rounded">grid_view</span>
+                <span>Tarjetas</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- VISTA TABLA -->
+        <div *ngIf="vistaProductos === 'tabla'" class="products-table-card">
+          <div class="table-responsive">
+            <table class="dash-table modern-table">
+              <thead>
+                <tr>
+                  <th style="width: 58px;">Foto</th>
+                  <th>Producto & Referencia</th>
+                  <th>Categoría</th>
+                  <th>Subcategoría</th>
+                  <th>Stock</th>
+                  <th>Precio</th>
+                  <th style="text-align: right;">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let p of productosPaginados" class="product-row" (click)="abrirDetalleProducto(p)">
+                  <td class="td-thumb" (click)="$event.stopPropagation(); abrirDetalleProducto(p)">
+                    <img [src]="p.imagen || 'assets/img/placeholder.png'" [alt]="p.nombre" class="product-thumb" />
+                  </td>
+                  <td class="td-info">
+                    <span class="product-title">{{ p.nombre }}</span>
+                    <div class="product-meta-sub">
+                      <span class="sku-tag">SKU: {{ p.sku || ('DIST-' + p.id) }}</span>
+                      <span *ngIf="p.isFeatured" class="badge-tag-red">Destacado</span>
+                      <span *ngIf="p.isNew" class="badge-tag-dark">Nuevo</span>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="pill-category">{{ p.categoria }}</span>
+                  </td>
+                  <td>
+                    <span class="subcat-label">{{ p.subcategoria || 'General' }}</span>
+                  </td>
+                  <td>
+                    <span class="stock-indicator" [class.stock-out]="p.stock <= 0">
+                      <span [class.dot-green]="p.stock > 0" [class.dot-red]="p.stock <= 0"></span>
+                      {{ p.stock }} un.
+                    </span>
+                  </td>
+                  <td class="td-price">
+                    {{ p.precio > 0 ? formatearMoneda(p.precio) : 'A cotizar' }}
+                  </td>
+                  <td style="text-align: right;" (click)="$event.stopPropagation()">
+                    <div class="table-actions-cell">
+                      <button class="btn-action-ghost" (click)="abrirDetalleProducto(p)" title="Ver detalles y especificaciones">
+                        <span class="material-symbols-rounded">visibility</span>
+                        <span>Detalles</span>
+                      </button>
+                      <button class="btn-primary-black btn-table-action" (click)="verProductoEnTienda(p)" title="Ver en tienda pública">
+                        <span>Tienda</span>
+                        <span class="material-symbols-rounded">arrow_outward</span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr *ngIf="productosFiltrados.length === 0">
+                  <td colspan="7" class="td-empty-state">
+                    <div class="empty-message-wrap">
+                      <span class="material-symbols-rounded empty-icon">inventory_2</span>
+                      <p>No se encontraron productos con los filtros aplicados.</p>
+                      <button class="btn-primary-black" (click)="limpiarFiltros()">Restablecer filtros</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- VISTA TARJETAS / GALERÍA -->
+        <div *ngIf="vistaProductos === 'tarjetas'" class="products-grid-view">
+          <div *ngFor="let p of productosPaginados" class="product-grid-card" (click)="abrirDetalleProducto(p)">
+            <div class="card-img-wrapper">
+              <img [src]="p.imagen || 'assets/img/placeholder.png'" [alt]="p.nombre" class="card-img" />
+              <div class="card-overlay-badges">
+                <span class="card-badge-cat">{{ p.categoria }}</span>
+                <span class="card-badge-stock" [class.out]="p.stock <= 0">
+                  {{ p.stock > 0 ? p.stock + ' un.' : 'Agotado' }}
+                </span>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="card-meta-top">
+                <span class="card-subcat">{{ p.subcategoria || 'General' }}</span>
+                <span class="card-sku">ID: #{{ p.id }}</span>
+              </div>
+              <h3 class="card-title">{{ p.nombre }}</h3>
+              <p class="card-desc" *ngIf="p.descripcion">{{ p.descripcion }}</p>
+
+              <div class="card-footer-row">
+                <div class="card-price-box">
+                  <span class="card-price-label">Precio</span>
+                  <span class="card-price-val">{{ p.precio > 0 ? formatearMoneda(p.precio) : 'A cotizar' }}</span>
+                </div>
+
+                <div class="card-actions" (click)="$event.stopPropagation()">
+                  <button class="btn-action-ghost-sm" (click)="abrirDetalleProducto(p)" title="Ver Ficha Técnica">
+                    <span class="material-symbols-rounded">visibility</span>
+                  </button>
+                  <button class="btn-primary-black btn-action-sm" (click)="verProductoEnTienda(p)" title="Ver en Tienda">
+                    <span class="material-symbols-rounded">arrow_outward</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="productosFiltrados.length === 0" class="grid-empty-card">
+            <span class="material-symbols-rounded empty-icon">search_off</span>
+            <p>No se encontraron productos con los filtros seleccionados.</p>
+            <button class="btn-primary-black" (click)="limpiarFiltros()">Restablecer filtros</button>
+          </div>
+        </div>
+
+        <!-- Paginador Común para la Sección de Productos -->
+        <div class="dash-pagination" *ngIf="productosFiltrados.length > 0">
+          <div class="pagination-info">
+            <span class="pagination-count">
+              Mostrando <strong>{{ indiceInicio }}</strong>–<strong>{{ indiceFin }}</strong> de <strong>{{ productosFiltrados.length }}</strong> referencias
+            </span>
+
+            <div class="pagination-per-page">
+              <span class="per-page-label">Mostrar:</span>
+              <select 
+                class="select-per-page" 
+                [ngModel]="itemsPorPagina" 
+                (ngModelChange)="cambiarItemsPorPagina($event)"
+              >
+                <option [value]="6">6 / pág</option>
+                <option [value]="8">8 / pág</option>
+                <option [value]="12">12 / pág</option>
+                <option [value]="25">25 / pág</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="pagination-controls" *ngIf="totalPaginas > 1">
+            <button 
+              type="button"
+              class="page-nav-btn" 
+              [disabled]="paginaActual === 1" 
+              (click)="paginaAnterior()" 
+              title="Página anterior"
+              aria-label="Página anterior"
+            >
+              <span class="material-symbols-rounded">chevron_left</span>
+            </button>
+
+            <div class="page-numbers">
+              <button 
+                type="button"
+                *ngFor="let pag of paginasArray" 
+                class="page-num-btn" 
+                [class.active]="pag === paginaActual"
+                (click)="cambiarPagina(pag)"
+              >
+                {{ pag }}
+              </button>
+            </div>
+
+            <button 
+              type="button"
+              class="page-nav-btn" 
+              [disabled]="paginaActual === totalPaginas" 
+              (click)="paginaSiguiente()" 
+              title="Página siguiente"
+              aria-label="Página siguiente"
+            >
+              <span class="material-symbols-rounded">chevron_right</span>
+            </button>
+          </div>
+        </div>
+      </section>
     </div>
   </main>
+
+  <!-- ══════════════════════════════════════════════════════════
+       MODAL DE DETALLE DE PRODUCTO (SOLO LECTURA)
+       ══════════════════════════════════════════════════════════ -->
+  <div class="dash-modal-backdrop" *ngIf="productoSeleccionado" (click)="cerrarDetalleProducto()">
+    <div class="dash-modal-dialog" (click)="$event.stopPropagation()">
+      <!-- Header del Modal -->
+      <div class="dash-modal-header">
+        <div class="modal-header-left">
+          <div class="modal-readonly-badge">
+            <span class="material-symbols-rounded">lock</span>
+            <span>MODO SUPERVISIÓN &bull; SOLO LECTURA</span>
+          </div>
+          <h2 class="modal-title">{{ productoSeleccionado.nombre }}</h2>
+        </div>
+        <button class="btn-modal-close" (click)="cerrarDetalleProducto()" title="Cerrar ventana">
+          <span class="material-symbols-rounded">close</span>
+        </button>
+      </div>
+
+      <!-- Contenido del Modal (2 Columnas) -->
+      <div class="dash-modal-body">
+        <!-- Columna Izquierda: Galería de Imágenes -->
+        <div class="modal-gallery-col">
+          <div class="modal-main-image-wrap">
+            <img [src]="imagenModalActiva || productoSeleccionado.imagen || 'assets/img/placeholder.png'" [alt]="productoSeleccionado.nombre" class="modal-main-image" />
+          </div>
+
+          <!-- Tiras de miniaturas si existen múltiples imágenes -->
+          <div class="modal-thumbs-strip" *ngIf="productoSeleccionado.imagenes && productoSeleccionado.imagenes.length > 1">
+            <button 
+              type="button"
+              *ngFor="let img of productoSeleccionado.imagenes" 
+              class="modal-thumb-btn"
+              [class.active]="img === imagenModalActiva"
+              (click)="seleccionarImagenModal(img)"
+            >
+              <img [src]="img" [alt]="productoSeleccionado.nombre" />
+            </button>
+          </div>
+        </div>
+
+        <!-- Columna Derecha: Especificaciones y Detalles -->
+        <div class="modal-details-col">
+          <div class="modal-price-card">
+            <div class="price-data">
+              <span class="price-label">Precio al Público</span>
+              <span class="price-amount">{{ productoSeleccionado.precio > 0 ? formatearMoneda(productoSeleccionado.precio) : 'A cotizar' }}</span>
+            </div>
+            <div class="modal-stock-badge" [class.out]="productoSeleccionado.stock <= 0">
+              <span [class.dot-green]="productoSeleccionado.stock > 0" [class.dot-red]="productoSeleccionado.stock <= 0"></span>
+              <span>{{ productoSeleccionado.stock > 0 ? productoSeleccionado.stock + ' unidades disponibles' : 'Agotado' }}</span>
+            </div>
+          </div>
+
+          <!-- Descripción -->
+          <div class="modal-section-block" *ngIf="productoSeleccionado.descripcion">
+            <h4 class="block-title">Descripción</h4>
+            <p class="block-text">{{ productoSeleccionado.descripcion }}</p>
+          </div>
+
+          <!-- Tabla de Especificaciones Técnicas -->
+          <div class="modal-section-block">
+            <h4 class="block-title">Especificaciones de Catálogo</h4>
+            <div class="specs-grid">
+              <div class="spec-row">
+                <span class="spec-key">ID de Referencia:</span>
+                <span class="spec-val">#{{ productoSeleccionado.id }}</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-key">Código SKU:</span>
+                <span class="spec-val">{{ productoSeleccionado.sku || ('DIST-' + productoSeleccionado.id) }}</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-key">Categoría:</span>
+                <span class="spec-val font-semibold">{{ productoSeleccionado.categoria }}</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-key">Subcategoría:</span>
+                <span class="spec-val">{{ productoSeleccionado.subcategoria || 'General' }}</span>
+              </div>
+              <div class="spec-row" *ngIf="productoSeleccionado.tag">
+                <span class="spec-key">Tecnología:</span>
+                <span class="spec-val highlight">{{ productoSeleccionado.tag }}</span>
+              </div>
+              <div class="spec-row" *ngIf="productoSeleccionado.badgePromo">
+                <span class="spec-key">Etiqueta Comercial:</span>
+                <span class="spec-val">{{ productoSeleccionado.badgePromo }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer del Modal -->
+      <div class="dash-modal-footer">
+        <div class="modal-footer-notice">
+          <span class="material-symbols-rounded notice-icon">info</span>
+          <span>Catálogo central sincronizado. La edición y eliminación están deshabilitadas en este panel.</span>
+        </div>
+
+        <div class="modal-footer-buttons">
+          <button type="button" class="btn-action-ghost" (click)="cerrarDetalleProducto()">
+            Cerrar
+          </button>
+          <button type="button" class="btn-primary-black" (click)="verProductoEnTienda(productoSeleccionado)">
+            <span>Ver en Tienda</span>
+            <span class="material-symbols-rounded">arrow_outward</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
