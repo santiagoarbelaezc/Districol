@@ -34,7 +34,7 @@ export class GridProductosInteresComponent implements OnInit, OnChanges {
   }
 
   private cargarProductos(): void {
-    this.productoService.getProductosDeInteres(this.productoActualId, 6).subscribe({
+    this.productoService.getProductosDeInteres(this.productoActualId, 8).subscribe({
       next: (productos) => {
         this.productos = productos;
       },

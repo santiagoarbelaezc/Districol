@@ -38,7 +38,7 @@ export class ProductoDetailService {
     );
   }
 
-  getProductosDeInteres(excludeId: any, limit: number = 6): Observable<Producto[]> {
+  getProductosDeInteres(excludeId: any, limit: number = 8): Observable<Producto[]> {
     const numericExclude = parseProductIdFromParam(excludeId);
     return this.districolService.getAdaptedProducts().pipe(
       map(prods => {

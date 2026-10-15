@@ -200,7 +200,6 @@
     color: #374151;
     cursor: pointer;
     transition: all 0.3s ease;
-    pointer-events: none;
 }
 
 .producto-card:hover .btn-ver-detalles {
