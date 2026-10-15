@@ -121,7 +121,7 @@ export class DescripcionSeleccionadoComponent implements OnInit, OnChanges {
     const mensaje = encodeURIComponent(
       `Hola, estoy interesado en cotizar el producto: ${this.nombreCompleto}. ¿Me pueden enviar una cotización y detalles de disponibilidad?`
     );
-    return `https://wa.me/573001234567?text=${mensaje}`;
+    return `https://wa.me/573053237250?text=${mensaje}`;
   }
 
   copiarEnlace(): void {

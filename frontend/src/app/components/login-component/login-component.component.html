@@ -47,19 +47,35 @@
       <form class="login-form-body" (ngSubmit)="onSubmit()">
         <!-- Email -->
         <div class="form-field-group">
-          <label for="email" class="field-label">Correo electrónico</label>
+          <div class="field-label-row">
+            <label for="email" class="field-label">Correo electrónico</label>
+            <span *ngIf="usuarioRecordado" class="badge-remembered">
+              <span class="material-symbols-rounded">devices</span>
+              <span>Recordado en este equipo</span>
+            </span>
+          </div>
           <div class="input-container">
             <span class="material-symbols-rounded field-icon">mail</span>
             <input 
               type="email" 
               id="email" 
               class="input-minimal" 
+              [class.has-clear-btn]="usuarioRecordado"
               [(ngModel)]="email" 
               name="email"
               placeholder="admin@districol.com" 
               autocomplete="email"
               required
             />
+            <button 
+              *ngIf="usuarioRecordado" 
+              type="button" 
+              class="btn-clear-user" 
+              (click)="cambiarUsuario()" 
+              title="Cambiar usuario en este dispositivo"
+            >
+              Cambiar
+            </button>
           </div>
         </div>
 
@@ -77,6 +93,7 @@
               placeholder="••••••••" 
               autocomplete="current-password"
               required
+              [autofocus]="usuarioRecordado"
             />
             <button type="button" class="btn-toggle-eye" (click)="togglePassword()" [attr.aria-label]="showPassword ? 'Ocultar contraseña' : 'Ver contraseña'">
               <span class="material-symbols-rounded">
@@ -84,6 +101,19 @@
               </span>
             </button>
           </div>
+        </div>
+
+        <!-- Recordar usuario en este dispositivo -->
+        <div class="remember-row">
+          <label class="checkbox-remember-wrap">
+            <input 
+              type="checkbox" 
+              [(ngModel)]="recordarUsuario" 
+              name="recordarUsuario" 
+              class="custom-checkbox"
+            />
+            <span class="remember-label-text">Recordar usuario en este dispositivo</span>
+          </label>
         </div>
 
         <!-- Mensaje de Error -->
