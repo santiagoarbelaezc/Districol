@@ -334,7 +334,8 @@ export class DistricolService {
       tag: p.tag,
       badgePromo: p.badgePromo,
       badgeType: (p.badgeType as any) || 'discount',
-      precio: p.precio
+      precio: p.precio,
+      slug: (p as any).slug
     };
   }
 

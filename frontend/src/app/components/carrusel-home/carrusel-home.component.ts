@@ -12,6 +12,7 @@ export interface ProductoCarrusel {
   badgePromo?: string;
   badgeType?: 'discount' | 'promo' | 'warning';
   precio?: number;
+  slug?: string;
 }
 
 @Component({
@@ -85,7 +86,6 @@ export class CarruselHomeComponent implements AfterViewInit, OnDestroy {
 
     // ── 1. Desplazamiento Horizontal con Rueda del Mouse ──
     this.wheelListener = (e: WheelEvent) => {
-      // Determinamos el delta: Soporta rueda vertical estándar, rueda con Shift y rueda/trackpad horizontal
       const hasHorizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY);
       const rawDelta = hasHorizontal ? e.deltaX : e.deltaY;
 
@@ -94,11 +94,9 @@ export class CarruselHomeComponent implements AfterViewInit, OnDestroy {
       const maxScroll = carousel.scrollWidth - carousel.clientWidth;
       if (maxScroll <= 0) return;
 
-      // Verificar si el carrusel aún tiene contenido para avanzar o retroceder
       const atStart = carousel.scrollLeft <= 1 && rawDelta < 0;
       const atEnd = carousel.scrollLeft >= maxScroll - 1 && rawDelta > 0;
 
-      // Si no está en el extremo, interceptamos para que el giro del mouse desplace horizontalmente
       if (!atStart && !atEnd) {
         e.preventDefault();
 
@@ -106,7 +104,6 @@ export class CarruselHomeComponent implements AfterViewInit, OnDestroy {
           this.targetScrollLeft = carousel.scrollLeft;
         }
 
-        // Sensibilidad calibrada para fluidez máxima sin saltos
         const sensitivity = Math.abs(rawDelta) > 100 ? 1.3 : 1.7;
         this.targetScrollLeft += rawDelta * sensitivity;
         this.targetScrollLeft = Math.max(0, Math.min(this.targetScrollLeft, maxScroll));
@@ -126,25 +123,23 @@ export class CarruselHomeComponent implements AfterViewInit, OnDestroy {
 
       this.isDragging = true;
       this.hasDragged = false;
-      this.startX = e.pageX - carousel.offsetLeft;
+      this.startX = e.pageX;
       this.startScrollLeft = carousel.scrollLeft;
       this.targetScrollLeft = carousel.scrollLeft;
-
-      carousel.classList.add('is-dragging');
     };
     carousel.addEventListener('mousedown', this.mouseDownListener);
 
     this.mouseMoveListener = (e: MouseEvent) => {
       if (!this.isDragging) return;
 
-      const x = e.pageX - carousel.offsetLeft;
-      const walk = (x - this.startX) * 1.5;
+      const diff = e.pageX - this.startX;
 
-      if (Math.abs(walk) > 4) {
+      // Umbral generoso de 8px para que los clics normales jamás se consideren arrastres
+      if (Math.abs(diff) > 8) {
         this.hasDragged = true;
+        carousel.classList.add('is-dragging');
+        carousel.scrollLeft = this.startScrollLeft - diff;
       }
-
-      carousel.scrollLeft = this.startScrollLeft - walk;
     };
     window.addEventListener('mousemove', this.mouseMoveListener);
 
@@ -152,6 +147,11 @@ export class CarruselHomeComponent implements AfterViewInit, OnDestroy {
       if (this.isDragging) {
         this.isDragging = false;
         carousel.classList.remove('is-dragging');
+        if (this.hasDragged) {
+          setTimeout(() => {
+            this.hasDragged = false;
+          }, 80);
+        }
       }
     };
     window.addEventListener('mouseup', this.mouseUpListener);
@@ -160,6 +160,7 @@ export class CarruselHomeComponent implements AfterViewInit, OnDestroy {
       if (this.isDragging) {
         this.isDragging = false;
         carousel.classList.remove('is-dragging');
+        this.hasDragged = false;
       }
     };
     carousel.addEventListener('mouseleave', this.mouseLeaveListener);
@@ -171,7 +172,7 @@ export class CarruselHomeComponent implements AfterViewInit, OnDestroy {
       const diff = this.targetScrollLeft - current;
 
       if (Math.abs(diff) > 0.8) {
-        carousel.scrollLeft += diff * 0.18; // Inercia suave de resorte
+        carousel.scrollLeft += diff * 0.18; // Inercia suave
         this.animFrameId = requestAnimationFrame(step);
       } else {
         carousel.scrollLeft = this.targetScrollLeft;
@@ -182,13 +183,16 @@ export class CarruselHomeComponent implements AfterViewInit, OnDestroy {
     this.animFrameId = requestAnimationFrame(step);
   }
 
-  verMas(producto: ProductoCarrusel): void {
-    // Si el usuario estaba arrastrando con el ratón, ignorar el clic accidental
+  verMas(producto: ProductoCarrusel, event?: Event): void {
+    if (event) {
+      event.stopPropagation();
+    }
+    // Si el usuario estaba arrastrando con el ratón, ignorar
     if (this.hasDragged) {
-      this.hasDragged = false;
       return;
     }
-    const slug = getProductSlug(producto.id, producto.nombre);
+    const slug = producto.slug || getProductSlug(producto.id, producto.nombre);
+    window.scrollTo({ top: 0, behavior: 'instant' });
     this.router.navigate(['/productos', slug]);
   }
 

@@ -69,10 +69,7 @@
 .carrusel-container.is-dragging {
   cursor: grabbing !important;
   scroll-behavior: auto !important;
-}
-
-.carrusel-container.is-dragging .producto-card {
-  pointer-events: none;
+  user-select: none;
 }
 
 /* ===== TARJETA DE PRODUCTO BLANCA COMPLETAMENTE SELECCIONABLE ===== */
@@ -306,7 +303,6 @@
   gap: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  pointer-events: none; /* Toda la tarjeta procesa el clic */
 }
 
 .arrow-icon {

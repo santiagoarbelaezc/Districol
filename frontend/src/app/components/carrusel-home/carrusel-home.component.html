@@ -16,8 +16,8 @@
       <div
         class="producto-card"
         *ngFor="let producto of productos"
-        (click)="verMas(producto)"
-        (keydown.enter)="verMas(producto)"
+        (click)="verMas(producto, $event)"
+        (keydown.enter)="verMas(producto, $event)"
         tabindex="0"
         role="button"
         [attr.aria-label]="'Ver detalles de ' + producto.nombre"
@@ -53,7 +53,7 @@
           </div>
 
           <!-- Botón Ver Detalles visual -->
-          <button type="button" class="btn-ver-detalles">
+          <button type="button" class="btn-ver-detalles" (click)="verMas(producto, $event)">
             <span>Ver Detalles</span>
             <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>

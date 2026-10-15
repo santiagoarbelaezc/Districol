@@ -46,6 +46,7 @@ export class CarruselCategoryComponent implements OnInit {
 
   verProducto(producto: Producto): void {
     const slug = getProductSlug(producto.id, producto.nombre);
+    window.scrollTo({ top: 0, behavior: 'instant' });
     this.router.navigate(['/productos', slug]);
   }
 
