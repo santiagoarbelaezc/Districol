@@ -292,6 +292,7 @@
 
 /* ===== CHIP UNIFICADO DE SESIÓN EN NAVBAR (DESKTOP & HEADER) ===== */
 .nav-admin-chip {
+  order: -1;
   display: inline-flex;
   align-items: center;
   gap: 10px;

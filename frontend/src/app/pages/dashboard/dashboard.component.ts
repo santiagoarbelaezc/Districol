@@ -17,6 +17,14 @@ export class DashboardComponent implements OnInit {
   // Estado del Shell
   sidebarCollapsed = false;
 
+  // Estado de Navegación del Dashboard
+  seccionActiva: 'estadisticas' | 'productos' = 'estadisticas';
+  vistaProductos: 'tabla' | 'tarjetas' = 'tabla';
+
+  // Modal de Detalle de Producto (Solo lectura)
+  productoSeleccionado: any = null;
+  imagenModalActiva: string = '';
+
   // Estado de carga y métricas
   cargando = true;
   estadisticas: any = null;
@@ -29,9 +37,11 @@ export class DashboardComponent implements OnInit {
   totalPaginas = 1;
   productosPaginados: any[] = [];
 
-  // Filtros de supervisión
+  // Filtros y ordenamiento de supervisión
   busqueda = '';
   categoriaSeleccionada = 'todas';
+  filtroStock: 'todos' | 'en_stock' | 'agotados' = 'todos';
+  ordenarPor: string = 'nombre_asc';
 
   // Sesión administrativa
   usuario: any = null;
@@ -57,6 +67,32 @@ export class DashboardComponent implements OnInit {
     this.sidebarCollapsed = !this.sidebarCollapsed;
   }
 
+  cambiarSeccion(seccion: 'estadisticas' | 'productos'): void {
+    this.seccionActiva = seccion;
+    this.paginaActual = 1;
+    this.actualizarPaginacion();
+  }
+
+  cambiarVista(vista: 'tabla' | 'tarjetas'): void {
+    this.vistaProductos = vista;
+  }
+
+  abrirDetalleProducto(producto: any): void {
+    this.productoSeleccionado = producto;
+    this.imagenModalActiva = producto.imagen || 
+      (producto.imagenes && producto.imagenes[0]) || 
+      'assets/img/placeholder.png';
+  }
+
+  cerrarDetalleProducto(): void {
+    this.productoSeleccionado = null;
+    this.imagenModalActiva = '';
+  }
+
+  seleccionarImagenModal(img: string): void {
+    this.imagenModalActiva = img;
+  }
+
   cargarEstadisticas(): void {
     this.cargando = true;
     this.districolService.getEstadisticas().subscribe({
@@ -76,16 +112,45 @@ export class DashboardComponent implements OnInit {
   aplicarFiltros(): void {
     let result = [...this.productos];
 
+    // Filtro Categoría
     if (this.categoriaSeleccionada !== 'todas') {
       result = result.filter(p => p.categoria === this.categoriaSeleccionada);
     }
 
+    // Filtro Disponibilidad Stock
+    if (this.filtroStock === 'en_stock') {
+      result = result.filter(p => (p.stock !== undefined ? p.stock : (p.cantidad || 0)) > 0);
+    } else if (this.filtroStock === 'agotados') {
+      result = result.filter(p => (p.stock !== undefined ? p.stock : (p.cantidad || 0)) <= 0);
+    }
+
+    // Filtro Búsqueda
     if (this.busqueda.trim()) {
       const term = this.busqueda.toLowerCase().trim();
       result = result.filter(p =>
         (p.nombre && p.nombre.toLowerCase().includes(term)) ||
-        (p.subcategoria && p.subcategoria.toLowerCase().includes(term))
+        (p.subcategoria && p.subcategoria.toLowerCase().includes(term)) ||
+        (p.descripcion && p.descripcion.toLowerCase().includes(term))
       );
+    }
+
+    // Ordenamiento
+    switch (this.ordenarPor) {
+      case 'nombre_asc':
+        result.sort((a, b) => (a.nombre || '').localeCompare(b.nombre || ''));
+        break;
+      case 'nombre_desc':
+        result.sort((a, b) => (b.nombre || '').localeCompare(a.nombre || ''));
+        break;
+      case 'precio_desc':
+        result.sort((a, b) => (b.precio || 0) - (a.precio || 0));
+        break;
+      case 'precio_asc':
+        result.sort((a, b) => (a.precio || 0) - (b.precio || 0));
+        break;
+      case 'stock_desc':
+        result.sort((a, b) => (b.stock || b.cantidad || 0) - (a.stock || a.cantidad || 0));
+        break;
     }
 
     this.productosFiltrados = result;

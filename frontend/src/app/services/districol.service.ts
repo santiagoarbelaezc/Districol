@@ -236,11 +236,17 @@ export class DistricolService {
           productos: prods.map(p => ({
             id: p.id,
             nombre: p.nombre,
+            descripcion: p.descripcion,
             categoria: p.categoria,
             subcategoria: p.subcategoria,
             precio: p.precio,
             stock: p.cantidad,
             imagen: p.imagen,
+            imagenes: p.imagenes || [p.imagen],
+            tag: p.tag,
+            badgePromo: p.badgePromo,
+            badgeType: p.badgeType,
+            sku: 'DIST-' + p.id,
             slug: p.slug
           }))
         };
