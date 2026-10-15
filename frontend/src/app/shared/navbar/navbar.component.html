@@ -26,27 +26,26 @@
         </div>
       </li>
 
-      <!-- Retorno a sesión administrativa en menú móvil -->
-      <li *ngIf="isLoggedIn" class="mobile-session-li">
-        <a routerLink="/dashboard" (click)="navigateAndClose()" class="navbar-link active-session-mobile">
-          <span class="session-pulsing-dot"></span>
-          <span>Volver al Dashboard</span>
+      <!-- Retorno a sesión administrativa solo en menú móvil -->
+      <li *ngIf="isLoggedIn" class="mobile-drawer-only-item">
+        <a routerLink="/dashboard" (click)="navigateAndClose()" class="mobile-drawer-admin-btn">
+          <div class="mobile-admin-badge-avatar">
+            {{ (currentUser?.nombre || currentUser?.correo || 'A')[0].toUpperCase() }}
+            <span class="pulse-dot-online"></span>
+          </div>
+          <div class="mobile-admin-badge-info">
+            <span class="mobile-badge-tag">SESIÓN ACTIVA</span>
+            <span class="mobile-badge-title">Volver al Dashboard</span>
+          </div>
+          <svg class="mobile-badge-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
         </a>
       </li>
     </ul>
 
     <!-- Acciones: buscador + login / sesión + hamburguesa -->
     <div class="navbar-actions d-flex items-center">
-
-      <!-- Botón Volver a la Sesión / Dashboard (Desktop) -->
-      <a *ngIf="isLoggedIn" routerLink="/dashboard" class="btn-return-session" (click)="navigateAndClose()" title="Sesión administrativa activa: Volver al Dashboard">
-        <span class="session-pulsing-dot"></span>
-        <span class="btn-session-text">Volver al Panel</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-          <polyline points="12 5 19 12 12 19"></polyline>
-        </svg>
-      </a>
 
       <!-- Contenedor de búsqueda -->
       <div class="search-container" [class.expandido]="searchExpanded">
@@ -102,15 +101,31 @@
         </svg>
       </button>
 
-      <!-- Login / Avatar con estado de sesión -->
-      <a [routerLink]="isLoggedIn ? '/dashboard' : '/login'" class="btn btn-outline" [class.btn-outline-user]="isLoggedIn" [attr.aria-label]="isLoggedIn ? 'Panel de Administración' : 'Iniciar Sesión'" (click)="navigateAndClose()" [title]="isLoggedIn ? 'Sesión iniciada (Ir al Dashboard)' : 'Iniciar Sesión'">
-        <svg *ngIf="!isLoggedIn" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <!-- Estado de Sesión / Login: Un único botón integrado -->
+      <!-- Caso 1: NO Logueado -> Botón Outline Clásico -->
+      <a *ngIf="!isLoggedIn" routerLink="/login" class="btn btn-outline" aria-label="Iniciar Sesión" (click)="navigateAndClose()" title="Iniciar Sesión">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
           <path
             d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
         </svg>
-        <span *ngIf="isLoggedIn" class="user-initial-badge">
-          {{ (currentUser?.nombre || currentUser?.correo || 'A')[0].toUpperCase() }}
-        </span>
+      </a>
+
+      <!-- Caso 2: LOGUEADO -> Chip Unificado Elegante "Dashboard" -->
+      <a *ngIf="isLoggedIn" routerLink="/dashboard" class="nav-admin-chip" (click)="navigateAndClose()" title="Sesión activa: Ir al Dashboard">
+        <div class="chip-avatar-wrap">
+          <span class="chip-avatar-letter">
+            {{ (currentUser?.nombre || currentUser?.correo || 'A')[0].toUpperCase() }}
+          </span>
+          <span class="pulse-dot-online"></span>
+        </div>
+        <div class="chip-info">
+          <span class="chip-badge-tag">ADMIN</span>
+          <span class="chip-main-title">Dashboard</span>
+        </div>
+        <svg class="chip-arrow" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
       </a>
 
       <!-- Hamburguesa (mobile) -->
