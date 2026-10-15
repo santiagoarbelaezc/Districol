@@ -1,25 +1,20 @@
-import { Injectable } from '@angular/core';
-import { Categoria, MOCK_CATEGORIAS } from '../data/mock-categories';
-import { Producto, MOCK_PRODUCTOS } from '../data/mock-products';
+import { Injectable, inject } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Categoria } from '../data/mock-categories';
+import { Producto } from '../data/mock-products';
+import { DistricolService } from './districol.service';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class CategoriasMockService {
+  private districolService = inject(DistricolService);
 
-    getCategorias(): Categoria[] {
-        return MOCK_CATEGORIAS.map(cat => ({ ...cat, subcategorias: [...cat.subcategorias] }));
-    }
+  getCategorias$(): Observable<Categoria[]> {
+    return this.districolService.getCategoriasDinamicas();
+  }
 
-    getProductosPorSubcategoria(subcategoriaId: number): Producto[] {
-        return MOCK_PRODUCTOS.filter(p => p.subcategoriaId === subcategoriaId);
-    }
-
-    getProductosPorCategoria(categoriaId: number): Producto[] {
-        return MOCK_PRODUCTOS.filter(p => p.categoriaId === categoriaId);
-    }
-
-    getTodosLosProductos(): Producto[] {
-        return [...MOCK_PRODUCTOS];
-    }
+  getTodosLosProductos$(): Observable<Producto[]> {
+    return this.districolService.getAdaptedProducts();
+  }
 }

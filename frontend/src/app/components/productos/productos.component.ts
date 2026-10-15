@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CategoriasMockService } from '../../services/categorias-mock.service';
+import { DistricolService } from '../../services/districol.service';
 import { Producto } from '../../data/mock-products';
 import { getProductSlug } from '../../utils/seo-slug.util';
 
@@ -16,6 +16,7 @@ import { getProductSlug } from '../../utils/seo-slug.util';
 export class ProductosListComponent implements OnInit, OnDestroy {
 
   productos: Producto[] = [];
+  todosLosProductos: Producto[] = [];
   cargando = true;
   modoBusqueda = false;
   terminoBusqueda = '';
@@ -23,13 +24,30 @@ export class ProductosListComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   constructor(
-    private categoriasService: CategoriasMockService,
+    private districolService: DistricolService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    // Escuchar cambios en query params para búsqueda y filtros
+    // 1. Cargar catálogo desde la API y luego aplicar filtros de ruta
+    this.districolService.getAdaptedProducts()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (prods) => {
+          this.todosLosProductos = prods;
+          this.escucharQueryParams();
+        },
+        error: (err) => {
+          console.error('Error al obtener productos de Districol:', err);
+          this.todosLosProductos = [];
+          this.productos = [];
+          this.cargando = false;
+        }
+      });
+  }
+
+  private escucharQueryParams(): void {
     this.activatedRoute.queryParams
       .pipe(takeUntil(this.destroy$))
       .subscribe(params => {
@@ -57,9 +75,9 @@ export class ProductosListComponent implements OnInit, OnDestroy {
     this.modoBusqueda = false;
     this.mensajeResultados = 'Nuestros Productos';
     setTimeout(() => {
-      this.productos = this.categoriasService.getTodosLosProductos();
+      this.productos = [...this.todosLosProductos];
       this.cargando = false;
-    }, 400);
+    }, 200);
   }
 
   filtrarPorSubcategoria(subcategoriaId: number, categoriaId: number): void {
@@ -71,18 +89,22 @@ export class ProductosListComponent implements OnInit, OnDestroy {
     this.modoBusqueda = false;
     setTimeout(() => {
       if (subcategoriaId > 0) {
-        this.productos = this.categoriasService.getProductosPorSubcategoria(subcategoriaId);
+        this.productos = this.todosLosProductos.filter(p => p.subcategoriaId === subcategoriaId);
         if (this.productos.length > 0) {
           this.mensajeResultados = this.productos[0].subcategoria;
+        } else {
+          this.mensajeResultados = 'Categoría seleccionada';
         }
       } else {
-        this.productos = this.categoriasService.getProductosPorCategoria(categoriaId);
+        this.productos = this.todosLosProductos.filter(p => p.categoriaId === categoriaId);
         if (this.productos.length > 0) {
           this.mensajeResultados = this.productos[0].categoria;
+        } else {
+          this.mensajeResultados = 'Categoría seleccionada';
         }
       }
       this.cargando = false;
-    }, 400);
+    }, 200);
   }
 
   /**
@@ -114,11 +136,10 @@ export class ProductosListComponent implements OnInit, OnDestroy {
    */
   private cargarProductosPorBusqueda(termino: string): void {
     this.cargando = true;
-    const todosProductos = this.categoriasService.getTodosLosProductos();
     const terminoNorm = this.normalizarTexto(termino);
 
     setTimeout(() => {
-      this.productos = todosProductos.filter(p => {
+      this.productos = this.todosLosProductos.filter(p => {
         const nombreNorm = this.normalizarTexto(p.nombre);
         const descNorm = this.normalizarTexto(p.descripcion);
         return nombreNorm.includes(terminoNorm) || descNorm.includes(terminoNorm);
@@ -126,7 +147,7 @@ export class ProductosListComponent implements OnInit, OnDestroy {
 
       this.actualizarMensajeResultados();
       this.cargando = false;
-    }, 400);
+    }, 200);
   }
 
   /**
@@ -161,7 +182,7 @@ export class ProductosListComponent implements OnInit, OnDestroy {
 
   handleImageError(event: Event): void {
     const img = event.target as HTMLImageElement;
-    img.style.display = 'none';
+    img.src = 'assets/img/placeholder.png';
   }
 
   verDetalles(producto: Producto): void {

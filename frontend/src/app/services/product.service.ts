@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from './api.service';
@@ -11,7 +11,7 @@ export class ProductService {
 
   constructor(private http: HttpClient, private api: ApiService) {}
 
-  // ─── READ ────────────────────────────────────────────────────────────────
+  // ─── READ ONLY ───────────────────────────────────────────────────────────
   getProductos(): Observable<any[]> {
     return this.http.get<any[]>(this.api.getApiUrl('productos'))
       .pipe(
@@ -27,25 +27,4 @@ export class ProductService {
   getProductoPorId(id: number): Observable<any> {
     return this.http.get<any>(this.api.getApiUrl(`productos/${id}`));
   }
-
-  // ─── CREATE ──────────────────────────────────────────────────────────────
-  crearProducto(formData: FormData): Observable<any> {
-    return this.http.post<any>(this.api.getApiUrl('productos'), formData);
-  }
-
-  // ─── UPDATE ──────────────────────────────────────────────────────────────
-  actualizarProducto(id: number, formData: FormData): Observable<any> {
-    return this.http.post<any>(this.api.getApiUrl(`productos/${id}`), formData);
-  }
-
-  // ─── DELETE ──────────────────────────────────────────────────────────────
-  eliminarProducto(id: number): Observable<any> {
-    return this.http.delete<any>(this.api.getApiUrl(`productos/${id}`));
-  }
-
-  // ─── IMPORT ──────────────────────────────────────────────────────────────
-  importarDesdePlaxtilineas(): Observable<any> {
-    return this.http.post<any>(this.api.getApiUrl('importar/ejecutar'), {});
-  }
-
 }

@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ProductoDetailService } from '../../../services/producto-detail.service';
-import { Producto, MOCK_PRODUCTOS } from '../../../data/mock-products';
+import { Producto } from '../../../data/mock-products';
 import { getProductSlug } from '../../../utils/seo-slug.util';
 
 @Component({
@@ -25,19 +25,14 @@ export class CarruselCategoryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.categoriaId && this.categoriaId > 0) {
-      this.productoService.getProductosPorCategoria(this.categoriaId).subscribe({
-        next: (productos) => {
-          this.productos = productos && productos.length > 0 ? productos : MOCK_PRODUCTOS.filter(p => p.categoriaId === this.categoriaId);
-        },
-        error: () => {
-          this.productos = MOCK_PRODUCTOS.filter(p => p.categoriaId === this.categoriaId);
-        }
-      });
-    } else {
-      // Cargar catálogo completo para "Más productos" con sus badges y gadgets promocionales
-      this.productos = MOCK_PRODUCTOS;
-    }
+    this.productoService.getProductosPorCategoria(this.categoriaId).subscribe({
+      next: (productos) => {
+        this.productos = productos || [];
+      },
+      error: () => {
+        this.productos = [];
+      }
+    });
   }
 
   formatearPrecio(precio: number): string {

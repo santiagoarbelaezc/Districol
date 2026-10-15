@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CategoriasMockService } from '../../services/categorias-mock.service';
+import { DistricolService } from '../../services/districol.service';
 import { Categoria } from '../../data/mock-categories';
 
 @Component({
@@ -16,14 +16,19 @@ export class MenuCategoriasComponent implements OnInit {
   categorias: Categoria[] = [];
   cargando = true;
 
-  constructor(private categoriasService: CategoriasMockService) { }
+  constructor(private districolService: DistricolService) { }
 
   ngOnInit(): void {
-    // Simular carga
-    setTimeout(() => {
-      this.categorias = this.categoriasService.getCategorias();
-      this.cargando = false;
-    }, 600);
+    this.districolService.getCategoriasDinamicas().subscribe({
+      next: (cats) => {
+        this.categorias = cats;
+        this.cargando = false;
+      },
+      error: (err) => {
+        console.error('Error cargando categorías dinámicas:', err);
+        this.cargando = false;
+      }
+    });
   }
 
   toggle(cat: Categoria): void {

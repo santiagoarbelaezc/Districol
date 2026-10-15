@@ -1,40 +1,23 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ProductoCarrusel } from '../components/carrusel-home/carrusel-home.component';
-import { 
-  PRODUCTOS_COLCHONES, 
-  PRODUCTOS_AMBIENTES, 
-  PRODUCTOS_COMPLEMENTOS, 
-  PRODUCTOS_ALMOHADAS,
-  PRODUCTOS_SABANAS,
-  TODOS_LOS_PRODUCTOS 
-} from '../data/mock-products';
+import { DistricolService } from './districol.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsMockService {
+  private districolService = inject(DistricolService);
 
-  getColchones(): ProductoCarrusel[] {
-    return PRODUCTOS_COLCHONES;
+  getColchones$(): Observable<ProductoCarrusel[]> {
+    return this.districolService.getColchones();
   }
 
-  getAmbientes(): ProductoCarrusel[] {
-    return PRODUCTOS_AMBIENTES;
+  getAlmohadas$(): Observable<ProductoCarrusel[]> {
+    return this.districolService.getAlmohadas();
   }
 
-  getComplementos(): ProductoCarrusel[] {
-    return PRODUCTOS_COMPLEMENTOS;
-  }
-
-  getAlmohadas(): ProductoCarrusel[] {
-    return PRODUCTOS_ALMOHADAS;
-  }
-
-  getSabanas(): ProductoCarrusel[] {
-    return PRODUCTOS_SABANAS;
-  }
-
-  getTodosLosProductos(): ProductoCarrusel[] {
-    return TODOS_LOS_PRODUCTOS;
+  getSabanas$(): Observable<ProductoCarrusel[]> {
+    return this.districolService.getSabanas();
   }
 }
