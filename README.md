@@ -21,7 +21,7 @@ Plataforma e-commerce desarrollada para empresa de **distribución comercial**. 
 ---
 
 ### 🔧 **Version Catalogo Sincronico**
-- Pendiente implementacion
+- Pendiente implementacion con WOMPI
 
 ---
 
