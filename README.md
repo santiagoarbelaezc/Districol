@@ -20,8 +20,8 @@ Plataforma e-commerce desarrollada para empresa de **distribución comercial**. 
 
 ---
 
-### 🔧 **Version Beta**
-- Migración a PHP backend para Hostinger
+### 🔧 **Version Catalogo Sincronico**
+- Pendiente implementacion
 
 ---
 
